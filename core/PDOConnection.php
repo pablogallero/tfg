@@ -3,7 +3,7 @@
 
 class PDOConnection {
 	private static $dbhost = "127.0.0.1";
-	private static $dbname = "grena";
+	private static $dbname = "GRENA";
 	private static $dbuser = "grena";
 	private static $dbpass = "grena21";
 	private static $db_singleton = null;

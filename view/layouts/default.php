@@ -7,8 +7,12 @@ $currentuser = $view->getVariable("currentusername");
 ?><!DOCTYPE html>
 <html>
 <head>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="196768996394-8bg1mv223238sqjbl655msrp91m81kpt.apps.googleusercontent.com">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 	<link rel="stylesheet" href="css/bootstrap.css">
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -31,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
   <link rel="stylesheet" href="css/fullcalendar.min.css" type="text/css">
+  
 	<!-- enable ji18n() javascript function to translate inside your scripts -->
 </head>
 <body>
@@ -48,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     <div class="navbar-nav mr-auto ml-auto text-center">
       <div class="dropdown">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn btn-primary mr-4" data-toggle="dropdown">
           Inicio
         </button>
         <div class="dropdown-menu">
@@ -58,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
       <div class="dropdown">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn btn-primary mr-4" data-toggle="dropdown">
           Contenidos
         </button>
         <div class="dropdown-menu">
@@ -68,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
       <div class="dropdown">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn btn-primary mr-4 " data-toggle="dropdown">
           Comunidad
         </button>
         <div class="dropdown-menu">
@@ -76,14 +81,29 @@ document.addEventListener('DOMContentLoaded', function() {
           <a class="dropdown-item" href="#">Redes</a>
         </div>
       </div>
-      <a class="btn nav-item nav-link" href="index.php?controller=galeria&amp;action=showall&amp;pagina=0">Galería</a>
+      <a class="btn nav-item nav-link mr-4" href="index.php?controller=galeria&amp;action=showall&amp;pagina=0">Galería</a>
       <a class="btn nav-item nav-link" href="#">¿Cómo colaborar?</a>
      
       
     </div>
-    <div class="d-flex flex-row justify-content-center">
+    <div class="d-flex flex-row justify-content-center mr-3">
+      
       <a href="#" class="btn btn-outline-primary mr-2">F</a>
-      <a href="#" class="btn btn-outline-danger">Y</a>
+      <a href="#" class="btn btn-outline-danger mr-2">Y</a>
+      <?php if(!isset($_SESSION["currentuser"])) {?>
+      <a href="index.php?controller=users&amp;action=login"><i class="ml-2 mt-1  material-icons signup">exit_to_app</i> </a>
+      <?php }
+      else { ?>
+     <div class="dropdown">
+        
+        <i class="ml-2 mt-1  material-icons signup  btn-primary " data-toggle="dropdown">account_box</i> 
+        
+        <div class=" dropdown-menu-izq ">
+          <a class="dropdown-item" href="#">Info</a>
+          <a class="dropdown-item material-icons" href="index.php" onclick="<?php session_destroy();?>">settings_power</a>
+        </div>
+      </div>
+      <?php } ?>
     </div>
     </div>
   </nav>

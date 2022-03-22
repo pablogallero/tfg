@@ -28,7 +28,7 @@ class CalendarioMapper {
 	* @return mixed Array of Post instances (without comments)
 	*/
 	public function findAll() {
-		$stmt = $this->db->query("SELECT * FROM eventos");
+		$stmt = $this->db->query("SELECT * FROM EVENTOS");
 		$evento_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
 		$eventos = array();
@@ -50,7 +50,7 @@ class CalendarioMapper {
 	* if the Post is not found
 	*/
 	public function findById($postid){
-		$stmt = $this->db->prepare("SELECT * FROM posts WHERE id=?");
+		$stmt = $this->db->prepare("SELECT * FROM POSTS WHERE ID=?");
 		$stmt->execute(array($postid));
 		$post = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -85,8 +85,8 @@ class CalendarioMapper {
 			C.post as 'comment.post',
 			C.author as 'comment.author'
 
-			FROM posts P LEFT OUTER JOIN comments C
-			ON P.id = C.post
+			FROM POSTS P LEFT OUTER JOIN COMMENTS C
+			ON P.ID = C.POST
 			WHERE
 			P.id=? ");
 

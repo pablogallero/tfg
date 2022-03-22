@@ -10,7 +10,7 @@ class User {
 	* The user name of the user
 	* @var string
 	*/
-	private $username;
+	private $email;
 
 	/**
 	* The password of the user
@@ -24,8 +24,8 @@ class User {
 	* @param string $username The name of the user
 	* @param string $passwd The password of the user
 	*/
-	public function __construct($username=NULL, $passwd=NULL) {
-		$this->username = $username;
+	public function __construct($email=NULL, $passwd=NULL) {
+		$this->email = $email;
 		$this->passwd = $passwd;
 	}
 
@@ -34,8 +34,8 @@ class User {
 	*
 	* @return string The username of this user
 	*/
-	public function getUsername() {
-		return $this->username;
+	public function getEmail() {
+		return $this->email;
 	}
 
 	/**
@@ -44,8 +44,8 @@ class User {
 	* @param string $username The username of this user
 	* @return void
 	*/
-	public function setUsername($username) {
-		$this->username = $username;
+	public function setEmail($email) {
+		$this->email = $email;
 	}
 
 	/**
@@ -77,8 +77,8 @@ class User {
 	*/
 	public function checkIsValidForRegister() {
 		$errors = array();
-		if (strlen($this->username) < 5) {
-			$errors["username"] = "Username must be at least 5 characters length";
+		if (strlen($this->email) < 5) {
+			$errors["username"] = "Email must be at least 5 characters length";
 
 		}
 		if (strlen($this->passwd) < 5) {

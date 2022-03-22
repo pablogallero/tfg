@@ -23,7 +23,7 @@ class UserMapper {
 	* @throws PDOException if a database error occurs
 	* @return void
 	*/
-	public function save($user) {
+/*	public function save($user) {
 		$stmt = $this->db->prepare("INSERT INTO users values (?,?)");
 		$stmt->execute(array($user->getUsername(), $user->getPasswd()));
 	}
@@ -34,7 +34,7 @@ class UserMapper {
 	* @param string $username the username to check
 	* @return boolean true if the username exists, false otherwise
 	*/
-	public function usernameExists($username) {
+/*	public function usernameExists($username) {
 		$stmt = $this->db->prepare("SELECT count(username) FROM users where username=?");
 		$stmt->execute(array($username));
 
@@ -50,9 +50,9 @@ class UserMapper {
 	* @param string $passwd the password
 	* @return boolean true the username/passwrod exists, false otherwise.
 	*/
-	public function isValidUser($username, $passwd) {
-		$stmt = $this->db->prepare("SELECT count(username) FROM users where username=? and passwd=?");
-		$stmt->execute(array($username, $passwd));
+	public function isValidUser($email, $passwd) {
+		$stmt = $this->db->prepare("SELECT count(email) FROM usuario where email=? and passwd=?");
+		$stmt->execute(array($email, $passwd));
 
 		if ($stmt->fetchColumn() > 0) {
 			return true;

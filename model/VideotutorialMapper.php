@@ -28,7 +28,7 @@ class VideotutorialMapper {
 	* @return mixed Array of Post instances (without comments)
 	*/
 	public function findAll() {
-		$stmt = $this->db->query("SELECT * FROM videotutorial");
+		$stmt = $this->db->query("SELECT * FROM VIDEOTUTORIAL");
 		$videotutorial_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
 		$videotutoriales = array();
@@ -49,7 +49,7 @@ class VideotutorialMapper {
 	* @return Post The Post instances (without comments). NULL
 	* if the Post is not found
 	*/
-	public function findById($postid){
+	/*public function findById($postid){
 		$stmt = $this->db->prepare("SELECT * FROM posts WHERE id=?");
 		$stmt->execute(array($postid));
 		$post = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -74,7 +74,7 @@ class VideotutorialMapper {
 	* @return Post The Post instances (without comments). NULL
 	* if the Post is not found
 	*/
-	public function findByIdWithComments($postid){
+/*	public function findByIdWithComments($postid){
 		$stmt = $this->db->prepare("SELECT
 			P.id as 'post.id',
 			P.title as 'post.title',
@@ -123,7 +123,7 @@ class VideotutorialMapper {
 		* @throws PDOException if a database error occurs
 		* @return int The mew post id
 		*/
-		public function save(Post $post) {
+	/*	public function save(Post $post) {
 			$stmt = $this->db->prepare("INSERT INTO posts(title, content, author) values (?,?,?)");
 			$stmt->execute(array($post->getTitle(), $post->getContent(), $post->getAuthor()->getUsername()));
 			return $this->db->lastInsertId();
@@ -136,7 +136,7 @@ class VideotutorialMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function update(Post $post) {
+	/*	public function update(Post $post) {
 			$stmt = $this->db->prepare("UPDATE posts set title=?, content=? where id=?");
 			$stmt->execute(array($post->getTitle(), $post->getContent(), $post->getId()));
 		}
@@ -148,9 +148,9 @@ class VideotutorialMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function delete(Post $post) {
+	/*	public function delete(Post $post) {
 			$stmt = $this->db->prepare("DELETE from posts WHERE id=?");
 			$stmt->execute(array($post->getId()));
 		}
-
+*/
 	}
