@@ -67,15 +67,19 @@ class UsersController extends BaseController {
 		if (isset($_POST["email"])){ // reaching via HTTP Post...
 			//process login form
 			if ($this->userMapper->isValidUser($_POST["email"], $_POST["passwd"])) {
-
+				
 				$_SESSION["currentuser"]=$_POST["email"];
+				$userrol= $this->userMapper->RolfromEmail($_POST["email"]);
+				
+				
+				$_SESSION["rol"]= $userrol["rol"];
 				
 				// send user to the restricted area (HTTP 302 code)
 				$this->view->redirect("noticias", "index");
-
+				
 			}else{
 				$errors = array();
-				$errors["general"] = "Username is not valid";
+				$errors["general"] = "Username is not v	alid";
 				$this->view->setVariable("errors", $errors);
 			}
 		}
@@ -118,15 +122,21 @@ class UsersController extends BaseController {
 		if (isset($_POST["email"])){ // reaching via HTTP Post...
 
 			// populate the User object with data form the form
-			$user->setEmail($_POST["username"]);
+			$user->setEmail($_POST["email"]);
 			$user->setPassword($_POST["passwd"]);
+			$user->setUsername($_POST["username"]);
+			$user->setDni($_POST["dni"]);
+			$user->setTelefono($_POST["telefono"]);
+			$user->setDireccion($_POST["direccion"]);
+			$user->setGenero($_POST["genero"]);
+			$user->setRol("usuario");
 
 			try{
 				$user->checkIsValidForRegister(); // if it fails, ValidationException
 
 				// check if user exists in the database
-				if (!$this->userMapper->EmailExists($_POST["username"])){
-
+				if (!($this->userMapper->EmailExists($_POST["email"]) || $this->userMapper->DniExists($_POST["dni"]) || $this->userMapper->UsuarioExists($_POST["username"]))){
+					
 					// save the User object into the database
 					$this->userMapper->save($user);
 
@@ -143,8 +153,17 @@ class UsersController extends BaseController {
 					$this->view->redirect("users", "login");
 				} else {
 					$errors = array();
-					$errors["username"] = "Email already exists";
+					$errors["email"] = "Email ya existe";
 					$this->view->setVariable("errors", $errors);
+					if ($this->userMapper->EmailExists($_POST["email"])){
+					$this->view->setFlashF("Este correo electrónico ya se encuentra en la base de datos");
+					}
+					if ($this->userMapper->DniExists($_POST["dni"])){
+						$this->view->setFlashF("Este dni ya se encuentra en la base de datos");
+						}
+					if ($this->userMapper->UsuarioExists($_POST["username"])){
+					$this->view->setFlashF("Este nombre de usuario ya se encuentra en la base de datos");
+					}
 				}
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...

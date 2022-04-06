@@ -19,13 +19,13 @@ $errors = $view->getVariable("errors");
             <form action="index.php?controller=users&amp;action=login" method="POST">
               
               <label class="form-label" for="typeEmailX">Email</label>
-                <input type="email"  name="email" id="typeEmailX" class="form-control form-control-lg" />
+                <input type="email"  name="email" id="typeEmailX" class="form-control form-control-lg mb-3" />
                
               
 
               <div class="form-outline form-white mb-4">
-              <label class="form-label" for="typePasswordX">Password</label>
-                <input type="password" name="passwd" id="typePasswordX" class="form-control form-control-lg" />
+              <label class="form-label" for="typePasswordX">Contraseña</label>
+                <input type="password" name="passwd" id="typePasswordX" class="form-control form-control-lg mb-3" />
                 
               
             </form>
@@ -39,7 +39,7 @@ $errors = $view->getVariable("errors");
             </div>
 
             <div>
-              <p class="mb-0">¿Aún no tienes cuenta? <a href="#!" class="text-white-50 fw-bold">Regístrate</a></p>
+              <p class="mb-0">¿Aún no tienes cuenta? <a href="index.php?controller=users&amp;action=register" class="text-white-50 fw-bold">Regístrate</a></p>
             </div>
 
           </div>

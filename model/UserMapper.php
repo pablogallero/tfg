@@ -23,9 +23,9 @@ class UserMapper {
 	* @throws PDOException if a database error occurs
 	* @return void
 	*/
-/*	public function save($user) {
-		$stmt = $this->db->prepare("INSERT INTO users values (?,?)");
-		$stmt->execute(array($user->getUsername(), $user->getPasswd()));
+	public function save($user) {
+		$stmt = $this->db->prepare("INSERT INTO usuario(username,dni,telefono,email,direccion,genero,passwd,rol) values (?,?,?,?,?,?,?,?)");
+		$stmt->execute(array($user->getUsername(), $user->getDni(), $user->getTelefono(), $user->getEmail(), $user->getDireccion(), $user->getGenero(), $user->getPasswd(), $user->getRol()));
 	}
 
 	/**
@@ -34,14 +34,48 @@ class UserMapper {
 	* @param string $username the username to check
 	* @return boolean true if the username exists, false otherwise
 	*/
-/*	public function usernameExists($username) {
-		$stmt = $this->db->prepare("SELECT count(username) FROM users where username=?");
+
+	public function EmailExists($email) {
+		$stmt = $this->db->prepare("SELECT count(email) FROM usuario where email	=?");
+		$stmt->execute(array($email));
+
+		if ($stmt->fetchColumn() > 0) {
+			return true;
+		}
+		else return false;
+	}
+
+	public function DniExists($dni) {
+		$stmt = $this->db->prepare("SELECT count(dni) FROM usuario where dni	=?");
+		$stmt->execute(array($dni));
+
+		if ($stmt->fetchColumn() > 0) {
+			return true;
+		}
+		else return false;
+	}
+
+	public function UsuarioExists($username) {
+		$stmt = $this->db->prepare("SELECT count(username) FROM usuario where username	=?");
 		$stmt->execute(array($username));
 
 		if ($stmt->fetchColumn() > 0) {
 			return true;
 		}
+		else return false;
 	}
+
+	public function RolfromEmail($email) {
+		$stmt = $this->db->prepare("SELECT rol FROM usuario where email	=?");
+		$stmt->execute(array($email));
+		
+		$rolemail = $stmt->fetch(PDO::FETCH_ASSOC);
+		
+		return $rolemail;
+
+		
+	}
+
 
 	/**
 	* Checks if a given pair of username/password exists in the database

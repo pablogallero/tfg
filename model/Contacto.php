@@ -16,25 +16,37 @@ class Videotutorial {
 	* The title of this post
 	* @var string
 	*/
-	private $fecha;
+	private $nombre;
 
 	/**
 	* The content of this post
 	* @var string
 	*/
-	private $titulo;
+	private $apellidos;
 
 	/**
 	* The author of this post
 	* @var User
 	*/
-	private $enlace;
+	private $email;
 
 	/**
 	* The list of comments of this post
 	* @var mixed
 	*/
-	private $descripcion;
+	private $telefono;
+
+    /**
+	* The list of comments of this post
+	* @var mixed
+	*/
+	private $rutafoto;
+
+    /**
+	* The list of comments of this post
+	* @var mixed
+	*/
+	private $rutatwitter;
 	/**
 	* The constructor
 	*
@@ -44,12 +56,14 @@ class Videotutorial {
 	* @param User $author The author of the post
 	* @param mixed $comments The list of comments
 	*/
-	public function __construct($id=NULL, $fecha=NULL, $titulo=NULL, $enlace=NULL, $descripcion=NULL) {
+	public function __construct($id=NULL, $nombre=NULL,$apellidos=NULL,$email=NULL,$telefono=NULL,$rutafoto=NULL,$rutatwitter=NULL) {
 		$this->id = $id;
-		$this->fecha= $fecha;
-		$this->titulo = $titulo;
-		$this->enlace = $enlace;
-		$this->descripcion = $descripcion;
+		$this->nombre= $apellidos;
+        $this->apellidos= $apellidos;
+        $this->email= $email;
+        $this->telefono= $telefono;
+        $this->rutafoto= $rutafoto;
+        $this->rutatwitter= $rutatwitter;
 
 	}
 
@@ -69,11 +83,11 @@ class Videotutorial {
 	*
 	* @return string The title of this post
 	*/
-	public function getFecha() {
-		return $this->fecha;
+	public function getNombre() {
+		return $this->nombre;
 	}
-	public function setFecha($fecha) {
-		$this->fecha = $fecha;
+	public function setNombre($nombre) {
+		$this->nombre= $nombre;
 	}
 	/**
 	* Sets the title of this post
@@ -81,24 +95,24 @@ class Videotutorial {
 	* @param string $title the title of this post
 	* @return void
 	*/
-	public function getEnlace() {
-		return $this->enlace;
+	public function getApellidos() {
+		return $this->apellidos;
 	}
 
-	public function setEnlace($enlace) {
-		$this->enlace = $enlace;
+	public function setApellidos($apellidos) {
+		$this->apellidos = $apellidos;
 	}
 	/**
 	* Gets the content of this post
 	*
 	* @return string The content of this post
 	*/
-	public function getTitulo() {
-		return $this->titulo;
+	public function getEmail() {
+		return $this->email;
 	}
 
-	public function setTitulo($titulo) {
-		$this->titulo = $titulo;
+	public function setEmail($email) {
+		$this->email = $email;
 	}
 	
 	/**
@@ -107,14 +121,27 @@ class Videotutorial {
 	* @param string $content the content of this post
 	* @return void
 	*/
-	public function getDescripcion() {
-		return $this->descripcion;
+	public function getTelefono() {
+		return $this->telefono;
 	}
 	
-	public function setDescripcion($descripcion) {
-		$this->descripcion = $descripcion;
+	public function setTelefono($telefono) {
+		$this->telefono = $telefono;
 	}
 	
+    public function getRutafoto() {
+		return $this->rutafoto;
+	}
+	public function setRutafoto($rutafoto) {
+		$this->rutafoto = $rutafoto;
+	}
+
+    public function getRutatwitter() {
+		return $this->rutatwitter;
+	}
+	public function setRutatwitter($rutatwitter) {
+		$this->rutatwitter = $rutatwitter;
+	}
 
 	/**
 	* Checks if the current instance is valid

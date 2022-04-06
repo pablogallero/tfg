@@ -203,6 +203,10 @@ class ViewManager {
 
 	}
 
+	public function setFlashF($flashMessage) {
+		$this->setVariable("__flashmessageF__", $flashMessage, false);
+
+	}
 	/**
 	* Retrieves the flash message (and pops it)
 	*
@@ -210,6 +214,10 @@ class ViewManager {
 	*/
 	public function popFlash() {
 		return $this->getVariable("__flashmessage__", "");
+	}
+
+	public function popFlashF() {
+		return $this->getVariable("__flashmessageF__", "");
 	}
 
 

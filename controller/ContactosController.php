@@ -2,8 +2,8 @@
 //file: controller/PostController.php
 
 require_once(__DIR__."/../model/Comment.php");
-require_once(__DIR__."/../model/Videotutorial.php");
-require_once(__DIR__."/../model/VideotutorialMapper.php");
+require_once(__DIR__."/../model/Contacto.php");
+require_once(__DIR__."/../model/ContactoMapper.php");
 require_once(__DIR__."/../model/User.php");
 
 require_once(__DIR__."/../core/ViewManager.php");
@@ -16,7 +16,7 @@ require_once(__DIR__."/../controller/BaseController.php");
 *
 * @author lipido <lipido@gmail.com>
 */
-class VideotutorialesController extends BaseController {
+class ContactoController extends BaseController {
 
 	/**
 	* Reference to the PostMapper to interact
@@ -24,12 +24,12 @@ class VideotutorialesController extends BaseController {
 	*
 	* @var PostMapper
 	*/
-	private $videotutorialMapper;
+	private $contactoMapper;
 
 	public function __construct() {
 		parent::__construct();
 
-		$this->videotutorialMapper = new VideotutorialMapper();
+		$this->contactoMapper = new ContactoMapper();
 		
 	}
 

@@ -10,7 +10,7 @@ $currentuser = $view->getVariable("currentusername");
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="196768996394-8bg1mv223238sqjbl655msrp91m81kpt.apps.googleusercontent.com">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         <div class=" dropdown-menu-izq ">
           <a class="dropdown-item" href="#">Info</a>
-          <a class="dropdown-item material-icons" href="index.php" onclick="<?php session_destroy();?>">settings_power</a>
+          <a class="dropdown-item material-icons" href="index.php" onclick="<?php //session_destroy();?>">settings_power</a>
         </div>
       </div>
       <?php } ?>
@@ -111,8 +111,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	</header>
 
 	<main>
+    
 		<div id="flash">
-			<?= $view->popFlash() ?>
+			<?= $view->popFlash()?>
+		</div>
+    <div id="flashf">
+			<?= $view->popFlashF()?>
 		</div>
 
 		<?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>

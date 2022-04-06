@@ -24,6 +24,7 @@ $currentuser = $view->getVariable("currentusername");?>
 
   <!--  card -->
   <section class="container my-5 py-5">
+  
   <h3 class="text-uppercase text-center mb-4">Bienvenidos a Grena </h3>
   <p class="lead text-center mb-5">Grena es una plataforma desde la cual buscamos fomentar la realización de actividades sostenibles mediante actividades que favorezcan esta conexión.</p>
   <hr class="lineasep">
@@ -36,7 +37,7 @@ $currentuser = $view->getVariable("currentusername");?>
         <p class="card-text"><?= $noticias[0]->getCuerponoticia() ?></p>
         
       </div>
-      <a class="btn btn-primary link" href="#" role="button">Acceder</a>
+      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=showcurrent&amp;id=<?= $noticias[0]->getId() ?>" role="button">Acceder</a>
     </div>
     <div class="card">
       <img class="card-img-top img-fluid" src="images/<?= $noticias[1]->getImagenruta() ?>" alt="Card image cap">
@@ -45,7 +46,7 @@ $currentuser = $view->getVariable("currentusername");?>
         <p class="card-text"><?= $noticias[1]->getCuerponoticia() ?></p>
         
       </div>
-      <a class="btn btn-primary link" href="#" role="button">Acceder</a>
+      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=showcurrent&amp;id=<?= $noticias[1]->getId() ?>" role="button">Acceder</a>
     </div>
     <div class="card">
       <img class="card-img-top img-fluid" src="images/<?= $noticias[2]->getImagenruta()?>" alt="Card image cap">
@@ -54,7 +55,7 @@ $currentuser = $view->getVariable("currentusername");?>
         <p class="card-text"><?= $noticias[2]->getCuerponoticia() ?></p>
         
       </div>
-      <a class="btn btn-primary link" href="#" role="button">Acceder</a>
+      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=showcurrent&amp;id=<?= $noticias[2]->getId() ?>" role="button">Acceder</a>
     </div>
   </div>
   </section>
