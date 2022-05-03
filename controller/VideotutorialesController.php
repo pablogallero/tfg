@@ -134,8 +134,8 @@ class VideotutorialesController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Adding posts requires login");
+		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+			throw new Exception("No se puede editar sin ser administrador");
 		}
 
 		$videotutorial = new Videotutorial();
@@ -301,8 +301,8 @@ class VideotutorialesController extends BaseController {
 		if (!isset($_GET["id"])) {
 			throw new Exception("id is mandatory");
 		}
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
+		if ($_SESSION['rol']!= "administrador") {
+			throw new Exception("Borrar videotutoriales requiere rol de administrador");
 		}
 		
 		// Get the Post object from the database

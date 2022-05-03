@@ -1,74 +1,72 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css">
+<?php
 
-<div class="container">
-<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
-	<div class="col">
-		<div class="card radius-15">
-			<div class="card-body text-center">
-				<div class="p-4 border radius-15">
-					<img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="110" height="110" class="rounded-circle shadow" alt="">
-					<h5 class="mb-0 mt-5">Pauline I. Bird</h5>
-					<p class="mb-3">Webdeveloper</p>
-					<div class="list-inline contacts-social mt-3 mb-3"> <a href="javascript:;" class="list-inline-item bg-facebook text-white border-0"><i class="bx bxl-facebook"></i></a>
-						<a href="javascript:;" class="list-inline-item bg-twitter text-white border-0"><i class="bx bxl-twitter"></i></a>
-						<a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0"><i class="bx bxl-linkedin"></i></a>
-					</div>
-					<div class="d-grid"> <a href="#" class="btn btn-outline-primary radius-15">Contact Me</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col">
-		<div class="card radius-15">
-			<div class="card-body text-center">
-				<div class="p-4 border radius-15">
-					<img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="110" height="110" class="rounded-circle shadow" alt="">
-					<h5 class="mb-0 mt-5">Ralph L. Alva</h5>
-					<p class="mb-3">UI Developer</p>
-					<div class="list-inline contacts-social mt-3 mb-3"> <a href="javascript:;" class="list-inline-item bg-facebook text-white border-0"><i class="bx bxl-facebook"></i></a>
-						<a href="javascript:;" class="list-inline-item bg-twitter text-white border-0"><i class="bx bxl-twitter"></i></a>
-						<a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0"><i class="bx bxl-linkedin"></i></a>
-					</div>
-					<div class="d-grid"> <a href="#" class="btn btn-outline-primary radius-15">Contact Me</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col">
-		<div class="card radius-15">
-			<div class="card-body text-center">
-				<div class="p-4 border radius-15">
-					<img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="110" height="110" class="rounded-circle shadow" alt="">
-					<h5 class="mb-0 mt-5">John B. Roman</h5>
-					<p class="mb-3">Graphic Designer</p>
-					<div class="list-inline contacts-social mt-3 mb-3"> <a href="javascript:;" class="list-inline-item bg-facebook text-white border-0"><i class="bx bxl-facebook"></i></a>
-						<a href="javascript:;" class="list-inline-item bg-twitter text-white border-0"><i class="bx bxl-twitter"></i></a>
-						<a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0"><i class="bx bxl-linkedin"></i></a>
-					</div>
-					<div class="d-grid"> <a href="#" class="btn btn-outline-primary radius-15">Contact Me</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col">
-		<div class="card radius-15">
-			<div class="card-body text-center">
-				<div class="p-4 border radius-15">
-					<img src="https://bootdey.com/img/Content/avatar/avatar2.png" width="110" height="110" class="rounded-circle shadow" alt="">
-					<h5 class="mb-0 mt-5">David O. Buckley</h5>
-					<p class="mb-3">Android Developer</p>
-					<div class="list-inline contacts-social mt-3 mb-3"> <a href="javascript:;" class="list-inline-item bg-facebook text-white border-0"><i class="bx bxl-facebook"></i></a>
-						<a href="javascript:;" class="list-inline-item bg-twitter text-white border-0"><i class="bx bxl-twitter"></i></a>
-						<a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0"><i class="bx bxl-linkedin"></i></a>
-					</div>
-					<div class="d-grid"> <a href="#" class="btn btn-outline-primary radius-15">Contact Me</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+
+require_once(__DIR__."/../../core/ViewManager.php");
+$view = ViewManager::getInstance();
+
+
+$errors = $view->getVariable("errors");
+$contacto= $view->getVariable("contacto");
+$view->setVariable("title", "Edit Post");
+
+?>
+<div class="container mb-5"><div class=" text-center mt-5 ">
+        <h1>Editar Contacto</h1>
+    </div>
+    <div class="row ">
+        <div class="col-lg-7 mx-auto">
+            <div class="card mt-2 mx-auto p-4 bg-light">
+                <div class="card-body bg-light">
+                    <div class="container">
+                        <form id="contact-form" role="form" action="index.php?controller=contactos&amp;action=edit&amp;id=<?= $contacto->getId() ?>" method="POST">
+                            <div class="controls">
+							
+                                <div class="row">
+									
+                                    <div class="col-md-6">
+                                        <div class="form-group"> <label for="nombre">Nombre</label> <input id="form_name" type="text" name="nombre" class="form-control" value="<?= $contacto->getNombre() ?>" placeholder="Introduzca aquí el nombre" required="required" > </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group"> <label for="apellidos">Apellidos</label> <input id="form_lastname" type="text" name="apellidos" class="form-control" value="<?= $contacto->getApellidos() ?>" placeholder="Introduzca aquí los apellidos" required="required" > </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+									
+                                    <div class="col-md-6">
+                                        <div class="form-group"> <label for="email">Email</label> <input id="form_name" type="text" name="email" class="form-control" value="<?= $contacto->getEmail() ?>" placeholder="Introduzca aquí el email" required="required" > </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group"> <label for="telefono">Teléfono</label> <input id="form_lastname" type="text" name="telefono" class="form-control" value="<?= $contacto->getTelefono() ?>" placeholder="Introduzca aquí el teléfono" required="required" > </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+									
+                                    <div class="col-md-3">
+                                        <div class="form-group"> <label for="rutafoto">Foto de perfil</label> <input id="form_name" type="file" accept="image/png, image/jpeg" name="rutafoto" class="form-control"  required="required" > </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group"> <label for="form_need">Cargo</label> <select id="form_need" name="cargo" class="form-control" required="required" data-error="Indica el cargo, por favor.">
+                                                <option value=""  disabled>Selecciona un cargo</option>
+
+                                                <option <?php if($contacto->getCargo() =="Administrador"){ ?> selected <?php } ?> >Administrador</option>
+                                                <option <?php if($contacto->getCargo() =="Jefe"){ ?> selected <?php } ?> >Jefe</option>
+                                                <option <?php if($contacto->getCargo() =="Directivo"){ ?> selected <?php } ?> >Directivo</option>
+                                                
+                                            </select> </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group"> <label for="rutatwitter"> Nombre en Twitter</label> <input id="form_name" type="text" name="rutatwitter" class="form-control" value="<?= $contacto->getRutatwitter() ?>" placeholder="Su @ en Twitter" required="required" > </div>
+                                    </div>
+                                    <div class="col-md-12"> <button type="submit" class="btn btn-success btn-send pt-2 btn-block w-100" name="submit" value="submit"> Editar </button></div>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- /.8 -->
+        </div> <!-- /.row-->
+    </div>
 </div>

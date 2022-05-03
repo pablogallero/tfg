@@ -33,29 +33,29 @@ $currentuser = $view->getVariable("currentusername");?>
     <div class="card">
       <img class="card-img-top img-fluid" src="images/<?= $noticias[0]->getImagenruta() ?>" alt="Card image cap">
       <div class="card-block">
-        <h4 class="card-title"><?= $noticias[0]->getTitulo() ?></h4>
-        <p class="card-text"><?= $noticias[0]->getCuerponoticia() ?></p>
+        <h4 class="card-title textoverflowl"><?= $noticias[0]->getTitulo() ?></h4>
+        <p class="card-text textoverflowl"><?= $noticias[0]->getCuerponoticia() ?></p>
         
       </div>
-      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=showcurrent&amp;id=<?= $noticias[0]->getId() ?>" role="button">Acceder</a>
+      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=view&amp;id=<?= $noticias[0]->getId() ?>" role="button">Acceder</a>
     </div>
     <div class="card">
       <img class="card-img-top img-fluid" src="images/<?= $noticias[1]->getImagenruta() ?>" alt="Card image cap">
       <div class="card-block">
-        <h4 class="card-title"><?= $noticias[1]->getTitulo() ?></h4>
-        <p class="card-text"><?= $noticias[1]->getCuerponoticia() ?></p>
+        <h4 class="card-title textoverflowl"><?= $noticias[1]->getTitulo() ?></h4>
+        <p class="card-text textoverflowl"><?= $noticias[1]->getCuerponoticia() ?></p>
         
       </div>
-      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=showcurrent&amp;id=<?= $noticias[1]->getId() ?>" role="button">Acceder</a>
+      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=view&amp;id=<?= $noticias[1]->getId() ?>" role="button">Acceder</a>
     </div>
     <div class="card">
       <img class="card-img-top img-fluid" src="images/<?= $noticias[2]->getImagenruta()?>" alt="Card image cap">
       <div class="card-block">
-        <h4 class="card-title"><?= $noticias[2]->getTitulo() ?> </h4>
-        <p class="card-text"><?= $noticias[2]->getCuerponoticia() ?></p>
+        <h4 class="card-title textoverflowl "><?= $noticias[2]->getTitulo() ?> </h4>
+        <p class="card-text textoverflowl"><?= $noticias[2]->getCuerponoticia() ?></p>
         
       </div>
-      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=showcurrent&amp;id=<?= $noticias[2]->getId() ?>" role="button">Acceder</a>
+      <a class="btn btn-primary link" href="index.php?controller=noticias&amp;action=view&amp;id=<?= $noticias[2]->getId() ?>" role="button">Acceder</a>
     </div>
   </div>
   </section>
@@ -67,7 +67,7 @@ $currentuser = $view->getVariable("currentusername");?>
         
         <div class="row d-flex align-items-center my-5 py-5">
           <div class="col-md-7">
-            <a class="sinsubr" href="#"><h2 class="display-3">Nuestros proyectos</h2></a>
+            <a class="sinsubr linknegro" href="#"><h2 class="display-3">Nuestros proyectos</h2></a>
             
           </div>
           <div class="col-md-5">
@@ -79,10 +79,10 @@ $currentuser = $view->getVariable("currentusername");?>
         
         <div class="row d-flex align-items-center my-5 py-5">
           <div class="col-md-7 push-md-5">
-          <a class="sinsubr" href="#"><h2 class="display-3">La galería</h2></a>
+          <a class="sinsubr linknegro" href="index.php?controller=galeria&action=showall&pagina=0"><h2 class="display-3">La galería</h2></a>
           </div>
           <div class="col-md-5 pull-md-7">
-            <img class=" img-fluid mx-auto" src="images/cards2.png" alt="Generic placeholder image">
+            <img class=" img-fluid mx-auto" src="images/galeria.webp" alt="Generic placeholder image">
           </div>
         </div>
         
@@ -90,10 +90,10 @@ $currentuser = $view->getVariable("currentusername");?>
         
         <div class="row d-flex align-items-center my-5 py-5">
           <div class="col-md-7">
-          <a class="sinsubr" href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=0"><h2 class="display-3">Videotutoriales</h2></a>
+          <a class="sinsubr linknegro" href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=0"><h2 class="display-3">Videotutoriales</h2></a>
           </div>
           <div class="col-md-5">
-            <img class=" img-fluid mx-auto" src="images/cards3.png" alt="Generic placeholder image">
+            <img class=" img-fluid mx-auto" src="images/videotutorialesagricolas.jpg" alt="Generic placeholder image">
           </div>
         </div>
         

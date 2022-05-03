@@ -4,7 +4,7 @@
 require_once(__DIR__."/../core/ValidationException.php");
 
 
-class Videotutorial {
+class Contacto {
 
 	/**
 	* The id of this post
@@ -56,11 +56,12 @@ class Videotutorial {
 	* @param User $author The author of the post
 	* @param mixed $comments The list of comments
 	*/
-	public function __construct($id=NULL, $nombre=NULL,$apellidos=NULL,$email=NULL,$telefono=NULL,$rutafoto=NULL,$rutatwitter=NULL) {
+	public function __construct($id=NULL, $nombre=NULL,$apellidos=NULL,$email=NULL,$cargo=NULL,$telefono=NULL,$rutafoto=NULL,$rutatwitter=NULL) {
 		$this->id = $id;
-		$this->nombre= $apellidos;
+		$this->nombre= $nombre;
         $this->apellidos= $apellidos;
         $this->email= $email;
+		$this->cargo= $cargo;
         $this->telefono= $telefono;
         $this->rutafoto= $rutafoto;
         $this->rutatwitter= $rutatwitter;
@@ -115,6 +116,13 @@ class Videotutorial {
 		$this->email = $email;
 	}
 	
+	public function getCargo() {
+		return $this->cargo;
+	}
+
+	public function setCargo($cargo) {
+		$this->cargo = $cargo;
+	}
 	/**
 	* Sets the content of this post
 	*
@@ -154,31 +162,31 @@ class Videotutorial {
 	*/
 	public function checkIsValidForCreate() {
 		$errors = array();
-		if (strlen(trim($this->titulo)) == 0 ) {
-			$errors["titulo"] = "El titulo es obligatorio";
+		if (strlen(trim($this->nombre)) == 0 ) {
+			$errors["nombre"] = "El nombre es obligatorio";
 		}
 		
-		if ($this->enlace == NULL ) {
-			$errors["enlace"] = "El enlace al video es obligatorio";
+		if ($this->email == NULL ) {
+			$errors["email"] = "El email es obligatorio";
 		}
 
 		if (sizeof($errors) > 0){
-			throw new ValidationException($errors, "No se pudo agregar el videotutorial");
+			throw new ValidationException($errors, "No se pudo agregar el contacto");
 		}
 	}
 
 	public function checkIsValidForUpdate() {
 		$errors = array();
-		if (strlen(trim($this->titulo)) == 0 ) {
-			$errors["titulo"] = "El titulo es obligatorio";
+		if (strlen(trim($this->nombre)) == 0 ) {
+			$errors["nombre"] = "El nombre es obligatorio";
 		}
 		
-		if ($this->enlace == NULL ) {
-			$errors["enlace"] = "El enlace al video es obligatorio";
+		if ($this->email == NULL ) {
+			$errors["email"] = "El email es obligatorio";
 		}
 
 		if (sizeof($errors) > 0){
-			throw new ValidationException($errors, "No se pudo editar el videotutorial");
+			throw new ValidationException($errors, "No se pudo editar el contacto");
 		}
 	}
 

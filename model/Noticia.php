@@ -35,7 +35,9 @@ class Noticia {
 	* @var mixed
 	*/
 	private $cuerponoticia;
+
 	private $comentarios;
+	
 	/**
 	* The constructor
 	*
@@ -53,6 +55,8 @@ class Noticia {
 		$this->cuerponoticia = $cuerponoticia;
 		$this->comentarios = $comentarios;
 
+		
+
 	}
 
 	/**
@@ -64,6 +68,9 @@ class Noticia {
 		return $this->id;
 	}
 
+	public function setId($id) {
+		$this->id = $id;
+	}
 	/**
 	* Gets the title of this post
 	*
@@ -73,6 +80,9 @@ class Noticia {
 		return $this->fecha;
 	}
 
+	public function setFecha($fecha) {
+		$this->fecha = $fecha;
+	}
 	/**
 	* Sets the title of this post
 	*
@@ -83,6 +93,9 @@ class Noticia {
 		return $this->imagenruta;
 	}
 
+	public function setImagenruta($imagenruta) {
+		$this->imagenruta = $imagenruta;
+	}
 	/**
 	* Gets the content of this post
 	*
@@ -92,6 +105,9 @@ class Noticia {
 		return $this->titulo;
 	}
 
+	public function setTitulo($titulo) {
+		$this->titulo = $titulo;
+	}
 	/**
 	* Sets the content of this post
 	*
@@ -101,16 +117,23 @@ class Noticia {
 	public function getCuerponoticia() {
 		return $this->cuerponoticia;
 	}
+	public function setCuerponoticia($cuerponoticia) {
+		$this->cuerponoticia = $cuerponoticia;
+	}
+
+	public function getComentarios() {
+		return $this->comentarios;
+	}
+	public function setComentarios($comentarios) {
+		$this->comentarios = $comentarios;
+	}
+
 	/**
 	* Gets the author of this post
 	*
 	* @return User The author of this post
 	*/
-	public function getComentarios() {
-		return $this->comentarios;
-	}
-
-
+	
 	/**
 	* Checks if the current instance is valid
 	* for being updated in the database.
@@ -122,8 +145,8 @@ class Noticia {
 	*/
 	public function checkIsValidForCreate() {
 		$errors = array();
-		if (strlen(trim($this->title)) == 0 ) {
-			$errors["title"] = "title is mandatory";
+		if (strlen(trim($this->titulo)) == 0 ) {
+			$errors["titulo"] = "title is mandatory";
 		}
 		if (strlen(trim($this->cuerponoticia)) == 0 ) {
 			$errors["cuerponoticia"] = "content is mandatory";

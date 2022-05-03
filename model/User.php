@@ -59,7 +59,8 @@ class User {
 	* @param string $username The name of the user
 	* @param string $passwd The password of the user
 	*/
-	public function __construct($email=NULL, $passwd=NULL,$username=NULL,$dni=NULL,$telefono=NULL,$direccion=NULL,$genero=NULL,$rol=NULL) {
+	public function __construct($id=NULL,$email=NULL, $passwd=NULL,$username=NULL,$dni=NULL,$telefono=NULL,$direccion=NULL,$genero=NULL,$rol=NULL) {
+		$this->id = $id;
 		$this->email = $email;
 		$this->passwd = $passwd;
 		$this->username = $username;
@@ -70,6 +71,12 @@ class User {
 		$this->rol = $rol;
 	}
 
+	public function getId() {
+		return $this->id;
+	}
+	public function setId($id) {
+		$this->id = $id;
+	}
 	/**
 	* Gets the username of this user
 	*

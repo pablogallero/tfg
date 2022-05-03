@@ -35,6 +35,51 @@ class UserMapper {
 	* @return boolean true if the username exists, false otherwise
 	*/
 
+	public function findById($userid){
+		$stmt = $this->db->prepare("SELECT * FROM usuario WHERE id_usuario=?");
+		$stmt->execute(array($userid));
+		$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		if($usuario != null) {
+			return new User(
+			$usuario["ID_USUARIO"],
+			$usuario["USERNAME"],
+			$usuario["DNI"],
+			$usuario["TELEFONO"],
+			$usuario["EMAIL"],
+			$usuario["DIRECCION"],
+			$usuario["GENERO"],
+			$usuario["PASSWD"],
+			$usuario["ROL"],);
+		} else {
+			return NULL;
+		}
+	}
+
+	public function findByEmail($emailuser){
+		$stmt = $this->db->prepare("SELECT * FROM usuario WHERE email=?");
+		$stmt->execute(array($emailuser));
+		$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		if($usuario != null) {
+			return new User(
+			$usuario["ID_USUARIO"],
+			$usuario["USERNAME"],
+			$usuario["DNI"],
+			$usuario["TELEFONO"],
+			$usuario["EMAIL"],
+			$usuario["DIRECCION"],
+			$usuario["GENERO"],
+			$usuario["PASSWD"],
+			$usuario["ROL"],);
+		} else {
+			return NULL;
+		}
+	}
+
+	
+
+
 	public function EmailExists($email) {
 		$stmt = $this->db->prepare("SELECT count(email) FROM usuario where email	=?");
 		$stmt->execute(array($email));

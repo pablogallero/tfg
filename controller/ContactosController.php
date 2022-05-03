@@ -16,7 +16,7 @@ require_once(__DIR__."/../controller/BaseController.php");
 *
 * @author lipido <lipido@gmail.com>
 */
-class ContactoController extends BaseController {
+class ContactosController extends BaseController {
 
 	/**
 	* Reference to the PostMapper to interact
@@ -48,14 +48,14 @@ class ContactoController extends BaseController {
 	public function showAll() {
 		
 		// obtain the data from the database
-		$videotutoriales = $this->videotutorialMapper->findAll();
+		$contactos = $this->contactoMapper->findAll();
 		// put the array containing Post object to the view
 		
-		$videotutorialesr=array_reverse($videotutoriales);
-		$this->view->setVariable("videotutoriales", $videotutorialesr);
+		
+		$this->view->setVariable("contactos", $contactos);
 		
 		// render the view (/view/noticias/index.php)
-		$this->view->render("videotutoriales", "showall");
+		$this->view->render("contactos", "showall");
 	}
 	/**
 	* Action to view a given post
@@ -134,37 +134,41 @@ class ContactoController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Adding posts requires login");
+		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+			throw new Exception("No se puede editar sin ser administrador");
 		}
 
-		$videotutorial = new Videotutorial();
+		$contacto = new Contacto();
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
-			$videotutorial->setTitulo($_POST["titulo"]);
-			$videotutorial->setEnlace($_POST["enlace"]);
-			$videotutorial->setDescripcion($_POST["descripcion"]);
+			$contacto->setNombre($_POST["nombre"]);
+			$contacto->setApellidos($_POST["apellidos"]);
+			$contacto->setEmail($_POST["email"]);
+			$contacto->setCargo($_POST["cargo"]);
+			$contacto->setTelefono($_POST["telefono"]);
+			$contacto->setRutafoto($_POST["rutafoto"]);
+			$contacto->setRutatwitter($_POST["rutatwitter"]);
 			// The user of the Post is the currentUser (user in session)
 				
 
 			try {
 				// validate Post object
-				$videotutorial->checkIsValidForCreate(); // if it fails, ValidationException
+				$contacto->checkIsValidForCreate(); // if it fails, ValidationException
 
 				// save the Post object into the database
-				$this->videotutorialMapper->save($videotutorial);
+				$this->contactoMapper->save($contacto);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("El videotutorial \"%s\" se agregó correctamente."),$videotutorial->getTitulo()));
+				$this->view->setFlash(sprintf(i18n("El contacto \"%s\" se agregó correctamente."),$contacto->getNombre()));
 
 				// perform the redirection. More or less:
-				header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
+				header("Location: index.php?controller=contactos&action=showall");
 				// die();
 				
 
@@ -177,10 +181,10 @@ class ContactoController extends BaseController {
 		}
 
 		// Put the Post object visible to the view
-		$this->view->setVariable("videotutorial", $videotutorial);
+		$this->view->setVariable("contacto", $contacto);
 
 		// render the view (/view/posts/add.php)
-		$this->view->render("videotutoriales", "add");
+		$this->view->render("contactos", "add");
 
 	}
 
@@ -217,49 +221,53 @@ class ContactoController extends BaseController {
 	*/
 	public function edit() {
 		if (!isset($_GET["id"])) {
-			throw new Exception("No se encuentra el videotutorial");
+			throw new Exception("No se encuentra el contacto");
 		}
 
 		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Not in session. Editing posts requires login");
+			throw new Exception("Necesita ser administrador");
 		}
 
 
 		// Get the Post object from the database
-		$videotutorialid = $_GET["id"];
-		$videotutorial= $this->videotutorialMapper->findById($videotutorialid);
+		$contactoid = $_GET["id"];
+		$contacto= $this->contactoMapper->findById($contactoid);
 
 		// Does the post exist?
-		if ($videotutorial == NULL) {
-			throw new Exception("No existe dicho ese videotutorial");
+		if ($contacto == NULL) {
+			throw new Exception("No existe dicho ese contacto");
 		}
 
 		
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
-			$videotutorial->setTitulo($_POST["titulo"]);
-			$videotutorial->setEnlace($_POST["enlace"]);
-			$videotutorial->setDescripcion($_POST["descripcion"]);
+			$contacto->setNombre($_POST["nombre"]);
+			$contacto->setApellidos($_POST["apellidos"]);
+			$contacto->setEmail($_POST["email"]);
+			$contacto->setCargo($_POST["cargo"]);
+			$contacto->setTelefono($_POST["telefono"]);
+			$contacto->setRutafoto($_POST["rutafoto"]);
+			$contacto->setRutatwitter($_POST["rutatwitter"]);
 			try {
 				// validate Post object
-				$videotutorial->checkIsValidForUpdate(); // if it fails, ValidationException
+				$contacto->checkIsValidForUpdate(); // if it fails, ValidationException
 
 				// update the Post object in the database
-				$this->videotutorialMapper->update($videotutorial);
+				$this->contactoMapper->update($contacto);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("El videotutorial \"%s\" se editó correctamente."),$videotutorial->getTitulo()));
+				$this->view->setFlash(sprintf(i18n("El contacto \"%s\" se editó correctamente."),$contacto->getNombre()));
 
 				// perform the redirection. More or less:
 				// header("Location: index.php?controller=posts&action=index")
 				// die();
-				header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
+				header("Location: index.php?controller=contactos&action=showall");
 
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
@@ -270,11 +278,11 @@ class ContactoController extends BaseController {
 		}
 
 	// Put the Post object visible to the view
-	$this->view->setVariable("videotutorial", $videotutorial);
+	$this->view->setVariable("contacto", $contacto);
 
 	// render the view (/view/posts/edit.php)
 	
-	$this->view->render("videotutoriales", "edit");
+	$this->view->render("contactos", "edit");
 	}
 
 	/**
@@ -299,36 +307,36 @@ class ContactoController extends BaseController {
 	*/
 	public function delete() {
 		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
+			throw new Exception("Se necesita la id");
 		}
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
+		if ($_SESSION['rol']!= "administrador") {
+			throw new Exception("Necesita ser administrador");
 		}
 		
 		// Get the Post object from the database
-		$videotutorialid = $_GET["id"];
-		$videotutorial = $this->videotutorialMapper->findById($videotutorialid);
+		$contactoid = $_GET["id"];
+		$contacto= $this->contactoMapper->findById($contactoid);
 
 		// Does the post exist?
-		if ($videotutorial== NULL) {
-			throw new Exception("No existe dicho ese videotutorial");
+		if ($contacto== NULL) {
+			throw new Exception("No existe dicho ese contacto");
 		}
 
 		
 		// Delete the Post object from the database
-		$this->videotutorialMapper->delete($videotutorial);
+		$this->contactoMapper->delete($contacto);
 
 		// POST-REDIRECT-GET
 		// Everything OK, we will redirect the user to the list of posts
 		// We want to see a message after redirection, so we establish
 		// a "flash" message (which is simply a Session variable) to be
 		// get in the view after redirection.
-		$this->view->setFlash(sprintf(i18n("El videotutorial \"%s\" se borró correctamente."),$videotutorial->getTitulo()));
+		$this->view->setFlash(sprintf(i18n("El contacto \"%s\" se borró correctamente."),$contacto->getNombre()));
 
 		// perform the redirection. More or less:
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
-		header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
+		header("Location: index.php?controller=contactos&action=showall");
 
 	}
 }

@@ -3,11 +3,11 @@
 require_once(__DIR__."/../core/PDOConnection.php");
 
 require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../model/Videotutorial.php");
+require_once(__DIR__."/../model/Contacto.php");
 require_once(__DIR__."/../model/Comment.php");
 
 
-class VideotutorialMapper {
+class ContactoMapper {
 
 	/**
 	* Reference to the PDO connection
@@ -28,16 +28,16 @@ class VideotutorialMapper {
 	* @return mixed Array of Post instances (without comments)
 	*/
 	public function findAll() {
-		$stmt = $this->db->query("SELECT * FROM VIDEOTUTORIAL");
-		$videotutorial_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$stmt = $this->db->query("SELECT * FROM CONTACTOS");
+		$contactos_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
-		$videotutoriales = array();
+		$contactos = array();
 		
-		foreach ($videotutorial_db as $videotutorial) {
-			array_push($videotutoriales, new Videotutorial($videotutorial["ID_VIDEOTUTORIAL"], $videotutorial["FECHA"], $videotutorial["TITULO"], $videotutorial["ENLACE"],$videotutorial["DESCRIPCION"],$videotutorial["DESCRIPCION"]));
+		foreach ($contactos_db as $contacto) {
+			array_push($contactos, new Contacto($contacto["ID_CONTACTO"], $contacto["NOMBRE"], $contacto["APELLIDOS"], $contacto["EMAIL"],$contacto["CARGO"],$contacto["TELEFONO"],$contacto["RUTAFOTO"],$contacto["RUTATWITTER"]));
 		}
 
-		return $videotutoriales;
+		return $contactos;
 	}
 
 	/**
@@ -49,18 +49,21 @@ class VideotutorialMapper {
 	* @return Post The Post instances (without comments). NULL
 	* if the Post is not found
 	*/
-	public function findById($videoid){
-		$stmt = $this->db->prepare("SELECT * FROM videotutorial WHERE id_videotutorial=?");
-		$stmt->execute(array($videoid));
-		$video = $stmt->fetch(PDO::FETCH_ASSOC);
+	public function findById($contid){
+		$stmt = $this->db->prepare("SELECT * FROM contactos WHERE id_contacto=?");
+		$stmt->execute(array($contid));
+		$cont = $stmt->fetch(PDO::FETCH_ASSOC);
 		
-		if($video != null) {
-			return new Videotutorial(
-			$video["ID_VIDEOTUTORIAL"],
-			$video["FECHA"],
-			$video["TITULO"],
-			$video["ENLACE"],
-			$video["DESCRIPCION"]);
+		if($cont != null) {
+			return new Contacto(
+			$cont["ID_CONTACTO"],
+			$cont["NOMBRE"],
+			$cont["APELLIDOS"],
+			$cont["EMAIL"],
+			$cont["CARGO"],
+			$cont["TELEFONO"],
+			$cont["RUTAFOTO"],
+			$cont["RUTATWITTER"],);
 		} else {
 			return NULL;
 		}
@@ -124,10 +127,10 @@ class VideotutorialMapper {
 		* @throws PDOException if a database error occurs
 		* @return int The mew post id
 		*/
-	public function save(Videotutorial $videotutorial) {
-			$stmt = $this->db->prepare("INSERT INTO videotutorial(titulo,enlace,descripcion, fecha) values (?,?,?,?)");
+	public function save(Contacto $contacto) {
+			$stmt = $this->db->prepare("INSERT INTO contactos(nombre,apellidos,email,cargo,telefono,rutafoto,rutatwitter) values (?,?,?,?,?,?,?)");
 			
-			$stmt->execute(array($videotutorial->getTitulo(), $videotutorial->getEnlace(), $videotutorial->getDescripcion(),getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"]));
+			$stmt->execute(array($contacto->getNombre(), $contacto->getApellidos(),$contacto->getEmail(),$contacto->getCargo(),$contacto->getTelefono(),$contacto->getRutafoto(),$contacto->getRutatwitter()));
 			
 		}
 
@@ -138,9 +141,9 @@ class VideotutorialMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function update(Videotutorial $videotutorial) {
-			$stmt = $this->db->prepare("UPDATE videotutorial set titulo=?, enlace=? , descripcion=? where id_videotutorial=?");
-			$stmt->execute(array($videotutorial->getTitulo(), $videotutorial->getEnlace(),$videotutorial->getDescripcion(), $videotutorial->getId()));
+		public function update(Contacto $contacto) {
+			$stmt = $this->db->prepare("UPDATE contactos set nombre=?, apellidos=? , email=? ,cargo=? , telefono=? ,rutafoto=? , rutatwitter=? where id_contacto=?");
+			$stmt->execute(array($contacto->getNombre(), $contacto->getApellidos(),$contacto->getEmail(),$contacto->getCargo(),$contacto->getTelefono(),$contacto->getRutafoto(),$contacto->getRutatwitter(), $contacto->getId()));
 		}
 
 		/**
@@ -150,9 +153,9 @@ class VideotutorialMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function delete(Videotutorial $videotutorial) {
-			$stmt = $this->db->prepare("DELETE from videotutorial WHERE id_videotutorial=?");
-			$stmt->execute(array($videotutorial->getId()));
+		public function delete(Contacto $contacto) {
+			$stmt = $this->db->prepare("DELETE from contactos WHERE id_contacto=?");
+			$stmt->execute(array($contacto->getId()));
 		}
 
 	}

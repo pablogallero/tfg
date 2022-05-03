@@ -100,28 +100,28 @@ class NoticiasController extends BaseController {
 	*/
 	public function view(){
 		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
+			throw new Exception("Se necesita una id de noticia");
 		}
 
-		$postid = $_GET["id"];
+		$noticiaid = $_GET["id"];
 
 		// find the Post object in the database
-		$post = $this->postMapper->findByIdWithComments($postid);
+		$noticia = $this->noticiaMapper->findByIdWithComments($noticiaid);
 
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+		if ($noticia == NULL) {
+			throw new Exception("No existe una noticia con esa id: ".$noticiaid);
 		}
 
 		// put the Post object to the view
-		$this->view->setVariable("post", $post);
+		$this->view->setVariable("noticia", $noticia);
 
 		// check if comment is already on the view (for example as flash variable)
 		// if not, put an empty Comment for the view
-		$comment = $this->view->getVariable("comment");
-		$this->view->setVariable("comment", ($comment==NULL)?new Comment():$comment);
+		$comentario = $this->view->getVariable("comentario");
+		$this->view->setVariable("comentario", ($comentario==NULL)?new Comentario():$comentario);
 
 		// render the view (/view/posts/view.php)
-		$this->view->render("posts", "view");
+		$this->view->render("noticias", "view");
 
 	}
 
@@ -154,41 +154,41 @@ class NoticiasController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Adding posts requires login");
+		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+			throw new Exception("No se puede añadir sin ser administrador");
 		}
 
-		$post = new Post();
+		$noticia = new Noticia();
 
-		if (isset($_POST["submit"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
-			$post->setTitle($_POST["title"]);
-			$post->setContent($_POST["content"]);
-
+			$noticia->setTitulo($_POST["titulo"]);
+			$noticia->setCuerponoticia($_POST["cuerponoticia"]);
+			$noticia->setImagenruta($_POST["imagenruta"]);
 			// The user of the Post is the currentUser (user in session)
-			$post->setAuthor($this->currentUser);
+				
 
 			try {
 				// validate Post object
-				$post->checkIsValidForCreate(); // if it fails, ValidationException
+				$noticia->checkIsValidForCreate(); // if it fails, ValidationException
 
 				// save the Post object into the database
-				$this->postMapper->save($post);
+				$this->noticiaMapper->save($noticia);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully added."),$post ->getTitle()));
+				$this->view->setFlash(sprintf(i18n("La noticia \"%s\" se agregó correctamente."),$noticia->getTitulo()));
 
 				// perform the redirection. More or less:
-				// header("Location: index.php?controller=posts&action=index")
+				header("Location: index.php?controller=noticias&action=showall&pagina=0");
 				// die();
-				$this->view->redirect("posts", "index");
+				
 
-			}catch(ValidationException $ex) {
+			} catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
 				$errors = $ex->getErrors();
 				// And put it to the view as "errors" variable
@@ -197,10 +197,10 @@ class NoticiasController extends BaseController {
 		}
 
 		// Put the Post object visible to the view
-		$this->view->setVariable("post", $post);
+		$this->view->setVariable("noticia", $noticia);
 
 		// render the view (/view/posts/add.php)
-		$this->view->render("posts", "add");
+		$this->view->render("noticias", "add");
 
 	}
 
@@ -236,14 +236,13 @@ class NoticiasController extends BaseController {
 	* @return void
 	*/
 	public function edit() {
-		if (!isset($_REQUEST["id"])) {
-			throw new Exception("A post id is mandatory");
+		if (!isset($_GET["id"])) {
+			throw new Exception("Se necesita una id de noticia");
 		}
 
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
+		if ($_SESSION['rol']!= "administrador") {
+			throw new Exception("Editar publicaciones requiere rol de administrador");
 		}
-
 
 		// Get the Post object from the database
 		$postid = $_REQUEST["id"];

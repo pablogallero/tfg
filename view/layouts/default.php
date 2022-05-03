@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="dropdown-menu">
           <a class="dropdown-item" href="index.php">Página principal</a>
           <a class="dropdown-item" href="#">Estructura</a>
-          <a class="dropdown-item" href="#">Contacto</a>
+          <a class="dropdown-item" href="index.php?controller=contactos&amp;action=showall">Contacto</a>
         </div>
       </div>
       <div class="dropdown">
@@ -88,8 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="d-flex flex-row justify-content-center mr-3">
       
-      <a href="#" class="btn btn-outline-primary mr-2">F</a>
-      <a href="#" class="btn btn-outline-danger mr-2">Y</a>
+      <a href="#" class="btn btn-outline-primary mr-2">EN</a>
+      <a href="#" class="btn btn-outline-danger mr-2">ES</a>
       <?php if(!isset($_SESSION["currentuser"])) {?>
       <a href="index.php?controller=users&amp;action=login"><i class="ml-2 mt-1  material-icons signup">exit_to_app</i> </a>
       <?php }
@@ -127,8 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="row text-white py-4 text-white">
       <div class="col-md-3">
         <img src="images/bootstrap-solid.svg" alt="" width="50px" height="auto" class="float-left mr-3">
-        <h4 class="lead">Bootstrap 4!</h4>
-        <footer class="blockquote-footer">Curso gratis por <cite title="Source Title">Bluuweb</cite></footer>
+        <h4 class="lead">Grena</h4>
+        
       </div>
       <div class="col-md-3">
         <h4 class="lead">Lorem ipsum</h4>

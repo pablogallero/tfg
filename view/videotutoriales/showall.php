@@ -34,13 +34,14 @@ $x=0;
         
         <div class="row d-flex align-items-center my-5 py-5">
           <div class="col-md-7">
-          <a href="index.php?controller=videotutoriales&amp;action=showcurrent&amp;id=<?=$videotutoriales[$x+3*$pagina]->getId();?>"><h2 class="display-3 titulovideos"><?= $videotutoriales[$x+3*$pagina]->getTitulo() ?></h2> </a> 
+          <a class="linknegro" href="index.php?controller=videotutoriales&amp;action=showcurrent&amp;id=<?=$videotutoriales[$x+3*$pagina]->getId();?>"><h2 class="display-3 titulovideos"><?= $videotutoriales[$x+3*$pagina]->getTitulo() ?></h2> </a> 
             <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="<?= $videotutoriales[$x+3*$pagina]->getEnlace() ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
           </div>
           <div class="col-md-5">
-          <p class="lead textovideos mb-5"><?= $videotutoriales[$x+3*$pagina]->getDescripcion() ?></p>
+          <p class="lead textovideos textoverflowdesc mb-5"><?= $videotutoriales[$x+3*$pagina]->getDescripcion() ?></p>
+          <button type="button" class="btn btn-success btnreadmore" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=showcurrent&amp;id=<?=$videotutoriales[$x+3*$pagina]->getId();?>'">Leer más >></button>
           <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
           <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=edit&amp;id=<?=$videotutoriales[$x+3*$pagina]->getId() ;?>'">Modificar videotutorial</button>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteVideotutorial<?=$videotutoriales[$x+3*$pagina]->getId() ;?>">Eliminar videotutorial</button>
@@ -63,7 +64,7 @@ $x=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p>¿Estás seguro de querer borrar "<?=$videotutoriales[$x+3*$pagina]->getTitulo() ;?>"?</p>
+                        <p class="p-5">¿Estás seguro de querer borrar "<?=$videotutoriales[$x+3*$pagina]->getTitulo() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=videotutoriales&action=delete&id=<?= $videotutoriales[$x+3*$pagina]->getId()?>'">Eliminar</button>
@@ -71,7 +72,7 @@ $x=0;
                         
                     </div>
                 </div>
-
+              
             </div>
         </div>
         <?php } ?> 
