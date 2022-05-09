@@ -79,7 +79,7 @@ class UsersController extends BaseController {
 				
 			}else{
 				$errors = array();
-				$errors["general"] = "Username is not v	alid";
+				$errors["general"] = "Username is not valid";
 				$this->view->setVariable("errors", $errors);
 			}
 		}

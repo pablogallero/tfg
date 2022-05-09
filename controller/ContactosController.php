@@ -1,11 +1,17 @@
 <?php
 //file: controller/PostController.php
-
+use PHPMailer\PHPMailer\PHPMailer; 
+use PHPMailer\PHPMailer\Exception; 
+ 
+require 'PHPMailer/Exception.php'; 
+require 'PHPMailer/PHPMailer.php'; 
+require 'PHPMailer/SMTP.php'; 
 require_once(__DIR__."/../model/Comment.php");
 require_once(__DIR__."/../model/Contacto.php");
 require_once(__DIR__."/../model/ContactoMapper.php");
 require_once(__DIR__."/../model/User.php");
-
+require_once(__DIR__."/../model/Estructura.php");
+require_once(__DIR__."/../model/EstructuraMapper.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
@@ -25,11 +31,13 @@ class ContactosController extends BaseController {
 	* @var PostMapper
 	*/
 	private $contactoMapper;
+	private $estructuraMapper;
 
 	public function __construct() {
 		parent::__construct();
 
 		$this->contactoMapper = new ContactoMapper();
+		$this->estructuraMapper = new EstructuraMapper();
 		
 	}
 
@@ -50,7 +58,10 @@ class ContactosController extends BaseController {
 		// obtain the data from the database
 		$contactos = $this->contactoMapper->findAll();
 		// put the array containing Post object to the view
+		$estructuras = $this->estructuraMapper->findAll();
+		// put the array containing Post object to the view
 		
+		$this->view->setVariable("estructuras", $estructuras);
 		
 		$this->view->setVariable("contactos", $contactos);
 		
@@ -102,6 +113,50 @@ class ContactosController extends BaseController {
 
 		// render the view (/view/posts/view.php)
 		$this->view->render("videotutoriales", "showcurrent");
+
+	}
+
+	public function contacto(){
+		$contactosadmin=$this->contactoMapper->findAllCargo();
+		if(!isset($_POST["asunto"])){
+		$cargo="Admin";
+		
+		$this->view->setVariable("contactosadmin", $contactosadmin);
+		$this->view->render("contactos", "contacto");}
+		else{
+
+			$mail = new PHPMailer; 
+ 
+$mail->isSMTP();                      // Set mailer to use SMTP 
+$mail->Host = 'smtp.gmail.com';       // Specify main and backup SMTP servers 
+$mail->SMTPAuth = true;               // Enable SMTP authentication 
+$mail->Username = 'contactogrena@gmail.com';   // SMTP username 
+$mail->Password = 'Contactogrena23';   // SMTP password 
+$mail->SMTPSecure = 'tls';            // Enable TLS encryption, `ssl` also accepted 
+$mail->Port = 587;                    // TCP port to connect to 
+ 
+// Sender info 
+$mail->setFrom('contactogrena@gmail.com', 'Grena'); 
+$mail->addReplyTo($_POST["email"], $_POST["nombre"]); 
+// Add a recipient 
+$mail->addAddress($contactosadmin[0]->getEmail()); 
+// Set email format to HTML 
+$mail->isHTML(true); 
+ 
+// Mail subject 
+$mail->Subject = $_POST["asunto"]; 
+
+$mail->Body = $_POST["mensaje"]; 
+
+// Send email 
+if(!$mail->send()) { 
+	
+    $this->view->setFlash("El email no se puedo enviar.");
+} else { 
+    $this->view->setFlash("El email se envió correctamente.");
+} 
+$this->view->redirect("contactos", "showall");
+		}
 
 	}
 

@@ -12,29 +12,28 @@ $currentuser = $view->getVariable("currentusername");
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/moment.min.js"></script>
-  <script type="text/javascript" src="js/fullcalendar.min.js"></script>
-  <script>
+  <link href='fullcalendar/lib/main.css' rel='stylesheet' />
+    <script src='fullcalendar/lib/main.js'></script>
+    <script>
 
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('CalendarioWeb');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth'
-  });
-  calendar.render();
-});
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
 
-</script>
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Grena</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/style.css" type="text/css">
-  <link rel="stylesheet" href="css/fullcalendar.min.css" type="text/css">
+
   
 	<!-- enable ji18n() javascript function to translate inside your scripts -->
 </head>
@@ -58,8 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </button>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="index.php">Página principal</a>
-          <a class="dropdown-item" href="#">Estructura</a>
-          <a class="dropdown-item" href="index.php?controller=contactos&amp;action=showall">Contacto</a>
+          <a class="dropdown-item" href="index.php?controller=contactos&amp;action=showall">Estructura</a>
+          <a class="dropdown-item" href="index.php?controller=contactos&amp;action=contacto">Contacto</a>
         </div>
       </div>
       <div class="dropdown">

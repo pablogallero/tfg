@@ -5,6 +5,7 @@ require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 
 $contactos = $view->getVariable("contactos");
+$estructuras = $view->getVariable("estructuras");
 $numcontactos= count($contactos);
 $y=0;
 
@@ -12,10 +13,20 @@ $y=0;
 
 
 <div class="container mt-5 mb-5">
-<div class ="algright">
+<div class ="">
 <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
       <a  href="index.php?controller=contactos&amp;action=add"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div><?php } ?>
+
+      <h1 class="display-3 titulovideos"><?= $estructuras[0]->getTitulo() ?></h1> </a>
+      <p class="lead titulovideos"><?= nl2br($estructuras[0]->getDescripcion())?></p>
+      <h2 class="mt-5 titulovideos"> Organigrama </h3>
+<div class="row d-flex  align-items-center  ">
+<img class=" img-fluid mx-auto w-100 h-100 mb-5 "   src="images/<?= $estructuras[0]->getOrganigrama() ?>" alt="Generic placeholder image"> 
+          
+          <div class="col-md-12  align-items-center mt-5">
+          <h2 class=" titulovideos"> Patronato </h3>     
 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
+
 <?php while($y < $numcontactos){ ?>	
 	<div class="col">
 		

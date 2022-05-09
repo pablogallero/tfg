@@ -7544,6 +7544,11 @@ a.bg-inverse:focus, a.bg-inverse:hover {
 .btnreadmore{
   color:#fff;
 }
+.imgback {
+  margin: 0 auto;
+  display: block;
+  margin-top: 20%;
+}
 .textoverflowl{
   width: 300px;
       white-space: nowrap;
