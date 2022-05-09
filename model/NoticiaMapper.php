@@ -50,7 +50,7 @@ class NoticiaMapper {
 	* if the Post is not found
 	*/
 	public function findById($noticiaid){
-		$stmt = $this->db->prepare("SELECT * FROM noticia WHERE id_noticia=?");
+		$stmt = $this->db->prepare("SELECT * FROM NOTICIA WHERE ID_NOTICIA=?");
 		$stmt->execute(array($noticiaid));
 		$noticia = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -68,59 +68,59 @@ class NoticiaMapper {
 
 	public function findByIdWithComments($noticiaid){
 		$stmt = $this->db->prepare("SELECT
-			N.id_noticia as 'noticia.id_noticia',
-			N.titulo as 'noticia.titulo',
-			N.cuerpo_noticia as 'noticia.cuerpo_noticia',
-			N.imagen_ruta as 'noticia.imagen_ruta',
-			N.fecha as 'noticia.fecha',
-			C.id_comentario as 'comentarios.id_comentario',
-			C.usuarioid as 'comentarios.usuarioid',
-			C.noticiaid as 'comentarios.noticiaid',
-			C.cuerpo_comentario as 'comentarios.cuerpo_comentario',
-			C.fecha as 'comentarios.fecha',
-			U.id_usuario as 'usuario.id_usuario',
-			U.username as 'usuario.username',
-			U.dni as 'usuario.dni',
-			U.telefono as 'usuario.telefono',
-			U.email as 'usuario.email',
-			U.direccion as 'usuario.direccion',
-			U.genero as 'usuario.genero',
-			U.passwd as 'usuario.passwd',
-			U.rol as 'usuario.rol'
+			N.ID_NOTICIA as 'NOTICIA.ID_NOTICIA',
+			N.TITULO as 'NOTICIA.TITULO',
+			N.CUERPO_NOTICIA as 'NOTICIA.CUERPO_NOTICIA',
+			N.IMAGEN_RUTA as 'NOTICIA.IMAGEN_RUTA',
+			N.FECHA as 'NOTICIA.FECHA',
+			C.ID_COMENTARIO as 'COMENTARIOS.ID_COMENTARIO',
+			C.USUARIOID as 'COMENTARIOS.USUARIOID',
+			C.NOTICIAID as 'COMENTARIOS.NOTICIAID',
+			C.CUERPO_COMENTARIO as 'COMENTARIOS.CUERPO_COMENTARIO',
+			C.FECHA as 'COMENTARIOS.FECHA',
+			U.ID_USUARIO as 'USUARIO.ID_USUARIO',
+			U.USERNAME as 'USUARIO.USERNAME',
+			U.DNI as 'USUARIO.DNI',
+			U.TELEFONO as 'USUARIO.TELEFONO',
+			U.EMAIL as 'USUARIO.EMAIL',
+			U.DIRECCION as 'USUARIO.DIRECCION',
+			U.GENERO as 'USUARIO.GENERO',
+			U.PASSWD as 'USUARIO.PASSWD',
+			U.ROL as 'USUARIO.ROL'
 			
 
-			FROM noticia N LEFT OUTER JOIN comentarios C 
-			ON N.id_noticia = C.noticiaid
-			LEFT OUTER JOIN usuario U 
-			ON C.usuarioid = U.id_usuario
+			FROM NOTICIA N LEFT OUTER JOIN COMENTARIOS C 
+			ON N.ID_NOTICIA = C.NOTICIAID
+			LEFT OUTER JOIN USUARIO U 
+			ON C.USUARIOID = U.ID_USUARIO
 			WHERE
-			N.id_noticia =? ");
+			N.ID_NOTICIA =? ");
 
 			$stmt->execute(array($noticiaid));
 			$noticia_wt_comentarios= $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 			if(sizeof($noticia_wt_comentarios) > 0) {
-				$noticia = new Noticia($noticia_wt_comentarios[0]["noticia.id_noticia"],
-				$noticia_wt_comentarios[0]["noticia.fecha"],
-				$noticia_wt_comentarios[0]["noticia.imagen_ruta"],
-				$noticia_wt_comentarios[0]["noticia.titulo"],
-				$noticia_wt_comentarios[0]["noticia.cuerpo_noticia"]);
-				$usuario = new User($noticia_wt_comentarios[0]["usuario.id_usuario"],
-				$noticia_wt_comentarios[0]["usuario.email"],
-				$noticia_wt_comentarios[0]["usuario.passwd"],
-				$noticia_wt_comentarios[0]["usuario.username"],
-				$noticia_wt_comentarios[0]["usuario.dni"],
-				$noticia_wt_comentarios[0]["usuario.telefono"],
-				$noticia_wt_comentarios[0]["usuario.direccion"],
-				$noticia_wt_comentarios[0]["usuario.genero"],
-				$noticia_wt_comentarios[0]["usuario.rol"]);
+				$noticia = new Noticia($noticia_wt_comentarios[0]["NOTICIA.ID_NOTICIA"],
+				$noticia_wt_comentarios[0]["NOTICIA.FECHA"],
+				$noticia_wt_comentarios[0]["NOTICIA.IMAGEN_RUTA"],
+				$noticia_wt_comentarios[0]["NOTICIA.TITULO"],
+				$noticia_wt_comentarios[0]["NOTICIA.CUERPO_NOTICIA"]);
+				$usuario = new User($noticia_wt_comentarios[0]["USUARIO.ID_USUARIO"],
+				$noticia_wt_comentarios[0]["USUARIO.EMAIL"],
+				$noticia_wt_comentarios[0]["USUARIO.PASSWD"],
+				$noticia_wt_comentarios[0]["USUARIO.USERNAME"],
+				$noticia_wt_comentarios[0]["USUARIO.DNI"],
+				$noticia_wt_comentarios[0]["USUARIO.TELEFONO"],
+				$noticia_wt_comentarios[0]["USUARIO.DIRECCION"],
+				$noticia_wt_comentarios[0]["USUARIO.GENERO"],
+				$noticia_wt_comentarios[0]["USUARIO.ROL"]);
 				$comentarios_array = array();
-				if ($noticia_wt_comentarios[0]["comentarios.id_comentario"]!=null) {
+				if ($noticia_wt_comentarios[0]["COMENTARIOS.ID_COMENTARIO"]!=null) {
 					foreach ($noticia_wt_comentarios as $comentario){
-						$comentario = new Comentario( $comentario["comentarios.id_comentario"],
-						$comentario["comentarios.fecha"],
+						$comentario = new Comentario( $comentario["COMENTARIOS.ID_COMENTARIO"],
+						$comentario["COMENTARIOS.FECHA"],
 						$usuario,
-						$comentario["comentarios.cuerpo_comentario"],
+						$comentario["COMENTARIOS.CUERPO_COMENTARIO"],
 						
 						
 						$noticia);	
@@ -143,7 +143,7 @@ class NoticiaMapper {
 		* @return int The mew post id
 		*/
 		public function save(Noticia $noticia) {
-			$stmt = $this->db->prepare("INSERT INTO noticia(fecha,imagen_ruta,titulo,cuerpo_noticia) values (?,?,?,?)");
+			$stmt = $this->db->prepare("INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values (?,?,?,?)");
 			$stmt->execute(array(getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"],$noticia->getImagenruta(),$noticia->getTitulo(),$noticia->getCuerponoticia()));
 	
 		}
@@ -156,7 +156,7 @@ class NoticiaMapper {
 		* @return void
 		*/
 	public function update(Noticia $noticia) {
-			$stmt = $this->db->prepare("UPDATE noticias set fecha=?, imagen_ruta=?, titulo=?,cuerpo_noticia=? where id_noticia=?");
+			$stmt = $this->db->prepare("UPDATE NOTICIA set FECHA=?, IMAGEN_RUTA=?, TITULO=?,CUERPO_NOTICIA=? where ID_NOTICIA=?");
 			$stmt->execute(array(getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"], $noticia->getImagenruta(),$noticia->getTitulo(),$noticia->getCuerponoticia(),$noticia->getId()));
 		}
 
@@ -173,9 +173,10 @@ class NoticiaMapper {
 		}
 */
 public function delete(Noticia $noticia) {
-	$stmt = $this->db->prepare("DELETE from noticia WHERE id_noticia=?");
+	
+	$stmt = $this->db->prepare("DELETE from COMENTARIOS WHERE NOTICIAID=?");
 	$stmt->execute(array($noticia->getId()));
-	$stmt = $this->db->prepare("DELETE from comentarios WHERE noticiaid=?");
+	$stmt = $this->db->prepare("DELETE from NOTICIA WHERE ID_NOTICIA=?");
 	$stmt->execute(array($noticia->getId()));
 }
 	}

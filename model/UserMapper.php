@@ -24,7 +24,7 @@ class UserMapper {
 	* @return void
 	*/
 	public function save($user) {
-		$stmt = $this->db->prepare("INSERT INTO usuario(username,dni,telefono,email,direccion,genero,passwd,rol) values (?,?,?,?,?,?,?,?)");
+		$stmt = $this->db->prepare("INSERT INTO USUARIO(USERNAME,DNI,TELEFONO,EMAIL,DIRECCION,GENERO,PASSWD,ROL) values (?,?,?,?,?,?,?,?)");
 		$stmt->execute(array($user->getUsername(), $user->getDni(), $user->getTelefono(), $user->getEmail(), $user->getDireccion(), $user->getGenero(), $user->getPasswd(), $user->getRol()));
 	}
 
@@ -36,7 +36,7 @@ class UserMapper {
 	*/
 
 	public function findById($userid){
-		$stmt = $this->db->prepare("SELECT * FROM usuario WHERE id_usuario=?");
+		$stmt = $this->db->prepare("SELECT * FROM USUARIO WHERE ID_USUARIO=?");
 		$stmt->execute(array($userid));
 		$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -57,7 +57,7 @@ class UserMapper {
 	}
 
 	public function findByEmail($emailuser){
-		$stmt = $this->db->prepare("SELECT * FROM usuario WHERE email=?");
+		$stmt = $this->db->prepare("SELECT * FROM USUARIO WHERE EMAIL=?");
 		$stmt->execute(array($emailuser));
 		$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -81,7 +81,7 @@ class UserMapper {
 
 
 	public function EmailExists($email) {
-		$stmt = $this->db->prepare("SELECT count(email) FROM usuario where email	=?");
+		$stmt = $this->db->prepare("SELECT count(EMAIL) FROM USUARIO where EMAIL	=?");
 		$stmt->execute(array($email));
 
 		if ($stmt->fetchColumn() > 0) {
@@ -91,7 +91,7 @@ class UserMapper {
 	}
 
 	public function DniExists($dni) {
-		$stmt = $this->db->prepare("SELECT count(dni) FROM usuario where dni	=?");
+		$stmt = $this->db->prepare("SELECT count(DNI) FROM USUARIO where DNI	=?");
 		$stmt->execute(array($dni));
 
 		if ($stmt->fetchColumn() > 0) {
@@ -101,7 +101,7 @@ class UserMapper {
 	}
 
 	public function UsuarioExists($username) {
-		$stmt = $this->db->prepare("SELECT count(username) FROM usuario where username	=?");
+		$stmt = $this->db->prepare("SELECT count(USERNAME) FROM USUARIO where USERNAME	=?");
 		$stmt->execute(array($username));
 
 		if ($stmt->fetchColumn() > 0) {
@@ -111,7 +111,7 @@ class UserMapper {
 	}
 
 	public function RolfromEmail($email) {
-		$stmt = $this->db->prepare("SELECT rol FROM usuario where email	=?");
+		$stmt = $this->db->prepare("SELECT ROL FROM USUARIO where EMAIL	=?");
 		$stmt->execute(array($email));
 		
 		$rolemail = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -130,7 +130,7 @@ class UserMapper {
 	* @return boolean true the username/passwrod exists, false otherwise.
 	*/
 	public function isValidUser($email, $passwd) {
-		$stmt = $this->db->prepare("SELECT count(email) FROM usuario where email=? and passwd=?");
+		$stmt = $this->db->prepare("SELECT count(EMAIL) FROM USUARIO where EMAIL=? and PASSWD=?");
 		$stmt->execute(array($email, $passwd));
 
 		if ($stmt->fetchColumn() > 0) {

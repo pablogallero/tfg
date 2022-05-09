@@ -42,7 +42,7 @@ class EstructuraMapper {
 
 	
 	public function save(Contacto $contacto) {
-			$stmt = $this->db->prepare("INSERT INTO contactos(nombre,apellidos,email,cargo,telefono,rutafoto,rutatwitter) values (?,?,?,?,?,?,?)");
+			$stmt = $this->db->prepare("INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values (?,?,?,?,?,?,?)");
 			
 			$stmt->execute(array($contacto->getNombre(), $contacto->getApellidos(),$contacto->getEmail(),$contacto->getCargo(),$contacto->getTelefono(),$contacto->getRutafoto(),$contacto->getRutatwitter()));
 			
@@ -56,7 +56,7 @@ class EstructuraMapper {
 		* @return void
 		*/
 		public function update(Contacto $contacto) {
-			$stmt = $this->db->prepare("UPDATE contactos set nombre=?, apellidos=? , email=? ,cargo=? , telefono=? ,rutafoto=? , rutatwitter=? where id_contacto=?");
+			$stmt = $this->db->prepare("UPDATE CONTACTOS set NOMBRE=?, APELLIDOS=? , EMAIL=? ,CARGO=? , TELEFONO=? ,RUTAFOTO=? , RUTATWITTER=? where ID_CONTACTO=?");
 			$stmt->execute(array($contacto->getNombre(), $contacto->getApellidos(),$contacto->getEmail(),$contacto->getCargo(),$contacto->getTelefono(),$contacto->getRutafoto(),$contacto->getRutatwitter(), $contacto->getId()));
 		}
 
@@ -68,7 +68,7 @@ class EstructuraMapper {
 		* @return void
 		*/
 		public function delete(Contacto $contacto) {
-			$stmt = $this->db->prepare("DELETE from contactos WHERE id_contacto=?");
+			$stmt = $this->db->prepare("DELETE from CONTACTOS WHERE ID_CONTACTO=?");
 			$stmt->execute(array($contacto->getId()));
 		}
 

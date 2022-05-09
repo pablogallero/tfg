@@ -319,41 +319,36 @@ class NoticiasController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
-		if (!isset($_POST["id"])) {
+		if (!isset($_GET["id"])) {
 			throw new Exception("id is mandatory");
 		}
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
+		if ($_SESSION['rol']!= "administrador") {
+			throw new Exception("Borrar videotutoriales requiere rol de administrador");
 		}
 		
 		// Get the Post object from the database
-		$postid = $_REQUEST["id"];
-		$post = $this->postMapper->findById($postid);
+		$noticiaid = $_GET["id"];
+		$noticia = $this->noticiaMapper->findById($noticiaid);
 
 		// Does the post exist?
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+		if ($noticia== NULL) {
+			throw new Exception("No existe dicho ese videotutorial");
 		}
 
-		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $this->currentUser) {
-			throw new Exception("Post author is not the logged user");
-		}
-
+		
 		// Delete the Post object from the database
-		$this->postMapper->delete($post);
+		$this->noticiaMapper->delete($noticia);
 
 		// POST-REDIRECT-GET
 		// Everything OK, we will redirect the user to the list of posts
 		// We want to see a message after redirection, so we establish
 		// a "flash" message (which is simply a Session variable) to be
 		// get in the view after redirection.
-		$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully deleted."),$post ->getTitle()));
+		$this->view->setFlash(sprintf(i18n("El videotutorial \"%s\" se borró correctamente."),$noticia->getTitulo()));
 
 		// perform the redirection. More or less:
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
-		$this->view->redirect("posts", "index");
-
+		header("Location: index.php?controller=noticias&action=showall&pagina=0");
 	}
 }

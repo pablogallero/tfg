@@ -72,7 +72,7 @@ class UsersController extends BaseController {
 				$userrol= $this->userMapper->RolfromEmail($_POST["email"]);
 				
 				
-				$_SESSION["rol"]= $userrol["rol"];
+				$_SESSION["rol"]= $userrol["ROL"];
 				
 				// send user to the restricted area (HTTP 302 code)
 				$this->view->redirect("noticias", "index");

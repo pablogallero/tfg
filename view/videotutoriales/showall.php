@@ -20,6 +20,7 @@ $x=0;
 <section class="container my-5 py-5">
   <h3 class="text-uppercase text-center mb-4">Videotutoriales</h3>
   <p class="lead text-center mb-5">Algunos vídeos en los que encontrarás útiles consejos.</p>
+  
   <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
           <div class ="algright">
       <a  href="index.php?controller=videotutoriales&amp;action=add"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div><?php } ?>

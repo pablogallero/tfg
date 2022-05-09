@@ -50,7 +50,7 @@ class VideotutorialMapper {
 	* if the Post is not found
 	*/
 	public function findById($videoid){
-		$stmt = $this->db->prepare("SELECT * FROM videotutorial WHERE id_videotutorial=?");
+		$stmt = $this->db->prepare("SELECT * FROM VIDEOTUTORIAL WHERE ID_VIDEOTUTORIAL=?");
 		$stmt->execute(array($videoid));
 		$video = $stmt->fetch(PDO::FETCH_ASSOC);
 		
@@ -125,7 +125,7 @@ class VideotutorialMapper {
 		* @return int The mew post id
 		*/
 	public function save(Videotutorial $videotutorial) {
-			$stmt = $this->db->prepare("INSERT INTO videotutorial(titulo,enlace,descripcion, fecha) values (?,?,?,?)");
+			$stmt = $this->db->prepare("INSERT INTO VIDEOTUTORIAL(TITULO,ENLACE,DESCRIPCION, FECHA) values (?,?,?,?)");
 			
 			$stmt->execute(array($videotutorial->getTitulo(), $videotutorial->getEnlace(), $videotutorial->getDescripcion(),getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"]));
 			
@@ -139,7 +139,7 @@ class VideotutorialMapper {
 		* @return void
 		*/
 		public function update(Videotutorial $videotutorial) {
-			$stmt = $this->db->prepare("UPDATE videotutorial set titulo=?, enlace=? , descripcion=? where id_videotutorial=?");
+			$stmt = $this->db->prepare("UPDATE VIDEOTUTORIAL set TITULO=?, ENLACE=? , DESCRIPCION=? where ID_VIDEOTUTORIAL=?");
 			$stmt->execute(array($videotutorial->getTitulo(), $videotutorial->getEnlace(),$videotutorial->getDescripcion(), $videotutorial->getId()));
 		}
 
@@ -151,7 +151,7 @@ class VideotutorialMapper {
 		* @return void
 		*/
 		public function delete(Videotutorial $videotutorial) {
-			$stmt = $this->db->prepare("DELETE from videotutorial WHERE id_videotutorial=?");
+			$stmt = $this->db->prepare("DELETE from VIDEOTUTORIAL WHERE ID_VIDEOTUTORIAL=?");
 			$stmt->execute(array($videotutorial->getId()));
 		}
 

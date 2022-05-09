@@ -7555,6 +7555,9 @@ a.bg-inverse:focus, a.bg-inverse:hover {
       text-overflow: ellipsis;
       overflow: hidden;
 }
+.black{
+  color:#000;
+}
 .textoverflowdesc{
   width: 600px;
       white-space: nowrap;

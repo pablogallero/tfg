@@ -26,7 +26,7 @@ class ComentarioMapper {
 	* @return int The new comment id
 	*/
 	public function save(Comentario $comentario) {
-		$stmt = $this->db->prepare("INSERT INTO comentarios(fecha, usuarioid,cuerpo_comentario,noticiaid) values (?,?,?,?)");
+		$stmt = $this->db->prepare("INSERT INTO COMENTARIOS(FECHA, USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values (?,?,?,?)");
 		$stmt->execute(array(getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"] , $comentario->getUser()->getId() , $comentario->getCuerpo(), $comentario->getNoticia()->getId()));
 		
 	}

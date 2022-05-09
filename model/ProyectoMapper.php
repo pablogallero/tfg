@@ -50,7 +50,7 @@ class ProyectoMapper {
 	* if the Post is not found
 	*/
 	public function findById($noticiaid){
-		$stmt = $this->db->prepare("SELECT * FROM noticia WHERE id_noticia=?");
+		$stmt = $this->db->prepare("SELECT * FROM NOTICIA WHERE ID_NOTICIA=?");
 		$stmt->execute(array($noticiaid));
 		$noticia = $stmt->fetch(PDO::FETCH_ASSOC);
 

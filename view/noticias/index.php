@@ -26,6 +26,7 @@ $currentuser = $view->getVariable("currentusername");?>
   <section class="container my-5 py-5">
   
   <h3 class="text-uppercase text-center mb-4">Bienvenidos a Grena </h3>
+ 
   <p class="lead text-center mb-5">Grena es una plataforma desde la cual buscamos fomentar la realización de actividades sostenibles mediante actividades que favorezcan esta conexión.</p>
   <hr class="lineasep">
   <h3 class="text-uppercase text-center mb-4 lastnews"><a class="sinsubr" href="index.php?controller=noticias&amp;action=showall&amp;pagina=0">Últimas noticias</a></h3>
