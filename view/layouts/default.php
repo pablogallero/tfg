@@ -67,9 +67,9 @@ $currentuser = $view->getVariable("currentusername");
           Contenidos
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Proyectos</a>
+          <a class="dropdown-item" href="index.php?controller=proyectos&amp;action=showall">Proyectos</a>
           <a class="dropdown-item" href="index.php?controller=calendario&amp;action=showall">Calendario</a>
-          <a class="dropdown-item" href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=0">Videotutoriales</a>
+          
         </div>
       </div>
       <div class="dropdown">
@@ -78,7 +78,7 @@ $currentuser = $view->getVariable("currentusername");
         </button>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="index.php?controller=noticias&amp;action=showall&amp;pagina=0">Noticias</a>
-          <a class="dropdown-item" href="#">Redes</a>
+          <a class="dropdown-item" href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=0">Videotutoriales</a>
         </div>
       </div>
       <a class="btn nav-item nav-link mr-4" href="index.php?controller=galeria&amp;action=showall&amp;pagina=0">Galería</a>

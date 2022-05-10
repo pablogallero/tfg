@@ -68,7 +68,7 @@ $currentuser = $view->getVariable("currentusername");?>
         
         <div class="row d-flex align-items-center my-5 py-5">
           <div class="col-md-7">
-            <a class="sinsubr linknegro" href="#"><h2 class="display-3">Nuestros proyectos</h2></a>
+            <a class="sinsubr linknegro" href="index.php?controller=proyectos&amp;action=showall" ><h2 class="display-3">Nuestros proyectos</h2></a>
             
           </div>
           <div class="col-md-5">
