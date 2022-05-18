@@ -34,7 +34,7 @@ class CalendarioMapper {
 		$eventos = array();
 		
 		foreach ($evento_db as $evento) {
-			array_push($eventos, new Calendario($evento["ID_EVENTO"], $evento["HORA"], $evento["TITULO"], $evento["DESCRIPCION"]));
+			array_push($eventos, new Calendario($evento["ID_EVENTO"], $evento["COLOR"], $evento["INICIO"],$evento["FIN"],$evento["TITULO"]));
 		}
 
 		return $eventos;
@@ -49,17 +49,18 @@ class CalendarioMapper {
 	* @return Post The Post instances (without comments). NULL
 	* if the Post is not found
 	*/
-	public function findById($postid){
-		$stmt = $this->db->prepare("SELECT * FROM POSTS WHERE ID=?");
-		$stmt->execute(array($postid));
-		$post = $stmt->fetch(PDO::FETCH_ASSOC);
+	public function findById($eventoid){
+		$stmt = $this->db->prepare("SELECT * FROM EVENTOS WHERE ID_EVENTO=?");
+		$stmt->execute(array($eventoid));
+		$evento = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if($post != null) {
-			return new Post(
-			$post["id"],
-			$post["title"],
-			$post["content"],
-			new User($post["author"]));
+		if($evento != null) {
+			return new Calendario(
+			$evento["ID_EVENTO"],
+			$evento["COLOR"],
+			$evento["TITULO"],
+			$evento["INICIO"],
+			$evento["FIN"],);
 		} else {
 			return NULL;
 		}
@@ -123,9 +124,9 @@ class CalendarioMapper {
 		* @throws PDOException if a database error occurs
 		* @return int The mew post id
 		*/
-		public function save(Post $post) {
-			$stmt = $this->db->prepare("INSERT INTO posts(title, content, author) values (?,?,?)");
-			$stmt->execute(array($post->getTitle(), $post->getContent(), $post->getAuthor()->getUsername()));
+		public function save(Calendario $calendario) {
+			$stmt = $this->db->prepare("INSERT INTO EVENTOS(TITULO,COLOR,INICIO,FIN) values (?,?,?,?)");
+			$stmt->execute(array($calendario->getTitulo(),$calendario->getColor(),$calendario->getInicio(),$calendario->getFin()));
 			return $this->db->lastInsertId();
 		}
 
@@ -136,9 +137,9 @@ class CalendarioMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function update(Post $post) {
-			$stmt = $this->db->prepare("UPDATE posts set title=?, content=? where id=?");
-			$stmt->execute(array($post->getTitle(), $post->getContent(), $post->getId()));
+		public function update(Calendario $evento) {
+			$stmt = $this->db->prepare("UPDATE EVENTOS set TITULO=?, COLOR=? , INICIO=? , FIN=? where ID_EVENTO=?");
+			$stmt->execute(array($evento->getTitulo(),$evento->getColor(),$evento->getInicio(),$evento->getFin(),$evento->getId()));
 		}
 
 		/**
@@ -148,9 +149,9 @@ class CalendarioMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function delete(Post $post) {
-			$stmt = $this->db->prepare("DELETE from posts WHERE id=?");
-			$stmt->execute(array($post->getId()));
+		public function delete(Calendario $evento) {
+			$stmt = $this->db->prepare("DELETE from EVENTOS WHERE ID_EVENTO=?");
+			$stmt->execute(array($evento->getId()));
 		}
 
 	}

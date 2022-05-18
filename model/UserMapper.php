@@ -71,14 +71,45 @@ class UserMapper {
 			$usuario["DIRECCION"],
 			$usuario["GENERO"],
 			$usuario["PASSWD"],
-			$usuario["ROL"],);
+			$usuario["ROL"]);
 		} else {
 			return NULL;
 		}
 	}
 
-	
+	public function update(User $usuario) {
+		$stmt = $this->db->prepare("UPDATE USUARIO set USERNAME=?,DNI=?,TELEFONO=?,EMAIL=?,DIRECCION=?,GENERO=?,PASSWD=?,ROL=? WHERE	 ID_USUARIO=?");
+		$stmt->execute(array($usuario->getUsername(),$usuario->getDni(),$usuario->getTelefono(),$usuario->getEmail(),$usuario->getDireccion(),$usuario->getGenero(),$usuario->getPasswd(),$usuario->getRol(),$usuario->getId()));
+	}
 
+
+	public function findAll() {
+		$stmt = $this->db->query("SELECT * FROM USUARIO");
+		$usuario_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$usuarios = array();
+		
+		foreach ($usuario_db as $usuario) {
+			array_push($usuarios, new User($usuario["ID_USUARIO"],
+			$usuario["USERNAME"],
+			$usuario["DNI"],
+			$usuario["TELEFONO"],
+			$usuario["EMAIL"],
+			$usuario["DIRECCION"],
+			$usuario["GENERO"],
+			$usuario["PASSWD"],
+			$usuario["ROL"]));
+		}
+
+		return $usuarios;
+	}
+
+	public function delete(User $usuario) {
+		$stmt = $this->db->prepare("DELETE from COMENTARIOS WHERE USUARIOID=?");
+		$stmt->execute(array($usuario->getId()));
+		$stmt = $this->db->prepare("DELETE from USUARIO WHERE ID_USUARIO=?");
+		$stmt->execute(array($usuario->getId()));
+	}
 
 	public function EmailExists($email) {
 		$stmt = $this->db->prepare("SELECT count(EMAIL) FROM USUARIO where EMAIL	=?");

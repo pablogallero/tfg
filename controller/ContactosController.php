@@ -151,7 +151,7 @@ $mail->Body = $_POST["mensaje"];
 // Send email 
 if(!$mail->send()) { 
 	
-    $this->view->setFlash("El email no se puedo enviar.");
+    $this->view->setFlashF("El email no se puedo enviar.");
 } else { 
     $this->view->setFlash("El email se envió correctamente.");
 } 

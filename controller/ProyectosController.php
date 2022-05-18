@@ -2,8 +2,8 @@
 //file: controller/PostController.php
 
 require_once(__DIR__."/../model/Comment.php");
-require_once(__DIR__."/../model/Noticia.php");
-require_once(__DIR__."/../model/NoticiaMapper.php");
+require_once(__DIR__."/../model/Proyecto.php");
+require_once(__DIR__."/../model/ProyectoMapper.php");
 require_once(__DIR__."/../model/User.php");
 
 require_once(__DIR__."/../core/ViewManager.php");
@@ -24,12 +24,12 @@ class ProyectosController extends BaseController {
 	*
 	* @var PostMapper
 	*/
-	private $noticiaMapper;
+	private $proyectoMapper;
 
 	public function __construct() {
 		parent::__construct();
 
-		$this->noticiaMapper = new NoticiaMapper();
+		$this->proyectoMapper = new ProyectoMapper();
 	}
 
 	/**
@@ -65,11 +65,10 @@ class ProyectosController extends BaseController {
 	public function showAll() {
 		
 		// obtain the data from the database
-		$noticias = $this->noticiaMapper->findAll();
+		$proyectos = $this->proyectoMapper->findAll();
 		// put the array containing Post object to the view
 		
-		$noticiasr=array_reverse($noticias);
-		$this->view->setVariable("proyectos", $noticiasr);
+		$this->view->setVariable("proyectos", $proyectos);
 		
 		// render the view (/view/noticias/index.php)
 		$this->view->render("proyectos", "showall");
@@ -100,28 +99,26 @@ class ProyectosController extends BaseController {
 	*/
 	public function view(){
 		if (!isset($_GET["id"])) {
-			throw new Exception("Se necesita una id de noticia");
+			throw new Exception("Se necesita una id de proyecto");
 		}
 
-		$noticiaid = $_GET["id"];
+		$proyectoid = $_GET["id"];
 
 		// find the Post object in the database
-		$noticia = $this->noticiaMapper->findByIdWithComments($noticiaid);
+		$proyecto = $this->proyectoMapper->findById($proyectoid);
 
-		if ($noticia == NULL) {
-			throw new Exception("No existe una noticia con esa id: ".$noticiaid);
+		if ($proyecto == NULL) {
+			throw new Exception("No existe un proyecto con esa id: ".$proyectoid);
 		}
 
 		// put the Post object to the view
-		$this->view->setVariable("noticia", $noticia);
+		$this->view->setVariable("proyecto", $proyecto);
 
 		// check if comment is already on the view (for example as flash variable)
 		// if not, put an empty Comment for the view
-		$comentario = $this->view->getVariable("comentario");
-		$this->view->setVariable("comentario", ($comentario==NULL)?new Comentario():$comentario);
 
 		// render the view (/view/posts/view.php)
-		$this->view->render("noticias", "view");
+		$this->view->render("proyectos", "view");
 
 	}
 
@@ -158,33 +155,43 @@ class ProyectosController extends BaseController {
 			throw new Exception("No se puede añadir sin ser administrador");
 		}
 
-		$noticia = new Noticia();
+		$proyecto = new Proyecto();
 
 		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+			var_dump($_FILES);
+			var_dump($_FILES['imagen']);
+			$name=$_FILES['imagen']['name'];
+			
+			$tmp_name=$_FILES['imagen']['tmp_name'];
+			$upload_folder="images/";
 
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
-			$noticia->setTitulo($_POST["titulo"]);
-			$noticia->setCuerponoticia($_POST["cuerponoticia"]);
-			$noticia->setImagenruta($_POST["imagenruta"]);
-			// The user of the Post is the currentUser (user in session)
+			$proyecto->setTitulo($_POST["titulo"]);
+			$proyecto->setImagen($_FILES['imagen']);
+			$proyecto->setIntroduccion($_POST["introduccion"]);
+			$proyecto->setObjetivos($_POST["objetivos"]);
+			$proyecto->setMetodologia($_POST["metodologia"]);
+
+			$proyecto->setConclusiones($_POST["conclusiones"]);
 				
 
 			try {
 				// validate Post object
-				$noticia->checkIsValidForCreate(); // if it fails, ValidationException
+				//	$noticia->checkIsValidForCreate(); // if it fails, ValidationException
 
 				// save the Post object into the database
-				$this->noticiaMapper->save($noticia);
+				$this->proyectoMapper->save($proyecto);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("La noticia \"%s\" se agregó correctamente."),$noticia->getTitulo()));
+				$this->view->setFlash(sprintf(i18n("El proyecto \"%s\" se añadió correctamente."),$proyecto ->getTitulo()));
 
 				// perform the redirection. More or less:
-				header("Location: index.php?controller=noticias&action=showall&pagina=0");
+				//header("Location: index.php?controller=proyectos&action=showall");
 				// die();
 				
 
@@ -196,11 +203,9 @@ class ProyectosController extends BaseController {
 			}
 		}
 
-		// Put the Post object visible to the view
-		$this->view->setVariable("noticia", $noticia);
 
 		// render the view (/view/posts/add.php)
-		$this->view->render("noticias", "add");
+		$this->view->render("proyectos", "add");
 
 	}
 
@@ -237,51 +242,56 @@ class ProyectosController extends BaseController {
 	*/
 	public function edit() {
 		if (!isset($_GET["id"])) {
-			throw new Exception("Se necesita una id de noticia");
+			throw new Exception("Se necesita una id de proyecto");
 		}
 
 		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Editar publicaciones requiere rol de administrador");
+			throw new Exception("Editar proyectos requiere rol de administrador");
 		}
 
 		// Get the Post object from the database
-		$postid = $_REQUEST["id"];
-		$post = $this->postMapper->findById($postid);
+		$proyectoid = $_GET["id"];
+		$proyecto = $this->proyectoMapper->findById($proyectoid);
 
 		// Does the post exist?
-		if ($post == NULL) {
+		if ($proyecto == NULL) {
 			throw new Exception("no such post with id: ".$postid);
 		}
 
-		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $this->currentUser) {
-			throw new Exception("logged user is not the author of the post id ".$postid);
-		}
+		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+			$imagen_name=$_FILES['imagen']['name'];
+			
+			$imagen_tmp=$_FILES['imagen']['tmp_name'];
+			$upload_folder="images/";
 
-		if (isset($_POST["submit"])) { // reaching via HTTP Post...
-
+			$movefile=move_uploaded_file($imagen_tmp,$upload_folder .$imagen_name);
 			// populate the Post object with data form the form
-			$post->setTitle($_POST["title"]);
-			$post->setContent($_POST["content"]);
+			$proyecto->setTitulo($_POST["titulo"]);
+			$proyecto->setImagen($_POST["imagen"]);
+			$proyecto->setIntroduccion($_POST["introduccion"]);
+			$proyecto->setObjetivos($_POST["objetivos"]);
+			$proyecto->setMetodologia($_POST["metodologia"]);
+
+			$proyecto->setConclusiones($_POST["conclusiones"]);
 
 			try {
 				// validate Post object
-				$post->checkIsValidForUpdate(); // if it fails, ValidationException
+				//$post->checkIsValidForUpdate(); // if it fails, ValidationException
 
 				// update the Post object in the database
-				$this->postMapper->update($post);
+				$this->proyectoMapper->update($proyecto);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully updated."),$post ->getTitle()));
+				$this->view->setFlash(sprintf(i18n("El proyecto \"%s\" se actualizó correctamente."),$proyecto ->getTitulo()));
 
 				// perform the redirection. More or less:
 				// header("Location: index.php?controller=posts&action=index")
 				// die();
-				$this->view->redirect("posts", "index");
+			//	$this->view->redirect("proyectos", "showall");
 
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
@@ -292,10 +302,10 @@ class ProyectosController extends BaseController {
 		}
 
 		// Put the Post object visible to the view
-		$this->view->setVariable("post", $post);
+		$this->view->setVariable("proyecto", $proyecto);
 
 		// render the view (/view/posts/add.php)
-		$this->view->render("posts", "edit");
+		$this->view->render("proyectos", "edit");
 	}
 
 	/**
@@ -319,41 +329,37 @@ class ProyectosController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
-		if (!isset($_POST["id"])) {
+		if (!isset($_GET["id"])) {
 			throw new Exception("id is mandatory");
 		}
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
+		if ($_SESSION['rol']!= "administrador") {
+			throw new Exception("Borrar proyectos requiere rol de administrador");
 		}
 		
 		// Get the Post object from the database
-		$postid = $_REQUEST["id"];
-		$post = $this->postMapper->findById($postid);
+		$proyectoid = $_GET["id"];
+		$proyecto = $this->proyectoMapper->findById($proyectoid);
 
 		// Does the post exist?
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+		if ($proyecto== NULL) {
+			throw new Exception("No existe ese proyecto");
 		}
 
-		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $this->currentUser) {
-			throw new Exception("Post author is not the logged user");
-		}
-
+		
 		// Delete the Post object from the database
-		$this->postMapper->delete($post);
+		$this->proyectoMapper->delete($proyecto);
 
 		// POST-REDIRECT-GET
 		// Everything OK, we will redirect the user to the list of posts
 		// We want to see a message after redirection, so we establish
 		// a "flash" message (which is simply a Session variable) to be
 		// get in the view after redirection.
-		$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully deleted."),$post ->getTitle()));
+		$this->view->setFlash(sprintf(i18n("El proyecto \"%s\" se borró correctamente."),$proyecto->getTitulo()));
 
 		// perform the redirection. More or less:
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
-		$this->view->redirect("posts", "index");
+		header("Location: index.php?controller=proyectos&action=showall");
 
 	}
 }

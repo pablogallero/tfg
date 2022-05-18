@@ -16,15 +16,15 @@ $y=0;
 <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
       <a  href="index.php?controller=proyectos&amp;action=add"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div><?php } ?>
 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
-<?php// while($y < $proyectos){ ?>	
+<?php while($y < count($proyectos)){ ?>	
 	<div class="col">
 		
 		<div class="card radius-15">
 			<div class="card-body text-center">
 				<div class="p-4 border radius-15">
-					<img src="images/galeria.webp" width="110" height="110" class="rounded-circle shadow" alt="">
-					<h5 class="mb-0 mt-5">Titulo</h5>
-					<p class="mb-3 textoverflowl">Esta es una pedazo de descripcion muy grande enorme, de locos pa rayarse completamente</p>
+					<img src="images/<?= $proyectos[$y]->getImagen()?>" width="110" height="110" class="rounded-circle shadow" alt="">
+					<h5 class="mb-0 mt-5"><?=$proyectos[$y]->getTitulo() ?></h5>
+					<p class="mb-3 textoverflowl"><?=$proyectos[$y]->getIntroduccion() ?></p>
 					<button type="button" class="btn btn-success btnreadmore" onclick="window.location.href='index.php?controller=proyectos&amp;action=view&amp;id=<?=$proyectos[$y]->getId();?>'">Leer más >></button>
                     
                     
@@ -52,7 +52,7 @@ $y=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p class="p-5">¿Estás seguro de querer borrar ""?</p>
+                        <p class="p-5">¿Estás seguro de querer borrar "<?=$proyectos[$y]->getTitulo() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=proyectos&action=delete&id=<?=$proyectos[$y]->getId() ;?>'">Eliminar</button>
@@ -72,7 +72,7 @@ $y=0;
     </div>
     </div>
     </div>
-    <?php // $y = $y+1;} ?> 
+    <?php  $y = $y+1;} ?> 
 	
 	
 	</div>

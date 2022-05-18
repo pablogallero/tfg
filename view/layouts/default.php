@@ -4,34 +4,40 @@
 $view = ViewManager::getInstance();
 $currentuser = $view->getVariable("currentusername");
 
-?><!DOCTYPE html>
+?><!DOCTYPE html> 
 <html>
 <head>
+<meta charset="UTF-8">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="196768996394-8bg1mv223238sqjbl655msrp91m81kpt.apps.googleusercontent.com">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/moment.min.js"></script>
-  <link href='fullcalendar/lib/main.css' rel='stylesheet' />
-    <script src='fullcalendar/lib/main.js'></script>
-    <script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
-      });
+
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+  
+ 
+  <script type="text/javascript" src="js/moment.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+
+  
+
+   
 
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<meta charset="utf-8">
+    
+    
+	
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Grena</title>
 
@@ -43,14 +49,17 @@ $currentuser = $view->getVariable("currentusername");
 	<header>
 	
 		 <!-- menú de navegación -->
-		 <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-sm sticky-top">
+		 <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-sm sticky-top barraminheight " >
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="index.html">
     
     </a>
+    
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a href="#" class="btn btn-outline-primary mr-2">EN</a>
+      <a href="#" class="btn btn-outline-danger mr-2">ES</a>
     <div class="navbar-nav mr-auto ml-auto text-center">
       <div class="dropdown">
         <button type="button" class="btn btn-primary mr-4" data-toggle="dropdown">
@@ -82,14 +91,14 @@ $currentuser = $view->getVariable("currentusername");
         </div>
       </div>
       <a class="btn nav-item nav-link mr-4" href="index.php?controller=galeria&amp;action=showall&amp;pagina=0">Galería</a>
-      <a class="btn nav-item nav-link" href="#">¿Cómo colaborar?</a>
-     
+      <a class="btn nav-item nav-link" href="index.php?controller=comocolaborar&amp;action=showall">¿Cómo colaborar?</a>
+      <?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]=="administrador"){ ?> 
+        <a class="btn nav-item nav-link" href="index.php?controller=users&amp;action=showall">Gestionar usuarios</a> <?php } ?>
       
     </div>
     <div class="d-flex flex-row justify-content-center mr-3">
       
-      <a href="#" class="btn btn-outline-primary mr-2">EN</a>
-      <a href="#" class="btn btn-outline-danger mr-2">ES</a>
+
       <?php if(!isset($_SESSION["currentuser"])) {?>
       <a href="index.php?controller=users&amp;action=login"><i class="ml-2 mt-1  material-icons signup">exit_to_app</i> </a>
       <?php }

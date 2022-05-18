@@ -5,7 +5,10 @@ require_once(__DIR__."/../model/Comment.php");
 require_once(__DIR__."/../model/Noticia.php");
 require_once(__DIR__."/../model/NoticiaMapper.php");
 require_once(__DIR__."/../model/User.php");
-
+require_once(__DIR__."/../model/Patrocinador.php");
+require_once(__DIR__."/../model/PatrocinadorMapper.php");
+require_once(__DIR__."/../model/Categoria.php");
+require_once(__DIR__."/../model/CategoriaMapper.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
@@ -25,11 +28,14 @@ class NoticiasController extends BaseController {
 	* @var PostMapper
 	*/
 	private $noticiaMapper;
+	private $patrocinadorMapper;
+	private $categoriaMapper;
 
 	public function __construct() {
 		parent::__construct();
-
+		$this->patrocinadorMapper = new PatrocinadorMapper();
 		$this->noticiaMapper = new NoticiaMapper();
+		$this->categoriaMapper = new CategoriaMapper();
 	}
 
 	/**
@@ -46,17 +52,30 @@ class NoticiasController extends BaseController {
 	public function index() {
 		$noticiastres=array();
 		$y=0;
+		$num=0;
 		// obtain the data from the database
 		$noticias = $this->noticiaMapper->findAll();
 		// put the array containing Post object to the view
+		
+		$categorias = $this->categoriaMapper->findAll();
+		
+		while($num < count($categorias)){
+			
+			$patrocinadores[$num]= $this->patrocinadorMapper->findCategoriaPatrocinador($categorias[$num]->getId());
+			
+			$num=$num+1;
+
+		}
 		
 		$noticiasr=array_reverse($noticias);
 		for($x=0;$x<=2;$x=$x+1){
 			$noticiastres[$y]=$noticiasr[$x];
 			$y=$y+1;
 		}
-		$this->view->setVariable("noticias", $noticiastres);
 		
+		$this->view->setVariable("noticias", $noticiastres);
+		$this->view->setVariable("patrocinadores", $patrocinadores);
+		$this->view->setVariable("categorias", $categorias);
 		// render the view (/view/noticias/index.php)
 		$this->view->render("noticias", "index");
 	}
@@ -245,43 +264,38 @@ class NoticiasController extends BaseController {
 		}
 
 		// Get the Post object from the database
-		$postid = $_REQUEST["id"];
-		$post = $this->postMapper->findById($postid);
+		$noticiaid = $_GET["id"];
+		$noticia = $this->noticiaMapper->findById($noticiaid);
 
 		// Does the post exist?
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+		if ($noticia == NULL) {
+			throw new Exception("No existe ninguna noticia con esa id: ".$noticiaid);
 		}
 
-		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $this->currentUser) {
-			throw new Exception("logged user is not the author of the post id ".$postid);
-		}
-
-		if (isset($_POST["submit"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
-			$post->setTitle($_POST["title"]);
-			$post->setContent($_POST["content"]);
+			$noticia->setTitulo($_POST["titulo"]);
+			$noticia->setCuerponoticia($_POST["cuerponoticia"]);
+			$noticia->setImagenruta($_POST["imagenruta"]);
 
 			try {
-				// validate Post object
-				$post->checkIsValidForUpdate(); // if it fails, ValidationException
+				
 
 				// update the Post object in the database
-				$this->postMapper->update($post);
+				$this->noticiaMapper->update($noticia);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully updated."),$post ->getTitle()));
+				$this->view->setFlash(sprintf(i18n("La noticia \"%s\" se modificó correctamente."),$noticia ->getTitulo()));
 
 				// perform the redirection. More or less:
 				// header("Location: index.php?controller=posts&action=index")
 				// die();
-				$this->view->redirect("posts", "index");
+				header(sprintf("Location: index.php?controller=noticias&action=view&id=%s",$noticia ->getId()));
 
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
@@ -292,10 +306,10 @@ class NoticiasController extends BaseController {
 		}
 
 		// Put the Post object visible to the view
-		$this->view->setVariable("post", $post);
+		$this->view->setVariable("noticia", $noticia);
 
 		// render the view (/view/posts/add.php)
-		$this->view->render("posts", "edit");
+		$this->view->render("noticias", "edit");
 	}
 
 	/**

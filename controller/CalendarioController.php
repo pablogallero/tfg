@@ -51,8 +51,18 @@ class CalendarioController extends BaseController {
 		$calendario = $this->calendarioMapper->findAll();
 		// put the array containing Post object to the view
 		
-		
-		$this->view->setVariable("calendarioall", $calendario);
+		$events=array();
+		foreach ($calendario as $calendar ) {
+			$events[]=[
+				'id' => $calendar->getId(),
+				'title' => $calendar->getTitulo(),
+				'start' => $calendar->getInicio(),
+				'end' => $calendar->getFin(),
+				'color' => $calendar->getColor(),
+
+			];
+		}
+		$this->view->setVariable("events", $events);
 		
 		// render the view (/view/noticias/index.php)
 		$this->view->render("calendario", "showall");
@@ -137,39 +147,39 @@ class CalendarioController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Adding posts requires login");
-		}
+		
 
-		$post = new Post();
-
-		if (isset($_POST["submit"])) { // reaching via HTTP Post...
-
+		$evento= new Calendario();
+		
+		
+		if (isset($_POST['title'])) { // reaching via HTTP Post...
+			
 			// populate the Post object with data form the form
-			$post->setTitle($_POST["title"]);
-			$post->setContent($_POST["content"]);
+			$evento->setTitulo($_POST['title']);
+			$evento->setColor($_POST['color']);
+			$evento->setInicio($_POST['start_date']);
+			$evento->setFin($_POST['end_date']);
 
 			// The user of the Post is the currentUser (user in session)
-			$post->setAuthor($this->currentUser);
+			
 
 			try {
-				// validate Post object
-				$post->checkIsValidForCreate(); // if it fails, ValidationException
+				
 
 				// save the Post object into the database
-				$this->postMapper->save($post);
+				$this->calendarioMapper->save($evento);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully added."),$post ->getTitle()));
+				$this->view->setFlash("La inserción se realizó correctamente");
 
 				// perform the redirection. More or less:
 				// header("Location: index.php?controller=posts&action=index")
 				// die();
-				$this->view->redirect("posts", "index");
+				$this->view->redirect("calendario", "showall");
 
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
@@ -178,12 +188,6 @@ class CalendarioController extends BaseController {
 				$this->view->setVariable("errors", $errors);
 			}
 		}
-
-		// Put the Post object visible to the view
-		$this->view->setVariable("post", $post);
-
-		// render the view (/view/posts/add.php)
-		$this->view->render("posts", "add");
 
 	}
 
@@ -219,53 +223,48 @@ class CalendarioController extends BaseController {
 	* @return void
 	*/
 	public function edit() {
-		if (!isset($_REQUEST["id"])) {
-			throw new Exception("A post id is mandatory");
+		if (!isset($_REQUEST["titleed"])) {
+			throw new Exception("Se necesita un titulo");
 		}
 
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
-		}
+		
 
 
 		// Get the Post object from the database
-		$postid = $_REQUEST["id"];
-		$post = $this->postMapper->findById($postid);
+		$eventoid = $_POST["ided"];
+		$evento = $this->calendarioMapper->findById($eventoid);
 
 		// Does the post exist?
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+		if ($evento == NULL) {
+			throw new Exception("No existe un evento con esa id: ".$eventoid);
 		}
 
-		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $this->currentUser) {
-			throw new Exception("logged user is not the author of the post id ".$postid);
-		}
+	
 
-		if (isset($_POST["submit"])) { // reaching via HTTP Post...
+		if (isset($_POST["titleed"])) { // reaching via HTTP Post...
 
-			// populate the Post object with data form the form
-			$post->setTitle($_POST["title"]);
-			$post->setContent($_POST["content"]);
+			$evento->setTitulo($_POST['titleed']);
+			$evento->setColor($_POST['colored']);
+			$evento->setInicio($_POST['start_dateed']);
+			$evento->setFin($_POST['end_dateed']);
 
 			try {
-				// validate Post object
-				$post->checkIsValidForUpdate(); // if it fails, ValidationException
+				
 
 				// update the Post object in the database
-				$this->postMapper->update($post);
+				$this->calendarioMapper->update($evento);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully updated."),$post ->getTitle()));
+				$this->view->setFlash("Evento editado correctamente");
 
 				// perform the redirection. More or less:
 				// header("Location: index.php?controller=posts&action=index")
 				// die();
-				$this->view->redirect("posts", "index");
+				
 
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
@@ -274,12 +273,8 @@ class CalendarioController extends BaseController {
 				$this->view->setVariable("errors", $errors);
 			}
 		}
-
-		// Put the Post object visible to the view
-		$this->view->setVariable("post", $post);
-
-		// render the view (/view/posts/add.php)
-		$this->view->render("posts", "edit");
+		$this->view->redirect("calendario", "showall");
+	
 	}
 
 	/**
@@ -303,41 +298,35 @@ class CalendarioController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
-		if (!isset($_POST["id"])) {
+		if (!isset($_POST["iddel"])) {
 			throw new Exception("id is mandatory");
 		}
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
-		}
 		
-		// Get the Post object from the database
-		$postid = $_REQUEST["id"];
-		$post = $this->postMapper->findById($postid);
+		
+		/// Get the Post object from the database
+		$eventoid = $_POST["iddel"];
+		$evento = $this->calendarioMapper->findById($eventoid);
 
 		// Does the post exist?
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+		if ($evento == NULL) {
+			throw new Exception("No existe un evento con esa id: ".$eventoid);
 		}
 
-		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $this->currentUser) {
-			throw new Exception("Post author is not the logged user");
-		}
 
 		// Delete the Post object from the database
-		$this->postMapper->delete($post);
+		$this->calendarioMapper->delete($evento);
 
 		// POST-REDIRECT-GET
 		// Everything OK, we will redirect the user to the list of posts
 		// We want to see a message after redirection, so we establish
 		// a "flash" message (which is simply a Session variable) to be
 		// get in the view after redirection.
-		$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully deleted."),$post ->getTitle()));
+		$this->view->setFlash("Evento borrado correctamente");
 
 		// perform the redirection. More or less:
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
-		$this->view->redirect("posts", "index");
+		$this->view->redirect("calendario", "showall");
 
 	}
 }

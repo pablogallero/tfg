@@ -15,7 +15,18 @@ $x=0;
 
  ?>
 
+<div class="modal fade" id="showImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <img class>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
+        <button type="submit" id="saveBtn" class="btn btn-warning">Borrar</button>
+      </div>
 
+    </div>
+  </div>
+</div>
 
 <section class="container my-5 py-5">
   <h3 class="text-uppercase text-center mb-4">Videotutoriales</h3>
@@ -92,12 +103,12 @@ $x=0;
       if($pagina!=0){
         $paginaanterior=$pagina-1;  
        ?>
-      <a href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=<?=$paginaanterior?>"> Página anterior </a>
+      <a href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=<?=$paginaanterior?>"> <i class=" mt-1   material-icons ">arrow_back</i> </a>
       <?php }
       if($pagina<$numpaginas-1){
         $paginasiguiente=$pagina+1;
         ?>
-      <a href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=<?=$paginasiguiente?>"> Siguiente página </a>
+      <a href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=<?=$paginasiguiente?>"> <i class=" mt-1   material-icons ">arrow_forward</i> </a>
       <?php } ?>
 
 

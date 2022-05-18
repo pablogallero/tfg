@@ -3,9 +3,13 @@
 
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
-
+$y=0;
+$z=0;
 $noticias = $view->getVariable("noticias");
-$currentuser = $view->getVariable("currentusername");?>
+$patrocinadores = $view->getVariable("patrocinadores");
+$categorias = $view->getVariable("categorias");
+$currentuser = $view->getVariable("currentusername");
+?>
  <style>
       .slider{
         background: url("images/sostenible2.jpg");
@@ -97,9 +101,26 @@ $currentuser = $view->getVariable("currentusername");?>
             <img class=" img-fluid mx-auto" src="images/videotutorialesagricolas.jpg" alt="Generic placeholder image">
           </div>
         </div>
+        <hr class="">
+
+        <div class="row d-flex align-items-center my-5 py-5 mb-5">
+        <?php while($y < count($patrocinadores)) {
+        $z=0;?>
+        <div class="card-block">
+          <h2 class="display-3 mb-4" style="color:<?= $categorias[$y]->getColor() ?>">Patrocinadores <?= $categorias[$y]->getNombre() ?></h2>
+        
+          <?php 
+          
+          while($z < count($patrocinadores[$y])) {?>
+            <img  width="200" height="200" class="rounded-circle shadow mb-3 ml-2" src="images/<?= $patrocinadores[$y][$z]->getImagen(); ?>" alt="Generic placeholder image">
+            <?php $z=$z+1; } $y=$y+1; } ?>
+        </div>
+        </div>
+        <hr class="">
         
         
       </div>
+      
 
       <!-- /END THE FEATURETTES -->
 

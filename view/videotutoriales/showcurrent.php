@@ -26,6 +26,7 @@ $fechavideo=$fecha["day"]."/".$fecha["month"]."/".$fecha["year"];
           <p class="lead textovideos"><?= nl2br($videotutorial->getDescripcion()) ?></p>
           <p class="lead textovideos"><?= $fechavideo ?></p>
           <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
+            <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=edit&amp;id=<?=$videotutorial->getId() ;?>'">Modificar videotutorial</button>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteVideotutorial<?=$videotutorial->getId() ;?>">Eliminar videotutorial</button>
           </div>
 

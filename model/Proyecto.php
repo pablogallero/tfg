@@ -16,27 +16,27 @@ class Proyecto {
 	* The title of this post
 	* @var string
 	*/
-	private $fechainicio;
+	private $titulo;
 
 	/**
 	* The content of this post
 	* @var string
 	*/
-	private $imagenruta;
+	private $introduccion;
 
 	/**
 	* The author of this post
 	* @var User
 	*/
-	private $titulo;
+	private $objetivos;
 
 	/**
 	* The list of comments of this post
 	* @var mixed
 	*/
-	private $cuerpoproyecto;
+	private $metodologia;
 
-	private $fotosalternativas;
+	private $conclusiones;
 	
 	/**
 	* The constructor
@@ -47,13 +47,14 @@ class Proyecto {
 	* @param User $author The author of the post
 	* @param mixed $comments The list of comments
 	*/
-	public function __construct($id=NULL, $fechainicio=NULL, $imagenruta=NULL, $titulo=NULL, $cuerpoproyecto=NULL,$fotosalternativas=NULL) {
+	public function __construct($id=NULL,$imagen=NULL, $introduccion=NULL, $objetivos=NULL, $titulo=NULL, $metodologia=NULL,$conclusiones=NULL) {
 		$this->id = $id;
-		$this->fechainicio= $fecha;
-		$this->imagenruta = $imagenruta;
+		$this->imagen= $imagen;
+		$this->introduccion= $introduccion;
+		$this->objetivos = $objetivos;
 		$this->titulo = $titulo;
-		$this->cuerpoproyecto = $cuerpoproyecto;
-		$this->fotosalternativas = $fotosalternativas;
+		$this->metodologia = $metodologia;
+		$this->conclusiones = $conclusiones;
 
 		
 
@@ -76,12 +77,24 @@ class Proyecto {
 	*
 	* @return string The title of this post
 	*/
-	public function getFechainicio() {
-		return $this->fechainicio;
+	
+
+	public function getImagen() {
+		return $this->imagen;
 	}
 
-	public function setFechainicio($fechainicio) {
-		$this->fechainicio = $fechainicio;
+	public function setImagen($imagen) {
+		$this->imagen = $imagen;
+	}
+
+
+
+	public function getIntroduccion() {
+		return $this->introduccion;
+	}
+
+	public function setIntroduccion($introduccion) {
+		$this->introduccion = $introduccion;
 	}
 	/**
 	* Sets the title of this post
@@ -89,12 +102,12 @@ class Proyecto {
 	* @param string $title the title of this post
 	* @return void
 	*/
-	public function getImagenruta() {
-		return $this->imagenruta;
+	public function getObjetivos() {
+		return $this->objetivos;
 	}
 
-	public function setImagenruta($imagenruta) {
-		$this->imagenruta = $imagenruta;
+	public function setObjetivos($objetivos) {
+		$this->objetivos = $objetivos;
 	}
 	/**
 	* Gets the content of this post
@@ -114,18 +127,18 @@ class Proyecto {
 	* @param string $content the content of this post
 	* @return void
 	*/
-	public function getCuerpoproyecto() {
-		return $this->cuerpoproyecto;
+	public function getMetodologia() {
+		return $this->metodologia;
 	}
-	public function setCuerpoproyecto($cuerpoproyecto) {
-		$this->cuerpoproyecto = $cuerpoproyecto;
+	public function setMetodologia($metodologia) {
+		$this->metodologia = $metodologia;
 	}
 
-	public function getFotosalternativas() {
-		return $this->fotosalternativas;
+	public function getConclusiones() {
+		return $this->conclusiones;
 	}
-	public function setFotosalternativas($fotosalternativas) {
-		$this->fotosalternativas = $fotosalternativas;
+	public function setConclusiones($conclusiones) {
+		$this->conclusiones = $conclusiones;
 	}
 
 	/**

@@ -139,7 +139,7 @@ class VideotutorialMapper {
 		* @return void
 		*/
 		public function update(Videotutorial $videotutorial) {
-			$stmt = $this->db->prepare("UPDATE VIDEOTUTORIAL set TITULO=?, ENLACE=? , DESCRIPCION=? where ID_VIDEOTUTORIAL=?");
+			$stmt = $this->db->prepare("UPDATE VIDEOTUTORIAL set TITULO=?, ENLACE=? , DESCRIPCION=? WHERE ID_VIDEOTUTORIAL=?");
 			$stmt->execute(array($videotutorial->getTitulo(), $videotutorial->getEnlace(),$videotutorial->getDescripcion(), $videotutorial->getId()));
 		}
 

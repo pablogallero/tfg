@@ -16,7 +16,7 @@ class Calendario {
 	* The title of this post
 	* @var string
 	*/
-	private $hora;
+	private $color;
 
 	/**
 	* The content of this post
@@ -28,7 +28,8 @@ class Calendario {
 	* The author of this post
 	* @var User
 	*/
-	private $descripcion;
+	private $inicio;
+	private $fin;
 
 	/**
 	* The list of comments of this post
@@ -44,10 +45,11 @@ class Calendario {
 	* @param User $author The author of the post
 	* @param mixed $comments The list of comments
 	*/
-	public function __construct($id=NULL, $hora=NULL, $descripcion=NULL, $titulo=NULL) {
+	public function __construct($id=NULL, $color=NULL, $inicio=NULL,$fin=NULL, $titulo=NULL) {
 		$this->id = $id;
-		$this->hora= $hora;
-		$this->descripcion = $descripcion;
+		$this->color= $color;
+		$this->inicio = $inicio;
+		$this->fin = $fin;
 		$this->titulo = $titulo;
 
 	}
@@ -61,34 +63,76 @@ class Calendario {
 		return $this->id;
 	}
 
+
+
 	/**
 	* Gets the title of this post
 	*
 	* @return string The title of this post
 	*/
-	public function getHora() {
-		return $this->hora;
+	public function getColor() {
+		return $this->color;
 	}
 
+	/**
+	* Sets the content of the Comment
+	*
+	* @param string $content the content of this comment
+	* @return void
+	*/
+	public function setColor($color) {
+		$this->color = $color;
+	}
 	/**
 	* Sets the title of this post
 	*
 	* @param string $title the title of this post
 	* @return void
 	*/
-	public function getDescripcion() {
-		return $this->descripcion;
+	public function getInicio() {
+		return $this->inicio;
 	}
 
+	/**
+	* Sets the content of the Comment
+	*
+	* @param string $content the content of this comment
+	* @return void
+	*/
+	public function setInicio($inicio) {
+		$this->inicio = $inicio;
+	}
 	/**
 	* Gets the content of this post
 	*
 	* @return string The content of this post
 	*/
+	public function getFin() {
+		return $this->fin;
+	}
+
+	/**
+	* Sets the content of the Comment
+	*
+	* @param string $content the content of this comment
+	* @return void
+	*/
+	public function setFin($fin) {
+		$this->fin = $fin;
+	}
 	public function getTitulo() {
 		return $this->titulo;
 	}
 
+	/**
+	* Sets the content of the Comment
+	*
+	* @param string $content the content of this comment
+	* @return void
+	*/
+	public function setTitulo($titulo) {
+		$this->titulo = $titulo;
+	}
 
 
 	/**

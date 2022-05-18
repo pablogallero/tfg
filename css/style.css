@@ -19,6 +19,32 @@
 	background-size: cover;
 	background-position: center; 
   }
+  .divShowCurrent{
+
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+  }
+  
+  .divLabelInput{
+  
+    border-bottom: 1px solid #ced4da;
+  }
+  
+  .inputShowCurrent{
+    text-align: center;
+    border: none;
+  
+  }
+  .inputShowCurrent:focus{
+    outline:none !important;
+  }
+  
+  .labelShowCurrent{
+    font-family: 'Roboto', sans-serif;
+    color: #7c8291;
+    font-size: 11px;
+  
+  }
 
   .black{
 	  color:black;
@@ -42,4 +68,12 @@
 .card {
     margin-left: 10px;
     margin-right: 10px
+}
+#imagenbig {
+  width: 100%;
+  height:100%;
+}
+
+.barraminheight{
+  min-height: 55px;
 }

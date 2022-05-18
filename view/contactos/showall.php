@@ -24,7 +24,7 @@ $y=0;
 <img class=" img-fluid mx-auto w-100 h-100 mb-5 "   src="images/<?= $estructuras[0]->getOrganigrama() ?>" alt="Generic placeholder image"> 
           
           <div class="col-md-12  align-items-center mt-5">
-          <h2 class=" titulovideos"> Patronato </h3>     
+          <h2 class=" titulovideos"> Dirección </h3>     
 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
 
 <?php while($y < $numcontactos){ ?>	

@@ -59,7 +59,7 @@ class User {
 	* @param string $username The name of the user
 	* @param string $passwd The password of the user
 	*/
-	public function __construct($id=NULL,$email=NULL, $passwd=NULL,$username=NULL,$dni=NULL,$telefono=NULL,$direccion=NULL,$genero=NULL,$rol=NULL) {
+	public function __construct($id=NULL,$username=NULL, $dni=NULL,$telefono=NULL,$email=NULL,$direccion=NULL,$genero=NULL,$passwd=NULL,$rol=NULL) {
 		$this->id = $id;
 		$this->email = $email;
 		$this->passwd = $passwd;

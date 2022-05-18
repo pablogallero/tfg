@@ -23,6 +23,7 @@ $x=0;
           <p class="lead textovideos"><?= nl2br($noticia->getCuerponoticia())?></p>
           <p class="lead textovideos  text-center"><?= $fechanoticia ?></p>
           <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
+            <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=noticias&amp;action=edit&amp;id=<?=$noticia->getId() ;?>'">Modificar noticia</button>
         <button type="button" class="btn text-center btn-danger " data-toggle="modal" data-target="#modalDeleteNoticia<?=$noticia->getId() ;?>">Eliminar noticia</button>
           
 
