@@ -14,17 +14,20 @@ $y=0;
 
 <div class="container mt-5 mb-5">
 <div class ="">
-<?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
-      <a  href="index.php?controller=contactos&amp;action=add"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div><?php } ?>
+
 
       <h1 class="display-3 titulovideos"><?= $estructuras[0]->getTitulo() ?></h1> </a>
       <p class="lead titulovideos"><?= nl2br($estructuras[0]->getDescripcion())?></p>
-      <h2 class="mt-5 titulovideos"> Organigrama </h3>
+      <h2 class="mt-5 titulovideos"> <?= i18n("Organigrama")?> </h3>
 <div class="row d-flex  align-items-center  ">
 <img class=" img-fluid mx-auto w-100 h-100 mb-5 "   src="images/<?= $estructuras[0]->getOrganigrama() ?>" alt="Generic placeholder image"> 
           
           <div class="col-md-12  align-items-center mt-5">
-          <h2 class=" titulovideos"> Dirección </h3>     
+              
+          <h2 class=" titulovideos"> <?= i18n("Dirección")?></h3>     
+
+          <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
+      <a  href="index.php?controller=contactos&amp;action=add"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div><?php } ?>
 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
 
 <?php while($y < $numcontactos){ ?>	
@@ -60,7 +63,7 @@ $y=0;
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar contacto</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Eliminar contacto")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -68,11 +71,11 @@ $y=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p class="p-5">¿Estás seguro de querer borrar "<?=$contactos[$y]->getNombre() ;?> <?=$contactos[$y]->getApellidos() ;?>"?</p>
+                        <p class="p-5"><?= i18n("¿Estás seguro de querer borrar")?> "<?=$contactos[$y]->getNombre() ;?> <?=$contactos[$y]->getApellidos() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=contactos&action=delete&id=<?=$contactos[$y]->getId() ;?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=contactos&action=delete&id=<?=$contactos[$y]->getId() ;?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
 					

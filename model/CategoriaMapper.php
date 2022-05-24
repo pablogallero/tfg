@@ -49,18 +49,16 @@ class CategoriaMapper {
 	* @return Post The Post instances (without comments). NULL
 	* if the Post is not found
 	*/
-	public function findById($eventoid){
-		$stmt = $this->db->prepare("SELECT * FROM EVENTOS WHERE ID_EVENTO=?");
-		$stmt->execute(array($eventoid));
-		$evento = $stmt->fetch(PDO::FETCH_ASSOC);
+	public function findById($categoriaid){
+		$stmt = $this->db->prepare("SELECT * FROM CATEGORIAS WHERE ID_CATEGORIA=?");
+		$stmt->execute(array($categoriaid));
+		$categoria = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if($evento != null) {
-			return new Calendario(
-			$evento["ID_EVENTO"],
-			$evento["COLOR"],
-			$evento["TITULO"],
-			$evento["INICIO"],
-			$evento["FIN"],);
+		if($categoria != null) {
+			return new Categoria(
+			$categoria["ID_CATEGORIA"],
+			$categoria["COLOR"],
+			$categoria["NOMBRE"]);
 		} else {
 			return NULL;
 		}
@@ -124,9 +122,9 @@ class CategoriaMapper {
 		* @throws PDOException if a database error occurs
 		* @return int The mew post id
 		*/
-		public function save(Calendario $calendario) {
-			$stmt = $this->db->prepare("INSERT INTO EVENTOS(TITULO,COLOR,INICIO,FIN) values (?,?,?,?)");
-			$stmt->execute(array($calendario->getTitulo(),$calendario->getColor(),$calendario->getInicio(),$calendario->getFin()));
+		public function save(Categoria $categoria) {
+			$stmt = $this->db->prepare("INSERT INTO CATEGORIAS(NOMBRE,COLOR) values (?,?)");
+			$stmt->execute(array($categoria->getNombre(),$categoria->getColor()));
 			return $this->db->lastInsertId();
 		}
 
@@ -137,9 +135,9 @@ class CategoriaMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function update(Calendario $evento) {
-			$stmt = $this->db->prepare("UPDATE EVENTOS set TITULO=?, COLOR=? , INICIO=? , FIN=? where ID_EVENTO=?");
-			$stmt->execute(array($evento->getTitulo(),$evento->getColor(),$evento->getInicio(),$evento->getFin(),$evento->getId()));
+		public function update(Categoria $categoria) {
+			$stmt = $this->db->prepare("UPDATE CATEGORIAS set NOMBRE=?, COLOR=?  where ID_CATEGORIA=?");
+			$stmt->execute(array($categoria->getNombre(),$categoria->getColor(),$categoria->getId()));
 		}
 
 		/**
@@ -149,9 +147,11 @@ class CategoriaMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function delete(Calendario $evento) {
-			$stmt = $this->db->prepare("DELETE from EVENTOS WHERE ID_EVENTO=?");
-			$stmt->execute(array($evento->getId()));
+		public function delete(Categoria $categoria) {
+			$stmt = $this->db->prepare("DELETE from PATROCINADORES WHERE CATEGORIA=?");
+			$stmt->execute(array($categoria->getId()));
+			$stmt = $this->db->prepare("DELETE from CATEGORIAS WHERE ID_CATEGORIA=?");
+			$stmt->execute(array($categoria->getId()));
 		}
 
 	}

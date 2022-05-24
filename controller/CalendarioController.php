@@ -157,8 +157,8 @@ class CalendarioController extends BaseController {
 			// populate the Post object with data form the form
 			$evento->setTitulo($_POST['title']);
 			$evento->setColor($_POST['color']);
-			$evento->setInicio($_POST['start_date']);
-			$evento->setFin($_POST['end_date']);
+			$evento->setInicio($_POST['start_date']." ".$_POST['start_hour']);
+			$evento->setFin($_POST['end_date']." ".$_POST['end_hour']);
 
 			// The user of the Post is the currentUser (user in session)
 			
@@ -245,8 +245,8 @@ class CalendarioController extends BaseController {
 
 			$evento->setTitulo($_POST['titleed']);
 			$evento->setColor($_POST['colored']);
-			$evento->setInicio($_POST['start_dateed']);
-			$evento->setFin($_POST['end_dateed']);
+			$evento->setInicio($_POST['start_dateed']." ".$_POST['start_houred']);
+			$evento->setFin($_POST['end_dateed']." ".$_POST['end_houred']);
 
 			try {
 				

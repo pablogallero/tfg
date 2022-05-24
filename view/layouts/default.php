@@ -28,6 +28,7 @@ $currentuser = $view->getVariable("currentusername");
   
  
   <script type="text/javascript" src="js/moment.min.js"></script>
+  <script type="text/javascript" src="js/validaciones.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
 
   
@@ -57,43 +58,44 @@ $currentuser = $view->getVariable("currentusername");
     
     </a>
     
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a href="#" class="btn btn-outline-primary mr-2">EN</a>
-      <a href="#" class="btn btn-outline-danger mr-2">ES</a>
-    <div class="navbar-nav mr-auto ml-auto text-center">
+    <?php
+		include(__DIR__."/language_select_element.php");
+		?>
       <div class="dropdown">
         <button type="button" class="btn btn-primary mr-4" data-toggle="dropdown">
-          Inicio
+        <?= i18n("Inicio")?>
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="index.php">Página principal</a>
-          <a class="dropdown-item" href="index.php?controller=contactos&amp;action=showall">Estructura</a>
-          <a class="dropdown-item" href="index.php?controller=contactos&amp;action=contacto">Contacto</a>
+          <a class="dropdown-item" href="index.php"><?= i18n("Página principal")?></a>
+          <a class="dropdown-item" href="index.php?controller=contactos&amp;action=showall"><?= i18n("Estructura")?></a>
+          <a class="dropdown-item" href="index.php?controller=contactos&amp;action=contacto"><?= i18n("Contacto")?></a>
         </div>
       </div>
       <div class="dropdown">
         <button type="button" class="btn btn-primary mr-4" data-toggle="dropdown">
-          Contenidos
+        <?= i18n("Contenidos")?>
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="index.php?controller=proyectos&amp;action=showall">Proyectos</a>
-          <a class="dropdown-item" href="index.php?controller=calendario&amp;action=showall">Calendario</a>
+          <a class="dropdown-item" href="index.php?controller=proyectos&amp;action=showall"><?= i18n("Proyectos")?></a>
+          <a class="dropdown-item" href="index.php?controller=calendario&amp;action=showall"><?= i18n("Calendario")?></a>
           
         </div>
       </div>
       <div class="dropdown">
         <button type="button" class="btn btn-primary mr-4 " data-toggle="dropdown">
-          Comunidad
+        <?= i18n("Comunidad")?>
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="index.php?controller=noticias&amp;action=showall&amp;pagina=0">Noticias</a>
-          <a class="dropdown-item" href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=0">Videotutoriales</a>
+          <a class="dropdown-item" href="index.php?controller=noticias&amp;action=showall&amp;pagina=0"><?= i18n("Noticias")?></a>
+          <a class="dropdown-item" href="index.php?controller=videotutoriales&amp;action=showall&amp;pagina=0"><?= i18n("Videotutoriales")?></a>
         </div>
       </div>
-      <a class="btn nav-item nav-link mr-4" href="index.php?controller=galeria&amp;action=showall&amp;pagina=0">Galería</a>
-      <a class="btn nav-item nav-link" href="index.php?controller=comocolaborar&amp;action=showall">¿Cómo colaborar?</a>
+      <a class="btn nav-item nav-link mr-4" href="index.php?controller=galeria&amp;action=showall&amp;pagina=0"><?= i18n("Galería")?></a>
+      <a class="btn nav-item nav-link" href="index.php?controller=comocolaborar&amp;action=showall"><?= i18n("¿Cómo colaborar?")?></a>
       <?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]=="administrador"){ ?> 
-        <a class="btn nav-item nav-link" href="index.php?controller=users&amp;action=showall">Gestionar usuarios</a> <?php } ?>
+        <a class="btn nav-item nav-link" href="index.php?controller=users&amp;action=showall"><?= i18n("Gestionar usuarios")?></a> 
+        <a class="btn nav-item nav-link" href="index.php?controller=patrocinadores&amp;action=showall"><?= i18n("Gestionar patrocinadores")?></a>
+        <?php } ?>
       
     </div>
     <div class="d-flex flex-row justify-content-center mr-3">
@@ -135,7 +137,7 @@ $currentuser = $view->getVariable("currentusername");
 	<footer class="container-fluid bg-inverse">
     <div class="row text-white py-4 text-white">
       <div class="col-md-3">
-        <img src="images/bootstrap-solid.svg" alt="" width="50px" height="auto" class="float-left mr-3">
+        <img src="images/sostenible2.jpg" alt="" width="50px" height="auto" class="float-left mr-3">
         <h4 class="lead">Grena</h4>
         
       </div>
@@ -149,14 +151,12 @@ $currentuser = $view->getVariable("currentusername");
       </div>
       <div class="col-md-3">
         <h4 class="lead">Síguenos</h4>
-        <a href="#"><span class="badge badge-primary">Facebook</span></a>
-        <a href="#"><span class="badge badge-danger">Youtube</span></a>
+        <a href="https://twitter.com/MedioAmbAND"><span class="badge badge-primary">Twitter</span></a>
+        <a href="https://www.youtube.com/user/fdsostenible"><span class="badge badge-danger">Youtube</span></a>
       </div>
     </div>
   
-		<?php
-		include(__DIR__."/language_select_element.php");
-		?>
+	
 	</footer>
 
 </body>

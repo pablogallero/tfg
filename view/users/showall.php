@@ -10,6 +10,8 @@ $x=0;
 
  ?>
 <section class="container my-5 py-5">
+<div class ="algright">
+      <a  href="index.php?controller=users&amp;action=add"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div>
 <table class="table table-hover   ">
   <thead>
     <tr>

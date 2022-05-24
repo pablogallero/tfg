@@ -18,20 +18,20 @@ $contenido= $view->getVariable("comocolaborar");
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=comocolaborar&amp;action=edit&amp;id=<?=$contenido->getId() ?>" method="POST">
+                        <form id="contact-form" role="form" action="index.php?controller=comocolaborar&amp;action=edit&amp;id=<?=$contenido->getId() ?>" onsubmit="return validarformulariocolaborar()" method="POST">
                             <div class="controls">
 							
                                 <div class="row">
 									
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="titulo">Título</label> <input id="form_name" type="text" name="titulo" class="form-control" value="<?= $contenido->getTitulo() ?>" placeholder="Introduzca aquí el título" required="required" > </div>
+                                        <div class="form-group"> <label for="titulo">Título</label> <input id="titulo" type="text" onblur="validarVacio(this.id)" name="titulo" class="form-control" value="<?= $contenido->getTitulo() ?>" placeholder="Introduzca aquí el título" required="required" > </div>
                                     </div>
                                     
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="descripcion">Descripción</label>  <textarea rows="15" name="descripcion" id="mytextarea"><?=nl2br( $contenido->getDescripcion()) ?></textarea> </div>
+                                        <div class="form-group"> <label for="descripcion">Descripción</label>  <textarea rows="15" name="descripcion" id="mytextarea" onblur="validarVacio(this.id)"><?=nl2br( $contenido->getDescripcion()) ?></textarea> </div>
                                     </div>
                                     <div class="col-md-12"> <button type="submit" class="btn btn-success btn-send pt-2 btn-block w-100" name="submit" value="submit"> Editar </button></div>
                                 </div>

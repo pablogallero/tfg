@@ -26,7 +26,8 @@ $x=0;
         <input type="color" class="form-control"  id="color" name="color">
         <input type="text" class="form-control mt-3" readonly id="start_datef" name="start_date">
         <input type="text" class="form-control mt-3" readonly id="end_datef" name="end_date">
-
+        <input type="time" class="form-control mt-3"  id="start_hourf" name="start_hour">
+        <input type="time" class="form-control mt-3"  id="end_hourf" name="end_hour">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
@@ -56,7 +57,10 @@ $x=0;
         <input type="color" class="form-control"  id="colored" name="colored">
         <input type="text" class="form-control mt-3" readonly id="start_dateed" name="start_dateed">
         <input type="text" class="form-control mt-3" readonly id="end_dateed" name="end_dateed">
-
+        <input type="time" class="form-control mt-3"  id="start_houred" name="start_houred">
+        <input type="time" class="form-control mt-3"  id="end_houred" name="end_houred">
+        
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
@@ -121,9 +125,14 @@ selectable:true,
 selectHelper:true,
 select: function(start,end,allDays){
     var start_date= moment(start).format('YYYY-MM-DD');
-        var end_date= moment(end).format('YYYY-MM-DD');
+    var end_date= moment(end).format('YYYY-MM-DD');
+    var start_hour = moment(start).format('HH:mm:ss');
+        
+        var end_hour = moment(end).format('HH:mm:ss');
     document.getElementById("start_datef").value = start_date;
     document.getElementById("end_datef").value = end_date;
+    document.getElementById("start_hourf").value = start_hour;
+    document.getElementById("end_hourf").value = end_hour;
     $('#bookingModal').modal('toggle');
     
    
@@ -133,13 +142,19 @@ eventDrop:function(event){
     var id= event.id;
     
     var start_date = moment(event.start).format('YYYY-MM-DD');
+   
     var end_date= moment(event.end).format('YYYY-MM-DD');
+    var start_hour = moment(event.start).format('HH:mm:ss');
+        
+        var end_hour = moment(event.end).format('HH:mm:ss');
     var title= event.title;
     var color = event.color;
     document.getElementById("ided").value = id;
     document.getElementById("titleed").value = title;
     document.getElementById("start_dateed").value = start_date;
     document.getElementById("end_dateed").value = end_date;
+    document.getElementById("start_houred").value = start_hour;
+    document.getElementById("end_houred").value = end_hour;
     document.getElementById("colored").value = color;
     $('#editModal').modal('toggle');
     
