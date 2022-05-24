@@ -40,7 +40,7 @@ class Galeria {
 	* @param User $author The author of the post
 	* @param mixed $comments The list of comments
 	*/
-	public function __construct($id=NULL, $fecha=NULL, $titulo=NULL, $ruta=NULL,) {
+	public function __construct($id=NULL, $fecha=NULL, $titulo=NULL, $ruta=NULL) {
 		$this->id = $id;
 		$this->fecha= $fecha;
 		$this->ruta = $ruta;

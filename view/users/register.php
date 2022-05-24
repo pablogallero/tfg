@@ -17,25 +17,25 @@ $errors = $view->getVariable("errors");
 
             <div class="mb-md-5 mt-md-4 pb-5">
 
-            <form action="index.php?controller=users&amp;action=register" method="POST">
+            <form action="index.php?controller=users&amp;action=register" onsubmit="return validarformularioadduser()" method="POST">
               
               <label class="form-label" for="typeEmailX">Email</label>
-                <input type="email"  name="email" id="typeEmailX" class="form-control form-control-lg mb-3" />
+                <input type="email"  name="email"  id="typeEmailX"  onblur="comprobarEmail(this.id)" class="form-control form-control-lg mb-3" />
                
               
 
               <div class="form-outline form-white mb-4">
               <label class="form-label" for="typePasswordX">Contraseña</label>
-                <input type="password" name="passwd" id="typePasswordX" class="form-control form-control-lg mb-3" />
+                <input type="password" name="passwd" id="typePasswordX"  onblur="comprobarTexto(this.id,25)" class="form-control form-control-lg mb-3" />
             
 				<label class="form-label" for="typeUsernameX">Nombre de usuario</label>
-                <input type="text"  name="username" id="typeUsernameX" class="form-control form-control-lg mb-3" />
+                <input type="text"  name="username" id="typeUsernameX"  onblur="comprobarTexto(this.id,25)" class="form-control form-control-lg mb-3" />
 				<label class="form-label" for="typeDniX">DNI</label>
-                <input type="text"  name="dni" id="typeDniX" class="form-control form-control-lg mb-3" />
+                <input type="text"  name="dni" id="typeDniX"  onblur="comprobarDNI(this.id)" class="form-control form-control-lg mb-3" />
 				<label class="form-label" for="typeTelefonoX">Teléfono</label>
-                <input type="text"  name="telefono" id="typeTelefonoX" class="form-control form-control-lg mb-3" />
+                <input type="text"  name="telefono" id="typeTelefonoX"  onblur="comprobarTelf(this.id)" class="form-control form-control-lg mb-3" />
 				<label class="form-label" for="typeDireccionX">Dirección</label>
-                <input type="text"  name="direccion" id="typeDireccionX" class="form-control form-control-lg mb-3" />
+                <input type="text"  name="direccion" id="typeDireccionX"  onblur="validarVacio(this.id)" class="form-control form-control-lg mb-3" />
 				<label class="form-label" for="typegeneroX">Género</label>
 				<select name="genero" class=" form-control form-control-lg mb-3">
 					<option value="1">Mujer</option> 

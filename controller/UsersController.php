@@ -227,33 +227,38 @@ class UsersController extends BaseController {
 			throw new Exception("No se puede editar sin ser administrador");
 		}
 
-		$videotutorial = new Videotutorial();
+		$usuario = new User();
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+		if (isset($_POST["email"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
-			$videotutorial->setTitulo($_POST["titulo"]);
-			$videotutorial->setEnlace($_POST["enlace"]);
-			$videotutorial->setDescripcion($_POST["descripcion"]);
+			$usuario->setEmail($_POST["email"]);
+			$usuario->setPassword($_POST["passwd"]);
+			$usuario->setUsername($_POST["username"]);
+			$usuario->setDni($_POST["dni"]);
+			$usuario->setTelefono($_POST["telefono"]);
+			$usuario->setDireccion($_POST["direccion"]);
+			$usuario->setGenero($_POST["genero"]);
+			$usuario->setRol($_POST["rol"]);
 			// The user of the Post is the currentUser (user in session)
 				
 
 			try {
 				// validate Post object
-				$videotutorial->checkIsValidForCreate(); // if it fails, ValidationException
+				//$videotutorial->checkIsValidForCreate(); // if it fails, ValidationException
 
 				// save the Post object into the database
-				$this->videotutorialMapper->save($videotutorial);
+				$this->userMapper->save($usuario);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("El videotutorial \"%s\" se agregó correctamente."),$videotutorial->getTitulo()));
+				$this->view->setFlash(sprintf(i18n("El usuario \"%s\" se agregó correctamente."),$usuario->getEmail()));
 
 				// perform the redirection. More or less:
-				header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
+				header("Location: index.php?controller=users&action=showall");
 				// die();
 				
 
@@ -265,11 +270,10 @@ class UsersController extends BaseController {
 			}
 		}
 
-		// Put the Post object visible to the view
-		$this->view->setVariable("videotutorial", $videotutorial);
+		
 
 		// render the view (/view/posts/add.php)
-		$this->view->render("videotutoriales", "add");
+		$this->view->render("users", "add");
 
 	}
 

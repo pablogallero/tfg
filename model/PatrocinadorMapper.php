@@ -77,18 +77,17 @@ return $patrocinadores;
 	* @return Post The Post instances (without comments). NULL
 	* if the Post is not found
 	*/
-	public function findById($eventoid){
-		$stmt = $this->db->prepare("SELECT * FROM EVENTOS WHERE ID_EVENTO=?");
-		$stmt->execute(array($eventoid));
-		$evento = $stmt->fetch(PDO::FETCH_ASSOC);
+	public function findById($patrocinadorid){
+		$stmt = $this->db->prepare("SELECT * FROM PATROCINADORES WHERE ID_PATROCINADOR=?");
+		$stmt->execute(array($patrocinadorid));
+		$patrocinador= $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if($evento != null) {
-			return new Calendario(
-			$evento["ID_EVENTO"],
-			$evento["COLOR"],
-			$evento["TITULO"],
-			$evento["INICIO"],
-			$evento["FIN"],);
+		if($patrocinador != null) {
+			return new Patrocinador(
+			$patrocinador["ID_PATROCINADOR"],
+			$patrocinador["NOMBRE"],
+			$patrocinador["IMAGEN"],
+			$patrocinador["CATEGORIA"]);
 		} else {
 			return NULL;
 		}
@@ -152,9 +151,9 @@ return $patrocinadores;
 		* @throws PDOException if a database error occurs
 		* @return int The mew post id
 		*/
-		public function save(Calendario $calendario) {
-			$stmt = $this->db->prepare("INSERT INTO EVENTOS(TITULO,COLOR,INICIO,FIN) values (?,?,?,?)");
-			$stmt->execute(array($calendario->getTitulo(),$calendario->getColor(),$calendario->getInicio(),$calendario->getFin()));
+		public function save(Patrocinador $patrocinador) {
+			$stmt = $this->db->prepare("INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values (?,?,?)");
+			$stmt->execute(array($patrocinador->getNombre(),$patrocinador->getImagen(),$patrocinador->getCategoria()));
 			return $this->db->lastInsertId();
 		}
 
@@ -165,9 +164,9 @@ return $patrocinadores;
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function update(Calendario $evento) {
-			$stmt = $this->db->prepare("UPDATE EVENTOS set TITULO=?, COLOR=? , INICIO=? , FIN=? where ID_EVENTO=?");
-			$stmt->execute(array($evento->getTitulo(),$evento->getColor(),$evento->getInicio(),$evento->getFin(),$evento->getId()));
+		public function update(Patrocinador $patrocinador) {
+			$stmt = $this->db->prepare("UPDATE PATROCINADORES set NOMBRE=?, IMAGEN=? , CATEGORIA=? where ID_PATROCINADOR=?");
+			$stmt->execute(array($patrocinador->getNombre(),$patrocinador->getImagen(),$patrocinador->getCategoria(),$patrocinador->getId()));
 		}
 
 		/**
@@ -177,9 +176,9 @@ return $patrocinadores;
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-		public function delete(Calendario $evento) {
-			$stmt = $this->db->prepare("DELETE from EVENTOS WHERE ID_EVENTO=?");
-			$stmt->execute(array($evento->getId()));
+		public function delete(Patrocinador $patrocinador) {
+			$stmt = $this->db->prepare("DELETE from PATROCINADORES WHERE ID_PATROCINADOR=?");
+			$stmt->execute(array($patrocinador->getId()));
 		}
 
 	}
