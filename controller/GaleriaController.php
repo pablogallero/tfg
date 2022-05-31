@@ -137,39 +137,43 @@ class GaleriaController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Adding posts requires login");
+		if ($_SESSION['rol']!= "administrador") {
+			throw new Exception("Añadir imágenes requiere rol de administrador");
 		}
 
-		$post = new Post();
+		$galeria = new Galeria();
 
-		if (isset($_POST["submit"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"] )&& isset($_FILES["imagen"])) { // reaching via HTTP Post...
+			
+			$name=$_FILES['imagen']['name'];
+			
+			$tmp_name=$_FILES['imagen']['tmp_name'];
+			$upload_folder="galeria/";
 
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
-			$post->setTitle($_POST["title"]);
-			$post->setContent($_POST["content"]);
-
-			// The user of the Post is the currentUser (user in session)
-			$post->setAuthor($this->currentUser);
-
+			$galeria->setTitulo($_POST["titulo"]);
+			$galeria->setRuta($_FILES["imagen"]["name"]);
+		
+		
 			try {
 				// validate Post object
-				$post->checkIsValidForCreate(); // if it fails, ValidationException
+				//$post->checkIsValidForCreate(); // if it fails, ValidationException
 
 				// save the Post object into the database
-				$this->postMapper->save($post);
+				$this->galeriaMapper->save($galeria);
 
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of posts
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully added."),$post ->getTitle()));
+				$this->view->setFlash(sprintf(i18n("La imagen \"%s\" se añadió correctamente."),$galeria ->getTitulo()));
 
 				// perform the redirection. More or less:
-				// header("Location: index.php?controller=posts&action=index")
+				//header("Location: index.php?controller=galeria&action=showall&pagina=0");
 				// die();
-				$this->view->redirect("posts", "index");
+				
 
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
@@ -179,11 +183,10 @@ class GaleriaController extends BaseController {
 			}
 		}
 
-		// Put the Post object visible to the view
-		$this->view->setVariable("post", $post);
+	
 
 		// render the view (/view/posts/add.php)
-		$this->view->render("posts", "add");
+		$this->view->render("galeria", "add");
 
 	}
 
@@ -223,26 +226,21 @@ class GaleriaController extends BaseController {
 			throw new Exception("A post id is mandatory");
 		}
 
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
+		if ($_SESSION['rol']!= "administrador") {
+			throw new Exception("Borrar imágenes requiere rol de administrador");
 		}
 
 
 		// Get the Post object from the database
-		$postid = $_REQUEST["id"];
-		$post = $this->postMapper->findById($postid);
+		$imagenid = $_GET["id"];
+		$imagen = $this->galeriaMapper->findById($imagenid);
 
 		// Does the post exist?
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+		if ($imagen == NULL) {
+			throw new Exception("No existe una imagen con esa id: ".$imagenid);
 		}
 
-		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $this->currentUser) {
-			throw new Exception("logged user is not the author of the post id ".$postid);
-		}
-
-		if (isset($_POST["submit"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
 			$post->setTitle($_POST["title"]);
@@ -303,41 +301,38 @@ class GaleriaController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
-		if (!isset($_POST["id"])) {
-			throw new Exception("id is mandatory");
+		if (!isset($_GET["imagen"])) {
+			throw new Exception("La imagen es necesaria");
 		}
-		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Editing posts requires login");
+		if ($_SESSION['rol']!= "administrador") {
+			throw new Exception("Borrar imágenes requiere rol de administrador");
 		}
-		
+
+
 		// Get the Post object from the database
-		$postid = $_REQUEST["id"];
-		$post = $this->postMapper->findById($postid);
+		$imagenid = $_GET["imagen"];
+		$imagen = $this->galeriaMapper->findByImagen($imagenid);
 
 		// Does the post exist?
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+		if ($imagen == NULL) {
+			throw new Exception("No existe una imagen con esa id: ".$imagenid);
 		}
 
-		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $this->currentUser) {
-			throw new Exception("Post author is not the logged user");
-		}
 
 		// Delete the Post object from the database
-		$this->postMapper->delete($post);
+		$this->galeriaMapper->delete($imagen);
 
 		// POST-REDIRECT-GET
 		// Everything OK, we will redirect the user to the list of posts
 		// We want to see a message after redirection, so we establish
 		// a "flash" message (which is simply a Session variable) to be
 		// get in the view after redirection.
-		$this->view->setFlash(sprintf(i18n("Post \"%s\" successfully deleted."),$post ->getTitle()));
+		$this->view->setFlash(sprintf(i18n("La imagen \"%s\" fue borrada correctamente."),$imagen ->getTitulo()));
 
 		// perform the redirection. More or less:
-		// header("Location: index.php?controller=posts&action=index")
+		header("Location: index.php?controller=galeria&action=showall&pagina=0");
 		// die();
-		$this->view->redirect("posts", "index");
+		
 
 	}
 }

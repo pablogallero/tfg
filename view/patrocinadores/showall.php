@@ -11,16 +11,16 @@ $y=0;
  ?>
 <section class="container my-5 py-5">
 
-<h3 class="text-uppercase text-center mb-4">Patrocinadores</h3>
+<h3 class="text-uppercase text-center mb-4"><?= i18n("Patrocinadores")?></h3>
 <div class ="algright">
       <a  href="index.php?controller=patrocinadores&amp;action=add"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div>
 <table class="table table-hover   ">
   <thead>
     <tr>
       <th scope="col ">Id</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Imagen</th>
-      <th scope="col">Categoria</th>
+      <th scope="col"><?= i18n("Nombre")?></th>
+      <th scope="col"><?= i18n("Imagen")?></th>
+      <th scope="col"><?= i18n("Categorías")?></th>
       
     </tr>
   </thead>
@@ -31,8 +31,8 @@ $y=0;
       <td ><?= $patrocinadores[$x]->getNombre() ?></td>
       <td ><?= $patrocinadores[$x]->getImagen() ?></td>
       <td ><?= $patrocinadores[$x]->getCategoria() ?></td>
-      <td> <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=patrocinadores&amp;action=edit&amp;id=<?=$patrocinadores[$x]->getId() ;?>'">Modificar</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeletePatrocinador<?=$patrocinadores[$x]->getId() ;?>">Eliminar</button>
+      <td> <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=patrocinadores&amp;action=edit&amp;id=<?=$patrocinadores[$x]->getId() ;?>'"><?= i18n("Modificar")?></button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeletePatrocinador<?=$patrocinadores[$x]->getId() ;?>"><?= i18n("Eliminar")?></button>
           
 
          
@@ -42,7 +42,7 @@ $y=0;
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar patrocinador</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Eliminar")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -50,11 +50,11 @@ $y=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p>¿Estás seguro de querer borrar "<?=$patrocinadores[$x]->getNombre() ;?>"?</p>
+                        <p><?= i18n("¿Estás seguro de querer borrar")?> "<?=$patrocinadores[$x]->getNombre() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger mt-3" onclick="window.location.href='index.php?controller=patrocinadores&action=delete&id=<?= $patrocinadores[$x]->getId()?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger mt-3" onclick="window.location.href='index.php?controller=patrocinadores&action=delete&id=<?= $patrocinadores[$x]->getId()?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
                 </div>
@@ -70,15 +70,15 @@ $y=0;
   </tbody>
 </table>
 
-<h3 class="text-uppercase text-center mt-5 mb-4">Categorías</h3>
+<h3 class="text-uppercase text-center mt-5 mb-4"><?= i18n("Categorías")?></h3>
 <div class ="algright">
       <a  href="index.php?controller=patrocinadores&amp;action=addcat"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div>
 <table class="table table-hover   ">
   <thead>
     <tr>
       <th scope="col ">Id</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Color</th>
+      <th scope="col"><?= i18n("Nombre")?></th>
+      <th scope="col"><?= i18n("Color")?></th>
       
     </tr>
   </thead>
@@ -89,8 +89,8 @@ $y=0;
       <td ><?= $categorias[$y]->getNombre() ?></td>
       <td ><?= $categorias[$y]->getColor() ?></td>
       
-      <td> <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=patrocinadores&amp;action=editcat&amp;id=<?=$categorias[$y]->getId() ;?>'">Modificar</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteCategoria<?=$categorias[$y]->getId() ;?>">Eliminar</button>
+      <td> <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=patrocinadores&amp;action=editcat&amp;id=<?=$categorias[$y]->getId() ;?>'"><?= i18n("Modificar")?></button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteCategoria<?=$categorias[$y]->getId() ;?>"><?= i18n("Eliminar")?></button>
           
 
          
@@ -100,7 +100,7 @@ $y=0;
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar categoria</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Eliminar categoría")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -108,11 +108,11 @@ $y=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p>¿Estás seguro de querer borrar "<?=$categorias[$y]->getNombre() ;?>"?</p>
+                        <p><?= i18n("¿Estás seguro de querer borrar")?> "<?=$categorias[$y]->getNombre() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger mt-3" onclick="window.location.href='index.php?controller=patrocinadores&action=deletecat&id=<?= $categorias[$y]->getId()?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger mt-3" onclick="window.location.href='index.php?controller=patrocinadores&action=deletecat&id=<?= $categorias[$y]->getId()?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
                 </div>

@@ -16,8 +16,8 @@ $x=0;
 
 
 <section class="container my-5 py-5">
-  <h3 class="text-uppercase text-center mb-4">NOTICIAS</h3>
-  <p class="lead text-center mb-5">Aquí encontrarás las noticias relacionadas con la organización.</p>  
+  <h3 class="text-uppercase text-center mb-4"><?= i18n("NOTICIAS")?></h3>
+  <p class="lead text-center mb-5"><?= i18n("Aquí encontrarás las noticias relacionadas con la organización")?></p>  
   <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
           <div class ="algright">
       <a  href="index.php?controller=noticias&amp;action=add"><i class="ml-2 mt-1 black  material-icons signup">add_circle</i> </a> </div><?php } ?>  
@@ -32,7 +32,7 @@ $x=0;
     
     <div class="row " >
     
-    <img class=" img-fluid mx-auto w-85 h-85"  src="images/<?= $noticias[$x+4*$pagina]->getImagenruta() ?>" alt="Generic placeholder image">
+    <img class=" img-fluid mx-auto mb-4" width="650" height="200" src="images/<?= $noticias[$x+4*$pagina]->getImagenruta() ?>" alt="Generic placeholder image">
     <div class="texto-encima ">
     <a class="linkblanco" href="index.php?controller=noticias&action=view&id=<?= $noticias[$x+4*$pagina]->getId()?>">   <h2 class="display-5"><?= $noticias[$x+4*$pagina]->getTitulo() ?></h2> </a>
   
@@ -54,7 +54,7 @@ $x=0;
         
     <div class="row ">
     
-    <img class=" img-fluid mx-auto w-50 h-50 mb-4 "   src="images/<?= $noticias[$x+4*$pagina]->getImagenruta() ?>" alt="Generic placeholder image">
+    <img class=" img-fluid mx-auto  mb-4 " width="100" height="100"  src="images/<?= $noticias[$x+4*$pagina]->getImagenruta() ?>" alt="Generic placeholder image">
             
     <a class="mt-auto mb-auto linknegro " href="index.php?controller=noticias&action=view&id=<?= $noticias[$x+4*$pagina]->getId()?>"> <h4 class="display-5  ml-4 textoverflow"><?= $noticias[$x+4*$pagina]->getTitulo() ?></h4></a>
             

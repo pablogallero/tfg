@@ -20,8 +20,8 @@ $x=0;
     <div class="modal-content">
     <img class>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
-        <button type="submit" id="saveBtn" class="btn btn-warning">Borrar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><?= i18n("Salir")?></button>
+        <button type="submit" id="saveBtn" class="btn btn-warning"><?= i18n("Borrar")?></button>
       </div>
 
     </div>
@@ -30,7 +30,7 @@ $x=0;
 
 <section class="container my-5 py-5">
   <h3 class="text-uppercase text-center mb-4"><?= i18n("VIDEOTUTORIALES")?></h3>
-  <p class="lead text-center mb-5">Algunos vídeos en los que encontrarás útiles consejos.</p>
+  <p class="lead text-center mb-5"><?= i18n("Algunos vídeos en los que encontrarás útiles consejos.")?></p>
   
   <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
           <div class ="algright">
@@ -53,10 +53,10 @@ $x=0;
           </div>
           <div class="col-md-5">
           <p class="lead textovideos textoverflowdesc mb-5"><?= $videotutoriales[$x+3*$pagina]->getDescripcion() ?></p>
-          <button type="button" class="btn btn-success btnreadmore" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=showcurrent&amp;id=<?=$videotutoriales[$x+3*$pagina]->getId();?>'">Leer más >></button>
+          <button type="button" class="btn btn-success btnreadmore" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=showcurrent&amp;id=<?=$videotutoriales[$x+3*$pagina]->getId();?>'"><?= i18n("Leer más")?> >></button>
           <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
-          <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=edit&amp;id=<?=$videotutoriales[$x+3*$pagina]->getId() ;?>'">Modificar videotutorial</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteVideotutorial<?=$videotutoriales[$x+3*$pagina]->getId() ;?>">Eliminar videotutorial</button>
+          <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=edit&amp;id=<?=$videotutoriales[$x+3*$pagina]->getId() ;?>'"><?= i18n("Modificar")?></button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteVideotutorial<?=$videotutoriales[$x+3*$pagina]->getId() ;?>"><?= i18n("Eliminar")?></button>
           </div>
           
         </div>
@@ -68,7 +68,7 @@ $x=0;
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar videotutorial</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Eliminar")?> videotutorial</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -76,11 +76,11 @@ $x=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p class="p-5">¿Estás seguro de querer borrar "<?=$videotutoriales[$x+3*$pagina]->getTitulo() ;?>"?</p>
+                        <p class="p-5"><?= i18n("¿Estás seguro de querer borrar")?> "<?=$videotutoriales[$x+3*$pagina]->getTitulo() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=videotutoriales&action=delete&id=<?= $videotutoriales[$x+3*$pagina]->getId()?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=videotutoriales&action=delete&id=<?= $videotutoriales[$x+3*$pagina]->getId()?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
                 </div>

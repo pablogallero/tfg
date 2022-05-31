@@ -46,16 +46,29 @@ class ComocolaborarController extends BaseController {
 	*/
 
 	public function showAll() {
-		
+		try{
 		// obtain the data from the database
 		$comocolaborar = $this->comocolaborarMapper->findAll();
+		if ($comocolaborar== NULL) {
+			$this->view->setFlashF(i18n("La sección está vacía"));
+			throw new Exception();
+			
+			
+		}
 		// put the array containing Post object to the view
 		
 		$comocolaborarr=array_reverse($comocolaborar);
+		
 		$this->view->setVariable("comocolaborar", $comocolaborarr);
 		
 		// render the view (/view/noticias/index.php)
 		$this->view->render("colaborar", "comocolaborar");
+	}
+
+	catch(Exception $ex){
+		$this->view->popFlashF();
+		header("Location: index.php?controller=noticias&action=index");
+	}
 	}
 	/**
 	* Action to view a given post
@@ -81,30 +94,7 @@ class ComocolaborarController extends BaseController {
 	* @return void
 	*
 	*/
-	public function showcurrent(){
-		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
-		}
-
-		$videotutoid = $_GET["id"];
-
-		// find the Post object in the database
-		$videotutorial= $this->videotutorialMapper->findById($videotutoid);
-
-		if ($videotutorial == NULL) {
-			throw new Exception("No existe ningún videotutorial con esa id: ".$videotutoid);
-		}
-
-		// put the Post object to the view
-		$this->view->setVariable("videotutorial", $videotutorial);
-
-		
-
-		// render the view (/view/posts/view.php)
-		$this->view->render("videotutoriales", "showcurrent");
-
-	}
-
+	
 	
 	/**
 	* Action to add a new post
@@ -133,57 +123,7 @@ class ComocolaborarController extends BaseController {
 	* @throws Exception if no user is in session
 	* @return void
 	*/
-	public function add() {
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
-		}
-
-		$videotutorial = new Videotutorial();
-
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
-
-			// populate the Post object with data form the form
-			$videotutorial->setTitulo($_POST["titulo"]);
-			$videotutorial->setEnlace($_POST["enlace"]);
-			$videotutorial->setDescripcion($_POST["descripcion"]);
-			// The user of the Post is the currentUser (user in session)
-				
-
-			try {
-				// validate Post object
-				$videotutorial->checkIsValidForCreate(); // if it fails, ValidationException
-
-				// save the Post object into the database
-				$this->videotutorialMapper->save($videotutorial);
-
-				// POST-REDIRECT-GET
-				// Everything OK, we will redirect the user to the list of posts
-				// We want to see a message after redirection, so we establish
-				// a "flash" message (which is simply a Session variable) to be
-				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("El videotutorial \"%s\" se agregó correctamente."),$videotutorial->getTitulo()));
-
-				// perform the redirection. More or less:
-				header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
-				// die();
-				
-
-			} catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
-			}
-		}
-
-		// Put the Post object visible to the view
-		$this->view->setVariable("videotutorial", $videotutorial);
-
-		// render the view (/view/posts/add.php)
-		$this->view->render("videotutoriales", "add");
-
-	}
-
+	
 	/**
 	* Action to edit a post
 	*
@@ -216,14 +156,20 @@ class ComocolaborarController extends BaseController {
 	* @return void
 	*/
 	public function edit() {
+		try{
 		if (!isset($_GET["id"])) {
-			throw new Exception("No se encuentra la sección");
+			$this->view->setFlashF(i18n("Es necesaria una id"));
+			throw new Exception();
+			
+			
+			
+			
 		}
 
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("No puedes acceder sin ser administrador");
+		if (!isset($_SESSION['rol']) || $_SESSION['rol']!="administrador"){
+			$this->view->setFlashF(i18n("No se puede acceder sin ser administrador del sistema"));
+			throw new Exception();
 		}
-
 
 		// Get the Post object from the database
 		$comocolaborarid = $_GET["id"];
@@ -273,6 +219,12 @@ class ComocolaborarController extends BaseController {
 	// render the view (/view/posts/edit.php)
 	
 	$this->view->render("colaborar", "edit");
+}
+
+catch(Exception $ex){
+	$this->view->popFlashF();
+	header("Location: index.php?controller=comocolaborar&action=showall");
+}
 	}
 
 	/**

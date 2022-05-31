@@ -25,14 +25,14 @@ $y=0;
 					<img src="images/<?= $proyectos[$y]->getImagen()?>" width="110" height="110" class="rounded-circle shadow" alt="">
 					<h5 class="mb-0 mt-5"><?=$proyectos[$y]->getTitulo() ?></h5>
 					<p class="mb-3 textoverflowl"><?=$proyectos[$y]->getIntroduccion() ?></p>
-					<button type="button" class="btn btn-success btnreadmore" onclick="window.location.href='index.php?controller=proyectos&amp;action=view&amp;id=<?=$proyectos[$y]->getId();?>'">Leer más >></button>
+					<button type="button" class="btn btn-success btnreadmore" onclick="window.location.href='index.php?controller=proyectos&amp;action=view&amp;id=<?=$proyectos[$y]->getId();?>'"><?= i18n("Leer más")?> >></button>
                     
                     
                     
 					<?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
                         <div class="  w-100">
-          <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=proyectos&amp;action=edit&amp;id=<?=$proyectos[$y]->getId() ;?>'">Editar</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteProyecto<?=$proyectos[$y]->getId() ;?>">Borrar</button>
+          <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=proyectos&amp;action=edit&amp;id=<?=$proyectos[$y]->getId() ;?>'"><?= i18n("Editar")?></button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteProyecto<?=$proyectos[$y]->getId() ;?>"><?= i18n("Borrar")?></button>
           
                     </div>
         
@@ -44,7 +44,7 @@ $y=0;
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar proyecto</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Eliminar proyecto")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -52,11 +52,11 @@ $y=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p class="p-5">¿Estás seguro de querer borrar "<?=$proyectos[$y]->getTitulo() ;?>"?</p>
+                        <p class="p-5"><?= i18n("¿Estás seguro de querer borrar")?> "<?=$proyectos[$y]->getTitulo() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=proyectos&action=delete&id=<?=$proyectos[$y]->getId() ;?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=proyectos&action=delete&id=<?=$proyectos[$y]->getId() ;?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
 					

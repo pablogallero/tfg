@@ -180,11 +180,17 @@ class NoticiasController extends BaseController {
 		$noticia = new Noticia();
 
 		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+			
+			$name=$_FILES['imagenruta']['name'];
+			
+			$tmp_name=$_FILES['imagenruta']['tmp_name'];
+			$upload_folder="images/";
 
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
 			$noticia->setTitulo($_POST["titulo"]);
 			$noticia->setCuerponoticia($_POST["cuerponoticia"]);
-			$noticia->setImagenruta($_POST["imagenruta"]);
+			$noticia->setImagenruta($_FILES["imagenruta"]["name"]);
 			// The user of the Post is the currentUser (user in session)
 				
 
@@ -273,11 +279,16 @@ class NoticiasController extends BaseController {
 		}
 
 		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+			$name=$_FILES['imagenruta']['name'];
+			
+			$tmp_name=$_FILES['imagenruta']['tmp_name'];
+			$upload_folder="images/";
 
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
 			$noticia->setTitulo($_POST["titulo"]);
 			$noticia->setCuerponoticia($_POST["cuerponoticia"]);
-			$noticia->setImagenruta($_POST["imagenruta"]);
+			$noticia->setImagenruta($_FILES["imagenruta"]["name"]);
 
 			try {
 				

@@ -27,8 +27,8 @@ $x=0;
       <th scope="row" onclick="window.location.href='index.php?controller=users&amp;action=view&amp;id=<?=$usuarios[$x]->getId() ;?>'"><?= $usuarios[$x]->getId() ?></th>
       <td onclick="window.location.href='index.php?controller=users&amp;action=view&amp;id=<?=$usuarios[$x]->getId() ;?>'"><?= $usuarios[$x]->getEmail() ?></td>
       <td onclick="window.location.href='index.php?controller=users&amp;action=view&amp;id=<?=$usuarios[$x]->getId() ;?>'"><?= $usuarios[$x]->getRol() ?></td>
-      <td> <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=users&amp;action=edit&amp;id=<?=$usuarios[$x]->getId() ;?>'">Modificar</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser<?=$usuarios[$x]->getId() ;?>">Eliminar</button>
+      <td> <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=users&amp;action=edit&amp;id=<?=$usuarios[$x]->getId() ;?>'"><?= i18n("Modificar")?></button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser<?=$usuarios[$x]->getId() ;?>"><?= i18n("Eliminar")?></button>
           
 
          
@@ -38,7 +38,7 @@ $x=0;
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar usuario</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Eliminar usuario")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -46,11 +46,11 @@ $x=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p>¿Estás seguro de querer borrar "<?=$usuarios[$x]->getEmail() ;?>"?</p>
+                        <p><?= i18n("¿Estás seguro de querer borrar")?> "<?=$usuarios[$x]->getEmail() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger mt-3" onclick="window.location.href='index.php?controller=users&action=delete&id=<?= $usuarios[$x]->getId()?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger mt-3" onclick="window.location.href='index.php?controller=users&action=delete&id=<?= $usuarios[$x]->getId()?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
                 </div>
@@ -66,3 +66,5 @@ $x=0;
   </tbody>
 </table>
    </section>
+
+   

@@ -60,7 +60,7 @@ class CalendarioMapper {
 			$evento["COLOR"],
 			$evento["TITULO"],
 			$evento["INICIO"],
-			$evento["FIN"],);
+			$evento["FIN"]);
 		} else {
 			return NULL;
 		}

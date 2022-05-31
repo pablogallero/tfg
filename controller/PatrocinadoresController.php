@@ -71,10 +71,15 @@ class PatrocinadoresController extends BaseController {
 		$patrocinador = new Patrocinador();
         
 		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+			$name=$_FILES['imagen']['name'];
+			
+			$tmp_name=$_FILES['imagen']['tmp_name'];
+			$upload_folder="images/";
 
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
 			$patrocinador->setNombre($_POST["nombre"]);
-			$patrocinador->setImagen($_POST["imagen"]);
+			$patrocinador->setImagen($_FILES["imagen"]["name"]);
 			$patrocinador->setCategoria($_POST["categoria"]);
 			// The user of the Post is the currentUser (user in session)
 				
@@ -187,7 +192,7 @@ class PatrocinadoresController extends BaseController {
 		
 
 		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
-
+			
 			// populate the Post object with data form the form
 			$categoria->setNombre($_POST["nombre"]);
 			$categoria->setColor($_POST["color"]);
@@ -249,10 +254,15 @@ class PatrocinadoresController extends BaseController {
 		
 
 		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+			$name=$_FILES['imagen']['name'];
+			
+			$tmp_name=$_FILES['imagen']['tmp_name'];
+			$upload_folder="images/";
 
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
 			$patrocinador->setNombre($_POST["nombre"]);
-			$patrocinador->setImagen($_POST["imagen"]);
+			$patrocinador->setImagen($_FILES["imagen"]["name"]);
 			$patrocinador->setCategoria($_POST["categoria"]);
 			try {
 				// validate Post object

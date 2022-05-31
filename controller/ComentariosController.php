@@ -72,8 +72,16 @@ class ComentariosController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		
+		try{
+		if (!isset($_SESSION['rol'])){
+			$this->view->setFlashF(i18n("Añadir comentarios requiere estar identificado en el sistema"));
+			throw new Exception();
+		}
 
+		if (!isset($_POST['cuerpocoment'])){
+			$this->view->setFlashF(i18n("El comentario no puede estar vacío"));
+			throw new Exception();
+		}
 		if (isset($_POST["cuerpocoment"])) { // reaching via HTTP Post...
 
 			
@@ -81,7 +89,19 @@ class ComentariosController extends BaseController {
 			// Create and populate the Comment object
 			$comentario = new Comentario();
 			$autor= $this->usermapper->findbyEmail($_SESSION['currentuser']);
+			if ($autor== NULL) {
+				$this->view->setFlashF(i18n("No existe dicho autor"));
+				throw new Exception();
+				
+				
+			}
 			$noticia= $this->noticiamapper->findbyId($_GET['id']);
+			if ($noticia== NULL) {
+				$this->view->setFlashF(i18n("No existe dicha noticia"));
+				throw new Exception();
+				
+				
+			}
 			$comentario->setCuerpo($_POST["cuerpocoment"]);
 			$comentario->setUser($autor);
 			$comentario->setNoticia($noticia);
@@ -89,8 +109,22 @@ class ComentariosController extends BaseController {
 			try {
 
 				// validate Comment object
-				$comentario->checkIsValidForCreate(); // if it fails, ValidationException
-
+				if(strlen($comentario->getCuerpo())<1   ){
+					$this->view->setFlashF(i18n("Formato incorrecto de contenido de comentario"));
+					throw new Exception();
+					
+				}
+				if( $comentario->getUser() == NULL  ){
+					$this->view->setFlashF(i18n("Usuario irreconocible"));
+					throw new Exception();
+					
+				}
+				if( $comentario->getNoticia() == NULL  ){
+					$this->view->setFlashF(i18n("No se reconoce la noticia"));
+					throw new Exception();
+					
+				}
+			
 				// save the Comment object into the database
 				$this->comentariomapper->save($comentario);
 
@@ -105,8 +139,8 @@ class ComentariosController extends BaseController {
 				// header("Location: index.php?controller=posts&action=view&id=$postid")
 				// die();
 				$this->view->redirect("noticias", "view", "id=".$noticia->getId());
-			}catch(ValidationException $ex) {
-				$errors = $ex->getErrors();
+			}catch(Exception $ex) {
+				
 
 				// Go back to the form to show errors.
 				// However, the form is not in a single page (comments/add)
@@ -114,13 +148,71 @@ class ComentariosController extends BaseController {
 				// We will save errors as a "flash" variable (third parameter true)
 				// and redirect the user to the referring page
 				// (the View post page)
-				$this->view->setVariable("comment", $comment, true);
-				$this->view->setVariable("errors", $errors, true);
+				$this->view->popFlashF();
+				
 
 				$this->view->redirect("noticias", "view", "id=".$noticia->getId());
 			}
-		} else {
-			throw new Exception("No such post id");
+		} 
+		
+	}
+catch(Exception $ex){
+	$this->view->popFlashF();
+	header("Location: index.php?controller=noticias&action=showall&pagina=0");
+}
+}
+
+	public function delete() {
+		try{
+		if (!isset($_GET["id"])) {
+			$this->view->setFlashF(i18n("Es necesaria una id"));
+			throw new Exception();
+			
+			
+			
+			
 		}
+		if (!isset($_SESSION['rol']) || $_SESSION['rol']!= "administrador") {
+			$this->view->setFlashF(i18n("Borrar comentarios requiere rol de administrador"));
+			throw new Exception();
+			
+			
+			
+		}
+		
+		// Get the Post object from the database
+		$comentarioid = $_GET["id"];
+		$comentario = $this->comentariomapper->findById($comentarioid);
+
+		// Does the post exist?
+		if ($comentario== NULL) {
+			$this->view->setFlashF(i18n("No existe dicho comentario"));
+			throw new Exception();
+			
+			
+		}
+
+		
+		// Delete the Post object from the database
+		$this->comentariomapper->delete($comentario);
+
+		// POST-REDIRECT-GET
+		// Everything OK, we will redirect the user to the list of posts
+		// We want to see a message after redirection, so we establish
+		// a "flash" message (which is simply a Session variable) to be
+		// get in the view after redirection.
+		$this->view->setFlash(i18n("El comentario se borró correctamente."));
+		
+		// perform the redirection. More or less:
+		// header("Location: index.php?controller=posts&action=index")
+		// die();
+		header("Location: index.php?controller=noticias&action=showall&pagina=0");
+		}
+
+		catch(Exception $ex){
+			$this->view->popFlashF();
+			header("Location: index.php?controller=noticias&action=showall&pagina=0");
+		}
+		
 	}
 }

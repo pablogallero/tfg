@@ -18,7 +18,7 @@ $view->setVariable("title", "Edit Post");
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=contactos&amp;action=add" onsubmit="return validarformulariocontacto()" method="POST">
+                        <form id="contact-form" role="form" action="index.php?controller=contactos&amp;action=add" onsubmit="return validarformulariocontacto()" method="POST" enctype="multipart/form-data">
                             <div class="controls">
 							
                                 <div class="row">
@@ -68,4 +68,24 @@ $view->setVariable("title", "Edit Post");
             </div> <!-- /.8 -->
         </div> <!-- /.row-->
     </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalComprobacion"><?= i18n("Error de validación")?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="parrafovalidacion"> </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><?= i18n("Cerrar")?></button>
+        
+      </div>
+    </div>
+  </div>
 </div>

@@ -49,17 +49,17 @@ class GaleriaMapper {
 	* @return Post The Post instances (without comments). NULL
 	* if the Post is not found
 	*/
-	/*public function findById($postid){
-		$stmt = $this->db->prepare("SELECT * FROM posts WHERE id=?");
-		$stmt->execute(array($postid));
-		$post = $stmt->fetch(PDO::FETCH_ASSOC);
+	public function findByImagen($imagenid){
+		$stmt = $this->db->prepare("SELECT * FROM GALERIA WHERE RUTA=?");
+		$stmt->execute(array($imagenid));
+		$imagen = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if($post != null) {
-			return new Post(
-			$post["id"],
-			$post["title"],
-			$post["content"],
-			new User($post["author"]));
+		if($imagen != null) {
+			return new Galeria(
+			$imagen["ID_IMAGEN"],
+			$imagen["FECHA"],
+			$imagen["TITULO"],
+			$imagen["RUTA"]);
 		} else {
 			return NULL;
 		}
@@ -123,9 +123,9 @@ class GaleriaMapper {
 		* @throws PDOException if a database error occurs
 		* @return int The mew post id
 		*/
-/*		public function save(Post $post) {
-			$stmt = $this->db->prepare("INSERT INTO posts(title, content, author) values (?,?,?)");
-			$stmt->execute(array($post->getTitle(), $post->getContent(), $post->getAuthor()->getUsername()));
+		public function save(Galeria $galeria) {
+			$stmt = $this->db->prepare("INSERT INTO GALERIA(TITULO, RUTA, FECHA) values (?,?,?)");
+			$stmt->execute(array($galeria->getTitulo(), $galeria->getRuta(),getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"] ));
 			return $this->db->lastInsertId();
 		}
 
@@ -148,9 +148,9 @@ class GaleriaMapper {
 		* @throws PDOException if a database error occurs
 		* @return void
 		*/
-/*		public function delete(Post $post) {
-			$stmt = $this->db->prepare("DELETE from posts WHERE id=?");
-			$stmt->execute(array($post->getId()));
+	public function delete(Galeria $galeria) {
+			$stmt = $this->db->prepare("DELETE from GALERIA WHERE ID_IMAGEN=?");
+			$stmt->execute(array($galeria->getId()));
 		}
-*/
+
 	}
