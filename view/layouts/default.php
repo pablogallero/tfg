@@ -110,7 +110,7 @@ $currentuser = $view->getVariable("currentusername");
         <i class="ml-2 mt-1  material-icons signup  btn-primary " data-toggle="dropdown">account_box</i> 
         
         <div class=" dropdown-menu-izq ">
-          <a class="dropdown-item" href="#">Info</a>
+          
           <a class="dropdown-item material-icons" href="index.php" onclick="<?php //session_destroy();?>">settings_power</a>
         </div>
       </div>

@@ -158,8 +158,6 @@ class ProyectosController extends BaseController {
 		$proyecto = new Proyecto();
 
 		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
-			var_dump($_FILES);
-			var_dump($_FILES['imagen']);
 			$name=$_FILES['imagen']['name'];
 			
 			$tmp_name=$_FILES['imagen']['tmp_name'];
@@ -168,7 +166,7 @@ class ProyectosController extends BaseController {
 			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
 			$proyecto->setTitulo($_POST["titulo"]);
-			$proyecto->setImagen($_FILES['imagen']);
+			$proyecto->setImagen($_FILES["imagen"]["name"]);
 			$proyecto->setIntroduccion($_POST["introduccion"]);
 			$proyecto->setObjetivos($_POST["objetivos"]);
 			$proyecto->setMetodologia($_POST["metodologia"]);
@@ -191,7 +189,7 @@ class ProyectosController extends BaseController {
 				$this->view->setFlash(sprintf(i18n("El proyecto \"%s\" se añadió correctamente."),$proyecto ->getTitulo()));
 
 				// perform the redirection. More or less:
-				//header("Location: index.php?controller=proyectos&action=showall");
+				header("Location: index.php?controller=proyectos&action=showall");
 				// die();
 				
 
@@ -259,15 +257,16 @@ class ProyectosController extends BaseController {
 		}
 
 		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
-			$imagen_name=$_FILES['imagen']['name'];
 			
-			$imagen_tmp=$_FILES['imagen']['tmp_name'];
+			$name=$_FILES['imagen']['name'];
+			
+			$tmp_name=$_FILES['imagen']['tmp_name'];
 			$upload_folder="images/";
 
-			$movefile=move_uploaded_file($imagen_tmp,$upload_folder .$imagen_name);
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
 			$proyecto->setTitulo($_POST["titulo"]);
-			$proyecto->setImagen($_POST["imagen"]);
+			$proyecto->setImagen($_FILES["imagen"]["name"]);
 			$proyecto->setIntroduccion($_POST["introduccion"]);
 			$proyecto->setObjetivos($_POST["objetivos"]);
 			$proyecto->setMetodologia($_POST["metodologia"]);
@@ -291,7 +290,7 @@ class ProyectosController extends BaseController {
 				// perform the redirection. More or less:
 				// header("Location: index.php?controller=posts&action=index")
 				// die();
-			//	$this->view->redirect("proyectos", "showall");
+				//$this->view->redirect("proyectos", "showall");
 
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...

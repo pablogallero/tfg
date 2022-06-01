@@ -26,8 +26,8 @@ $fechavideo=$fecha["day"]."/".$fecha["month"]."/".$fecha["year"];
           <p class="lead textovideos"><?= nl2br($videotutorial->getDescripcion()) ?></p>
           <p class="lead textovideos"><?= $fechavideo ?></p>
           <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
-            <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=edit&amp;id=<?=$videotutorial->getId() ;?>'">Modificar videotutorial</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteVideotutorial<?=$videotutorial->getId() ;?>">Eliminar videotutorial</button>
+            <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=videotutoriales&amp;action=edit&amp;id=<?=$videotutorial->getId() ;?>'"><?= i18n("Modificar")?></button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteVideotutorial<?=$videotutorial->getId() ;?>"><?= i18n("Eliminar")?></button>
           </div>
 
          
@@ -37,7 +37,7 @@ $fechavideo=$fecha["day"]."/".$fecha["month"]."/".$fecha["year"];
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar videotutorial</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Eliminar")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -45,11 +45,11 @@ $fechavideo=$fecha["day"]."/".$fecha["month"]."/".$fecha["year"];
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p>¿Estás seguro de querer borrar "<?=$videotutorial->getTitulo() ;?>"?</p>
+                        <p><?= i18n("¿Estás seguro de querer borrar")?> "<?=$videotutorial->getTitulo() ;?>"?</p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger mt-3" onclick="window.location.href='index.php?controller=videotutoriales&action=delete&id=<?= $videotutorial->getId()?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger mt-3" onclick="window.location.href='index.php?controller=videotutoriales&action=delete&id=<?= $videotutorial->getId()?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
                 </div>

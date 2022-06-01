@@ -147,10 +147,17 @@ class CalendarioController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		
+		try{
+			if (!isset($_SESSION['rol']) || $_SESSION['rol']!="administrador"){
+				$this->view->setFlashF(i18n("Añadir eventos requiere ser administrador del sistema"));
+				throw new Exception();
+			}
 
 		$evento= new Calendario();
-		
+		if (!isset($_POST["title"])) {
+			$this->view->setFlashF(i18n("No se encuentra el título"));
+			throw new Exception();
+		}
 		
 		if (isset($_POST['title'])) { // reaching via HTTP Post...
 			
@@ -165,7 +172,25 @@ class CalendarioController extends BaseController {
 
 			try {
 				
-
+				if(strlen($evento->getTitulo())<1   ){
+					$this->view->setFlashF(i18n("Formato incorrecto del título"));
+					throw new Exception();
+				}
+				if( $evento->getColor() == NULL  ){
+					$this->view->setFlashF(i18n("Color vacío"));
+					throw new Exception();
+					
+				}
+				if( $evento->getInicio() == NULL  ){
+					$this->view->setFlashF(i18n("La fecha de inicio es incorrecta"));
+					throw new Exception();
+					
+				}
+				if( $evento->getFin() == NULL  ){
+					$this->view->setFlashF(i18n("La fecha de inicio es incorrecta"));
+					throw new Exception();
+					
+				}
 				// save the Post object into the database
 				$this->calendarioMapper->save($evento);
 
@@ -181,12 +206,16 @@ class CalendarioController extends BaseController {
 				// die();
 				$this->view->redirect("calendario", "showall");
 
-			}catch(ValidationException $ex) {
+			}catch(Exception $ex) {
 				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+				$this->view->popFlashF();
+				header("Location: index.php?controller=calendario&action=showall");
 			}
+		}}
+
+		catch(Exception $ex){
+			$this->view->popFlashF();
+			header("Location: index.php?controller=calendario&action=showall");
 		}
 
 	}
@@ -223,20 +252,25 @@ class CalendarioController extends BaseController {
 	* @return void
 	*/
 	public function edit() {
-		if (!isset($_REQUEST["titleed"])) {
-			throw new Exception("Se necesita un titulo");
-		}
-
-		
-
-
+		try{
+			if (!isset($_SESSION['rol']) || $_SESSION['rol']!="administrador"){
+				$this->view->setFlashF(i18n("Modificar eventos requiere ser administrador del sistema"));
+				throw new Exception();
+			}
+	
+			
 		// Get the Post object from the database
 		$eventoid = $_POST["ided"];
+		if (!isset($_POST["ided"])) {
+			$this->view->setFlashF(i18n("No se encuentra la id"));
+			throw new Exception();
+		}
 		$evento = $this->calendarioMapper->findById($eventoid);
 
 		// Does the post exist?
 		if ($evento == NULL) {
-			throw new Exception("No existe un evento con esa id: ".$eventoid);
+			$this->view->setFlashF(i18n("No se encuentra el evento"));
+			throw new Exception();
 		}
 
 	
@@ -247,7 +281,26 @@ class CalendarioController extends BaseController {
 			$evento->setColor($_POST['colored']);
 			$evento->setInicio($_POST['start_dateed']." ".$_POST['start_houred']);
 			$evento->setFin($_POST['end_dateed']." ".$_POST['end_houred']);
-
+			if(strlen($evento->getTitulo())<1   ){
+				$this->view->setFlashF(i18n("Formato incorrecto del título"));
+				throw new Exception();
+			}
+			if( $evento->getColor() == NULL  ){
+				$this->view->setFlashF(i18n("Color vacío"));
+				throw new Exception();
+				
+			}
+			if( $evento->getInicio() == NULL  ){
+				$this->view->setFlashF(i18n("La fecha de inicio es incorrecta"));
+				throw new Exception();
+				
+			}
+			if( $evento->getFin() == NULL  ){
+				$this->view->setFlashF(i18n("La fecha de inicio es incorrecta"));
+				throw new Exception();
+				
+			}
+			
 			try {
 				
 
@@ -266,14 +319,20 @@ class CalendarioController extends BaseController {
 				// die();
 				
 
-			}catch(ValidationException $ex) {
+			}catch(Exception $ex) {
 				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
+				
 				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+				$this->view->popFlashF();
+				header("Location: index.php?controller=calendario&action=showall");
 			}
 		}
-		$this->view->redirect("calendario", "showall");
+		$this->view->redirect("calendario", "showall");}
+
+		catch(Exception $ex){
+			$this->view->popFlashF();
+			header("Location: index.php?controller=calendario&action=showall");
+		}
 	
 	}
 
@@ -298,20 +357,26 @@ class CalendarioController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
-		if (!isset($_POST["iddel"])) {
-			throw new Exception("id is mandatory");
-		}
+		try{
+			if (!isset($_SESSION['rol']) || $_SESSION['rol']!="administrador"){
+				$this->view->setFlashF(i18n("Eliminar eventos requiere ser administrador del sistema"));
+				throw new Exception();
+			}
+			if (!isset($_GET["id"])) {
+				$this->view->setFlashF(i18n("No se encuentra la id"));
+				throw new Exception();
+			}
 		
 		
 		/// Get the Post object from the database
-		$eventoid = $_POST["iddel"];
+		$eventoid = $_GET["id"];
 		$evento = $this->calendarioMapper->findById($eventoid);
 
-		// Does the post exist?
+		// Existe el evento?	
 		if ($evento == NULL) {
-			throw new Exception("No existe un evento con esa id: ".$eventoid);
+			$this->view->setFlashF(i18n("No se encuentra el evento"));
+			throw new Exception();
 		}
-
 
 		// Delete the Post object from the database
 		$this->calendarioMapper->delete($evento);
@@ -327,6 +392,12 @@ class CalendarioController extends BaseController {
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
 		$this->view->redirect("calendario", "showall");
+	}
+
+	catch(Exception $ex){
+		$this->view->popFlashF();
+		header("Location: index.php?controller=calendario&action=showall");
+	}
 
 	}
 }

@@ -23,8 +23,8 @@ $x=0;
           <p class="lead textovideos"><?= nl2br($noticia->getCuerponoticia())?></p>
           <p class="lead textovideos  text-center"><?= $fechanoticia ?></p>
           <?php if( isset($_SESSION['rol']) && $_SESSION['rol']== "administrador"){ ?>
-            <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=noticias&amp;action=edit&amp;id=<?=$noticia->getId() ;?>'">Modificar noticia</button>
-        <button type="button" class="btn text-center btn-danger " data-toggle="modal" data-target="#modalDeleteNoticia<?=$noticia->getId() ;?>">Eliminar noticia</button>
+            <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=noticias&amp;action=edit&amp;id=<?=$noticia->getId() ;?>'"><?= i18n("Modificar")?></button>
+        <button type="button" class="btn text-center btn-danger " data-toggle="modal" data-target="#modalDeleteNoticia<?=$noticia->getId() ;?>"><?= i18n("Borrar")?></button>
           
 
           
@@ -35,7 +35,7 @@ $x=0;
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar noticia</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Borrar noticia")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -43,11 +43,11 @@ $x=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p class="p-5">¿Estás seguro de querer borrar esta noticia y sus comentarios?</p>
+                        <p class="p-5"><?= i18n("¿Estás seguro de querer borrar esta noticia y sus comentarios?")?></p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=noticias&action=delete&id=<?= $noticia->getId()?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='index.php?controller=noticias&action=delete&id=<?= $noticia->getId()?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
                 </div>
@@ -61,13 +61,13 @@ $x=0;
         if(isset($_SESSION['currentuser'])){?>
        <!-- <section class="content-item" id="comments">-->
         <div class="container mt-5">   
-    	<h3 class=" text-center"><?php echo $numcomentarios; if($numcomentarios!=1){ ?> Comentarios <?php } else{
+    	<h3 class=" text-center"><?php echo $numcomentarios; if($numcomentarios!=1){ ?> <?= i18n("Comentarios")?> <?php } else{
 
-                ?> Comentario <?php } ?></h3>
+                ?> <?= i18n("Comentario")?> <?php } ?></h3>
         
                                 <form id="contact-form" class=" align-items-center" role="form" action="index.php?controller=comentarios&amp;action=add&id=<?=$noticia->getId()?>" method="POST">
-                                <textarea class="form-control mt-5" id="cuerpocoment" name="cuerpocoment" placeholder="Inserte aquí su comentario" required=""></textarea>
-                                <button type="submit" value="submit" class="btn btn-normal pull-right  text-center">Añadir comentario</button>
+                                <textarea class="form-control mt-5" id="cuerpocoment" name="cuerpocoment" placeholder="Inserte aquí su comentario" ></textarea>
+                                <button type="submit" value="submit" class="btn btn-normal pull-right  text-center"><?= i18n("Añadir comentario")?></button>
                                 <form>
                                 <hr class="mt-5 ">          
             <div class="col-sm-8">   
@@ -99,7 +99,7 @@ $x=0;
 
                         <div class="reply px-4">
                         <?php if( isset($_SESSION['rol']) && ($_SESSION['rol']== "administrador" || $_SESSION['currentuser']== $noticia->getComentarios()[$x]->getUser()->getEmail() )){ ?>
-        <button type="button" class="btn float-r btn-danger " data-toggle="modal" data-target="#modalDeleteComentario<?=$noticia->getComentarios()[$x]->getId() ;?>">Borrar</button>
+        <button type="button" class="btn float-r btn-danger " data-toggle="modal" data-target="#modalDeleteComentario<?=$noticia->getComentarios()[$x]->getId() ;?>"><?= i18n("Borrar")?></button>
           
 
           
@@ -110,7 +110,7 @@ $x=0;
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="col-9 px-0 mx-auto modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleModalDelete">Eliminar comentario</h5>
+                    <h5 class="modal-title" id="titleModalDelete"><?= i18n("Eliminar comentario")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -118,11 +118,11 @@ $x=0;
                   
                 <div>
                     <div class="mx-auto px-0 cuerpoModal modal-body ">
-                        <p class="p-5">¿Estás seguro de querer borrar el comentario?</p>
+                        <p class="p-5"><?= i18n("¿Estás seguro de querer borrar el comentario?")?></p>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger " onclick="window.location.href='index.php?controller=noticias&action=delete&id=<?= $noticia->getComentarios()[$x]->getId()?>'">Eliminar</button>
-                        <button type="button" class="btn btn-light " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger " onclick="window.location.href='index.php?controller=comentarios&action=delete&id=<?= $noticia->getComentarios()[$x]->getId()?>'"><?= i18n("Eliminar")?></button>
+                        <button type="button" class="btn btn-light " data-dismiss="modal"><?= i18n("Cerrar")?></button>
                         
                     </div>
                 </div>

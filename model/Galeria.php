@@ -56,7 +56,9 @@ class Galeria {
 	public function getId() {
 		return $this->id;
 	}
-
+	public function setId($id) {
+		$this->id = $id;
+	}
 	/**
 	* Gets the title of this post
 	*
@@ -65,7 +67,9 @@ class Galeria {
 	public function getFecha() {
 		return $this->fecha;
 	}
-
+	public function setFecha($fecha) {
+		$this->fecha = $fecha;
+	}
 	/**
 	* Sets the title of this post
 	*
@@ -75,7 +79,9 @@ class Galeria {
 	public function getRuta() {
 		return $this->ruta;
 	}
-
+	public function setRuta($ruta) {
+		$this->ruta = $ruta;
+	}
 	/**
 	* Gets the content of this post
 	*
@@ -85,7 +91,9 @@ class Galeria {
 		return $this->titulo;
 	}
 
-	
+	public function setTitulo($titulo) {
+		$this->titulo = $titulo;
+	}
 
 	/**
 	* Checks if the current instance is valid

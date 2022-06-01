@@ -196,14 +196,21 @@ $this->view->redirect("contactos", "showall");
 		$contacto = new Contacto();
 
 		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+			
+		
+			$name=$_FILES['rutafoto']['name'];
+			
+			$tmp_name=$_FILES['rutafoto']['tmp_name'];
+			$upload_folder="images/";
 
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
 			$contacto->setNombre($_POST["nombre"]);
 			$contacto->setApellidos($_POST["apellidos"]);
 			$contacto->setEmail($_POST["email"]);
 			$contacto->setCargo($_POST["cargo"]);
 			$contacto->setTelefono($_POST["telefono"]);
-			$contacto->setRutafoto($_POST["rutafoto"]);
+			$contacto->setRutafoto($_FILES["rutafoto"]["name"]);
 			$contacto->setRutatwitter($_POST["rutatwitter"]);
 			// The user of the Post is the currentUser (user in session)
 				
@@ -223,7 +230,7 @@ $this->view->redirect("contactos", "showall");
 				$this->view->setFlash(sprintf(i18n("El contacto \"%s\" se agregó correctamente."),$contacto->getNombre()));
 
 				// perform the redirection. More or less:
-				header("Location: index.php?controller=contactos&action=showall");
+				//header("Location: index.php?controller=contactos&action=showall");
 				// die();
 				
 
@@ -296,14 +303,19 @@ $this->view->redirect("contactos", "showall");
 		
 
 		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+			$name=$_FILES['rutafoto']['name'];
+			
+			$tmp_name=$_FILES['rutafoto']['tmp_name'];
+			$upload_folder="images/";
 
+			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
 			$contacto->setNombre($_POST["nombre"]);
 			$contacto->setApellidos($_POST["apellidos"]);
 			$contacto->setEmail($_POST["email"]);
 			$contacto->setCargo($_POST["cargo"]);
 			$contacto->setTelefono($_POST["telefono"]);
-			$contacto->setRutafoto($_POST["rutafoto"]);
+			$contacto->setRutafoto($_FILES["rutafoto"]["name"]);
 			$contacto->setRutatwitter($_POST["rutatwitter"]);
 			try {
 				// validate Post object

@@ -11,31 +11,31 @@ $view->setVariable("title", "Edit Post");
 
 ?>
 <div class="container mb-5"><div class=" text-center mt-5 ">
-        <h1>Añadir videotutorial</h1>
+        <h1><?= i18n("Añadir videotutorial")?></h1>
     </div>
     <div class="row ">
         <div class="col-lg-7 mx-auto">
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=videotutoriales&amp;action=add" method="POST">
+                        <form id="contact-form" role="form" action="index.php?controller=videotutoriales&amp;action=add" onsubmit="return validarformulariovideotutoriales()" method="POST">
                             <div class="controls">
 							
                                 <div class="row">
 									
                                     <div class="col-md-6">
-                                        <div class="form-group"> <label for="titulo">Título</label> <input id="form_name" type="text" name="titulo" class="form-control" placeholder="Introduzca aquí el título del videotutorial" required="required" > </div>
+                                        <div class="form-group"> <label for="titulo"><?= i18n("Título")?></label> <input id="titulo" onblur="validarVacio(this.id)" type="text" name="titulo" class="form-control"  required="required" > </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group"> <label for="enlace">Enlace</label> <input id="form_lastname" type="text" name="enlace" class="form-control" placeholder="Introduzca aquí el link embebido" required="required" > </div>
+                                        <div class="form-group"> <label for="enlace"><?= i18n("Enlace")?></label> <input id="enlace" onblur="validarVacio(this.id)" type="text" name="enlace" class="form-control" placeholder="<?= i18n("Introduzca aquí el link embebido")?>" required="required" > </div>
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="descripcion">Descripción</label> <textarea id="form_message" name="descripcion" class="form-control" placeholder="Escriba aquí la descripción." rows="4" required="required" ></textarea> </div>
+                                        <div class="form-group"> <label for="descripcion"><?= i18n("Descripción")?></label> <textarea id="descripcion" onblur="validarVacio(this.id)" name="descripcion" class="form-control"  rows="4" required="required" ></textarea> </div>
                                     </div>
-                                    <div class="col-md-12"> <button type="submit" class="btn btn-success btn-send pt-2 btn-block w-100" name="submit" value="submit"> Añadir </button></div>
+                                    <div class="col-md-12"> <button type="submit" class="btn btn-success btn-send pt-2 btn-block w-100" name="submit" value="submit"> <?= i18n("Añadir")?> </button></div>
                                 </div>
                             </div>
                         </form>
@@ -44,4 +44,24 @@ $view->setVariable("title", "Edit Post");
             </div> <!-- /.8 -->
         </div> <!-- /.row-->
     </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalComprobacion"><?= i18n("Error de validación")?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="parrafovalidacion"> </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><?= i18n("Cerrar")?></button>
+        
+      </div>
+    </div>
+  </div>
 </div>

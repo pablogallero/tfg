@@ -18,7 +18,7 @@ $x=0;
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=patrocinadores&amp;action=add" onsubmit="return validarformulariopatrocinador()" method="POST">
+                        <form id="contact-form" role="form" action="index.php?controller=patrocinadores&amp;action=add" onsubmit="return validarformulariopatrocinador()" method="POST" enctype="multipart/form-data">
                             <div class="controls">
 							
                                 
@@ -26,8 +26,8 @@ $x=0;
                                     <div class="col-md-4">
                                     <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" type="text" name="nombre" onblur="comprobarAlfabetico(this.id,50)" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="text" name="imagen" onblur="validarVacio(this.id)"  class="form-control"  required="required" > </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file" name="imagen"   class="form-control"  required="required" > </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group"> <label for="titulo">Categoria</label> <select class="form-control" name="categoria" id="exampleFormControlSelect1">
@@ -50,4 +50,25 @@ $x=0;
             </div> <!-- /.8 -->
         </div> <!-- /.row-->
     </div>
+    
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalComprobacion"><?= i18n("Error de validación")?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="parrafovalidacion"> </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><?= i18n("Cerrar")?></button>
+        
+      </div>
+    </div>
+  </div>
 </div>

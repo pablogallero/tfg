@@ -15,56 +15,56 @@ $view->setVariable("title", "Ver usuario");
         <div class="col-sm-12 col-md-10 ml-auto mr-auto mt-4 mb-4">
             <form>
                 <div class="divShowCurrent">
-                    <h4 class="ml-4 mt-4 mb-4">Perfil</h4>
+                    <h4 class="ml-4 mt-4 mb-4"><?= i18n("Perfil")?></h4>
                     <div class="divLabelInput ml-4">
-                        <label class="labelShowCurrent col-4" for="inputNombre">NOMBRE</label>
+                        <label class="labelShowCurrent col-4" for="inputNombre"><?= i18n("Nombre de usuario")?></label>
                         <input class="quitarReadOnly inputShowCurrent ml-3 col-7" id="inputNombre" name="name" type="text" value="<?=$user->getUsername()?>" readonly>
                     </div>
                     <div class="divLabelInput ml-4 mb-3 mt-4">
-                        <label class="labelShowCurrent col-4" for="inputPass">CONTRASEÑA</label>
+                        <label class="labelShowCurrent col-4" for="inputPass"><?= i18n("Contraseña")?></label>
                         <input class="quitarReadOnly inputShowCurrent ml-3 col-7" id="inputPass" name="passwd" type="text" value="<?=$user->getPasswd()?>" placeholder="..............." readonly>
                     </div>  
 
                     <div class=" ml-4">
-                        <label class="labelShowCurrent col-4" for="inputNombre">ROL</label>
+                        <label class="labelShowCurrent col-4" for="inputNombre"><?= i18n("Rol")?></label>
                         <input class="quitarReadOnly inputShowCurrent ml-3 col-7" id="inputNombre" name="rol" type="text" value="<?=$user->getRol()?>" readonly>
                     </div>
                 </div>
 
                 
                 <div class="divShowCurrent mt-4">
-                    <h4 class="ml-4 mt-4 mb-4">Información de contacto</h4>
+                    <h4 class="ml-4 mt-4 mb-4"><?= i18n("Información de contacto")?></h4>
                     <div class="divLabelInput ml-4">
-                        <label class="labelShowCurrent col-4" for="inputNombre">TELEFONO</label>
+                        <label class="labelShowCurrent col-4" for="inputNombre"><?= i18n("Teléfono")?></label>
                         <input class="quitarReadOnly inputShowCurrent ml-3 col-7" id="inputNombre" name="telf" type="text" value="<?=$user->getTelefono()?>" readonly>
                     </div>
                     <div class="ml-4 mb-3 mt-4">
-                        <label class="labelShowCurrent col-4" for="inputPass">EMAIL</label>
+                        <label class="labelShowCurrent col-4" for="inputPass">Email</label>
                         <input class="quitarReadOnly inputShowCurrent ml-3 col-7" id="inputPass" name="email" type="email" value="<?=$user->getEmail()?>" readonly>
                     </div>  
                 </div>
 
                 <div class="divShowCurrent mt-4">
-                    <h4 class="ml-4 mt-4 mb-4">Datos personales</h4>
+                    <h4 class="ml-4 mt-4 mb-4"><?= i18n("Datos personales")?></h4>
                     <div class="divLabelInput ml-4">
-                        <label class="labelShowCurrent col-4" for="inputNombre">DNI</label>
+                        <label class="labelShowCurrent col-4" for="inputNombre"><?= i18n("DNI")?></label>
                         <input class="inputShowCurrent ml-3 col-7" id="inputNombre" type="text" value="<?=$user->getDni()?>" readonly>
                     </div>
                     <div class="divLabelInput ml-4 mt-4">
-                        <label class="labelShowCurrent col-4" for="inputPass">DIRECCIÓN</label>
+                        <label class="labelShowCurrent col-4" for="inputPass"><?= i18n("Dirección de vivienda")?></label>
                         <input class="quitarReadOnly inputShowCurrent ml-3 col-7" id="inputPass" name="direccion" type="text" value="<?=$user->getDireccion()?>" readonly>
                     </div>
                     <div class="ml-4 mb-3 mt-4">
-                        <label class="labelShowCurrent col-4" for="inputPass">GÉNERO</label>
+                        <label class="labelShowCurrent col-4" for="inputPass"><?= i18n("Género")?></label>
                         <input class="inputShowCurrent ml-3 col-7" id="inputPass" type="text" value="<?=$user->getGenero()?>" readonly>
                     </div>  
                 </div>
 
                 <div class="text-right  mt-4">
-                <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=users&amp;action=edit&amp;id=<?=$user->getId() ;?>'">Modificar</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser<?=$user->getId() ;?>">Eliminar</button>
+                <button type="button" class="btn btn-warning" onclick="window.location.href='index.php?controller=users&amp;action=edit&amp;id=<?=$user->getId() ;?>'"><?= i18n("Modificar")?></button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser<?=$user->getId() ;?>"><?= i18n("Eliminar")?></button>
                     
-        <button type="button" class="btn btn-info" onclick="window.location.href='index.php?controller=users&amp;action=showall'">Atrás</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='index.php?controller=users&amp;action=showall'"><?= i18n("Atrás")?></button>
                     
                 </div>
                 
