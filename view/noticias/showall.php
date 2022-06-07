@@ -54,7 +54,7 @@ $x=0;
         
     <div class="row ">
     
-    <img class=" img-fluid mx-auto  mb-4 " width="100" height="100"  src="images/<?= $noticias[$x+4*$pagina]->getImagenruta() ?>" alt="Generic placeholder image">
+    <img class=" img-fluid mx-auto  mb-4 " width="150" height="150"  src="images/<?= $noticias[$x+4*$pagina]->getImagenruta() ?>" alt="Generic placeholder image">
             
     <a class="mt-auto mb-auto linknegro " href="index.php?controller=noticias&action=view&id=<?= $noticias[$x+4*$pagina]->getId()?>"> <h4 class="display-5  ml-4 textoverflow"><?= $noticias[$x+4*$pagina]->getTitulo() ?></h4></a>
             

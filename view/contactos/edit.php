@@ -43,8 +43,9 @@ $view->setVariable("title", "Edit Post");
                                 
                                 <div class="row">
 									
-                                    <div class="col-md-3">
-                                        <div class="form-group"> <label for="rutafoto"><?= i18n("Foto de perfil")?></label> <input id="fotoperfil" type="file" accept="image/png, image/jpeg" name="rutafoto" class="form-control"  required="required" > </div>
+                                    <div class="col-md-12">
+                                    <img id="preview" src="images/placeholder.jpg"  width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="rutafoto"><?= i18n("Foto de perfil")?></label> <input id="fotoperfil" type="file" accept="image/png, .jpeg, .jpg, image/gif" name="rutafoto" class="form-control"  required="required" > </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group"> <label for="form_need"><?= i18n("Cargo")?></label> <select id="cargo" name="cargo" class="form-control" required="required" data-error="Indica el cargo, por favor.">
@@ -89,3 +90,14 @@ $view->setVariable("title", "Edit Post");
     </div>
   </div>
 </div>
+
+
+<script>
+
+fotoperfil.onchange = evt => {
+  const [file] = fotoperfil.files
+  if (file) {
+    preview.src = URL.createObjectURL(file)
+  }
+}
+  </script>

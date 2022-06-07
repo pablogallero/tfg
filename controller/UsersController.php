@@ -64,10 +64,19 @@ class UsersController extends BaseController {
 	* @return void
 	*/
 	public function login() {
-		if (isset($_POST["email"])){ // reaching via HTTP Post...
+		try{
+		if (isset($_POST["email"]) && isset($_POST["passwd"])){ // reaching via HTTP Post...
 			//process login form
 			if ($this->userMapper->isValidUser($_POST["email"], $_POST["passwd"])) {
-				
+				if(strlen($_POST["email"])<5   ){
+					$this->view->setFlashF(i18n("Formato incorrecto del email"));
+					throw new Exception();
+				}
+				if( strlen($_POST["passwd"]) < 5  ){
+					$this->view->setFlashF(i18n("Contraseña demasiado corta"));
+					throw new Exception();
+					
+				}
 				$_SESSION["currentuser"]=$_POST["email"];
 				$userrol= $this->userMapper->RolfromEmail($_POST["email"]);
 				
@@ -78,14 +87,18 @@ class UsersController extends BaseController {
 				$this->view->redirect("noticias", "index");
 				
 			}else{
-				$errors = array();
-				$errors["general"] = "Username is not valid";
-				$this->view->setVariable("errors", $errors);
+				$this->view->setFlashF(i18n("El usuario no existe en la base de datos"));
+					throw new Exception();
 			}
 		}
 
 		// render the view (/view/users/login.php)
 		$this->view->render("users", "login");
+	}catch(Exception $ex){
+		$this->view->popFlashF();
+	header("Location: index.php?controller=users&action=login");
+	}
+
 	}
 
 	/**
@@ -119,7 +132,7 @@ class UsersController extends BaseController {
 
 		$user = new User();
 
-		if (isset($_POST["email"])){ // reaching via HTTP Post...
+		if (isset($_POST["email"]) && isset($_POST["passwd"]) && isset($_POST["username"]) &&  isset($_POST["dni"]) &&  isset($_POST["telefono"]) &&  isset($_POST["direccion"]) &&  isset($_POST["genero"])){ // reaching via HTTP Post...
 
 			// populate the User object with data form the form
 			$user->setEmail($_POST["email"]);
@@ -132,10 +145,40 @@ class UsersController extends BaseController {
 			$user->setRol("usuario");
 
 			try{
-				$user->checkIsValidForRegister(); // if it fails, ValidationException
-
+				if(strlen($user->getEmail())<5   ){
+					$this->view->setFlashF(i18n("Formato incorrecto del email"));
+					throw new Exception();
+				}
+				if( strlen($user->getPasswd()) < 5  ){
+					$this->view->setFlashF(i18n("Contraseña demasiado corta"));
+					throw new Exception();
+					
+				}
+				if( strlen($user->getUsername()) < 1  ){
+					$this->view->setFlashF(i18n("Nombre de usuario demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($user->getDni()) < 5  ){
+					$this->view->setFlashF(i18n("DNI demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($user->getTelefono()) < 5  ){
+					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($user->getDireccion()) < 5  ){
+					$this->view->setFlashF(i18n("Dirección demasiado corta"));
+					throw new Exception();
+					
+				}
+				
 				// check if user exists in the database
-				if (!($this->userMapper->EmailExists($_POST["email"]) || $this->userMapper->DniExists($_POST["dni"]) || $this->userMapper->UsuarioExists($_POST["username"]))){
+				if (!($this->userMapper->EmailExists($_POST["email"]) || $this->userMapper->DniExists($_POST["dni"]) || $this->userMapper->UsernameExists($_POST["username"])|| $this->userMapper->TelefonoExists($_POST["telefono"]))){
+					
+
 					
 					// save the User object into the database
 					$this->userMapper->save($user);
@@ -152,24 +195,23 @@ class UsersController extends BaseController {
 					// die();
 					$this->view->redirect("users", "login");
 				} else {
-					$errors = array();
-					$errors["email"] = "Email ya existe";
-					$this->view->setVariable("errors", $errors);
+					
 					if ($this->userMapper->EmailExists($_POST["email"])){
 					$this->view->setFlashF("Este correo electrónico ya se encuentra en la base de datos");
 					}
 					if ($this->userMapper->DniExists($_POST["dni"])){
 						$this->view->setFlashF("Este dni ya se encuentra en la base de datos");
 						}
-					if ($this->userMapper->UsuarioExists($_POST["username"])){
+					if ($this->userMapper->UsernameExists($_POST["username"])){
 					$this->view->setFlashF("Este nombre de usuario ya se encuentra en la base de datos");
 					}
+					if ($this->userMapper->TelefonoExists($_POST["telefono"])){
+						$this->view->setFlashF("Este telefono ya se encuentra en la base de datos");
+						}
 				}
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			}catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=users&action=register");
 			}
 		}
 
@@ -199,37 +241,18 @@ class UsersController extends BaseController {
 		$this->view->render("users", "showall");
 	}
 
-	public function showcurrent(){
-		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
-		}
 
-		$videotutoid = $_GET["id"];
-
-		// find the Post object in the database
-		$videotutorial= $this->videotutorialMapper->findById($videotutoid);
-
-		if ($videotutorial == NULL) {
-			throw new Exception("No existe ningún videotutorial con esa id: ".$videotutoid);
-		}
-
-		// put the Post object to the view
-		$this->view->setVariable("videotutorial", $videotutorial);
-
-		
-
-		// render the view (/view/posts/view.php)
-		$this->view->render("videotutoriales", "showcurrent");
-
-	}
 	public function add() {
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
-		}
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("Se requiere ser administrador"));
+						throw new Exception();
+			}
+	
 
 		$usuario = new User();
 
-		if (isset($_POST["email"])) { // reaching via HTTP Post...
+		if (isset($_POST["email"]) && isset($_POST["passwd"]) && isset($_POST["username"]) &&  isset($_POST["dni"]) &&  isset($_POST["telefono"]) &&  isset($_POST["direccion"]) &&  isset($_POST["genero"]) &&  isset($_POST["rol"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
 			$usuario->setEmail($_POST["email"]);
@@ -244,9 +267,37 @@ class UsersController extends BaseController {
 				
 
 			try {
+				if(strlen($usuario->getEmail())<5   ){
+					$this->view->setFlashF(i18n("Formato incorrecto del email"));
+					throw new Exception();
+				}
+				if( strlen($usuario->getPasswd()) < 5  ){
+					$this->view->setFlashF(i18n("Contraseña demasiado corta"));
+					throw new Exception();
+					
+				}
+				if( strlen($usuario->getUsername()) < 1  ){
+					$this->view->setFlashF(i18n("Nombre de usuario demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($usuario->getDni()) < 5  ){
+					$this->view->setFlashF(i18n("DNI demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($usuario->getTelefono()) < 5  ){
+					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($usuario->getDireccion()) < 5  ){
+					$this->view->setFlashF(i18n("Dirección demasiado corta"));
+					throw new Exception();
+					
+				}
 				// validate Post object
-				//$videotutorial->checkIsValidForCreate(); // if it fails, ValidationException
-
+				if (!($this->userMapper->EmailExists($_POST["email"]) || $this->userMapper->DniExists($_POST["dni"]) || $this->userMapper->UsernameExists($_POST["username"])|| $this->userMapper->TelefonoExists($_POST["telefono"]))){
 				// save the Post object into the database
 				$this->userMapper->save($usuario);
 
@@ -260,13 +311,25 @@ class UsersController extends BaseController {
 				// perform the redirection. More or less:
 				header("Location: index.php?controller=users&action=showall");
 				// die();
-				
+			} else {
+					
+				if ($this->userMapper->EmailExists($_POST["email"])){
+				$this->view->setFlashF("Este correo electrónico ya se encuentra en la base de datos");
+				}
+				if ($this->userMapper->DniExists($_POST["dni"])){
+					$this->view->setFlashF("Este dni ya se encuentra en la base de datos");
+					}
+				if ($this->userMapper->UsernameExists($_POST["username"])){
+				$this->view->setFlashF("Este nombre de usuario ya se encuentra en la base de datos");
+				}
+				if ($this->userMapper->TelefonoExists($_POST["telefono"])){
+					$this->view->setFlashF("Este telefono ya se encuentra en la base de datos");
+					}
+			}
 
-			} catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=users&action=add");
 			}
 		}
 
@@ -275,14 +338,31 @@ class UsersController extends BaseController {
 		// render the view (/view/posts/add.php)
 		$this->view->render("users", "add");
 
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=users&action=showall");
 	}
 
+	}
+
+	public function desconectar() {
+		if(isset($_SESSION["rol"])){
+		session_destroy();}
+
+		// render the view (/view/users/login.php)
+		$this->view->redirect("noticias", "index");
+	}
+
+
 	public function edit() {
+		try{
 		if (!isset($_GET["id"])) {
-			throw new Exception("No se encuentra el usuario");
+			$this->view->setFlashF(i18n("No se encuentra la id"));
+					throw new Exception();
 		}
 		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
+			$this->view->setFlashF(i18n("Se requiere ser administrador"));
+					throw new Exception();
 		}
 
 
@@ -292,12 +372,13 @@ class UsersController extends BaseController {
 
 		// Does the post exist?
 		if ($usuario == NULL) {
-			throw new Exception("No existe dicho usuario");
+			$this->view->setFlashF(i18n("No se encuentra el usuario"));
+					throw new Exception();
 		}
 
 		
 
-		if (isset($_POST["email"])) { // reaching via HTTP Post...
+		if (isset($_POST["email"]) && isset($_POST["passwd"]) && isset($_POST["username"]) &&  isset($_POST["dni"]) &&  isset($_POST["telefono"]) &&  isset($_POST["direccion"]) &&  isset($_POST["genero"]) &&  isset($_POST["rol"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
 			$usuario->setEmail($_POST["email"]);
@@ -309,9 +390,38 @@ class UsersController extends BaseController {
 			$usuario->setGenero($_POST["genero"]);
 			$usuario->setRol($_POST["rol"]);
 			try {
+				if(strlen($usuario->getEmail())<5   ){
+					$this->view->setFlashF(i18n("Formato incorrecto del email"));
+					throw new Exception();
+				}
+				if( strlen($usuario->getPasswd()) < 5  ){
+					$this->view->setFlashF(i18n("Contraseña demasiado corta"));
+					throw new Exception();
+					
+				}
+				if( strlen($usuario->getUsername()) < 1  ){
+					$this->view->setFlashF(i18n("Nombre de usuario demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($usuario->getDni()) < 5  ){
+					$this->view->setFlashF(i18n("DNI demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($usuario->getTelefono()) < 5  ){
+					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($usuario->getDireccion()) < 5  ){
+					$this->view->setFlashF(i18n("Dirección demasiado corta"));
+					throw new Exception();
+					
+				}
 				// validate Post object
 				//$usuario->checkIsValidForUpdate(); // if it fails, ValidationException
-
+				
 				// update the Post object in the database
 				$this->userMapper->update($usuario);
 
@@ -327,11 +437,9 @@ class UsersController extends BaseController {
 				// die();
 				header("Location: index.php?controller=users&action=showall");
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=users&action=showall");
 			}
 		}
 
@@ -341,16 +449,24 @@ class UsersController extends BaseController {
 	// render the view (/view/posts/edit.php)
 	
 	$this->view->render("users", "edit");
+
+} catch(Exception $ex) {
+	$this->view->popFlashF();
+header("Location: index.php?controller=users&action=showall");
+}
 	}
 
 
 	public function delete() {
-		if (!isset($_GET["id"])) {
-			throw new Exception("La id es obligatoria");
-		}
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede borrar sin ser administrador");
-		}
+		try{
+			if (!isset($_GET["id"])) {
+				$this->view->setFlashF(i18n("No se encuentra la id"));
+						throw new Exception();
+			}
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("Se requiere ser administrador"));
+						throw new Exception();
+			}
 
 		
 		// Get the Post object from the database
@@ -358,10 +474,10 @@ class UsersController extends BaseController {
 		$usuario= $this->userMapper->findById($usuarioid);
 
 		// Does the post exist?
-		if ($usuario== NULL) {
-			throw new Exception("No existe ese usuario");
+		if ($usuario == NULL) {
+			$this->view->setFlashF(i18n("No se encuentra el usuario"));
+					throw new Exception();
 		}
-
 		
 		// Delete the Post object from the database
 		$this->userMapper->delete($usuario);
@@ -377,23 +493,32 @@ class UsersController extends BaseController {
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
 		header("Location: index.php?controller=users&action=showall");
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=users&action=showall");
+	}
 
 	}
 
 	public function view(){
-		if (!isset($_GET["id"])) {
-			throw new Exception("La id es obligatoria");
-		}
-
+		try{
+			if (!isset($_GET["id"])) {
+				$this->view->setFlashF(i18n("No se encuentra la id"));
+						throw new Exception();
+			}
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("Se requiere ser administrador"));
+						throw new Exception();
+			}
 		$userid = $_GET["id"];
 
 		// find the Post object in the database
 		$user= $this->userMapper->findById($userid);
 
-		if ($user == NULL) {
-			throw new Exception("No existe ningún usuario con esa id: ".$userid);
+		if ($usuario == NULL) {
+			$this->view->setFlashF(i18n("No se encuentra el usuario"));
+					throw new Exception();
 		}
-
 		// put the Post object to the view
 		$this->view->setVariable("usuario", $user);
 
@@ -402,6 +527,10 @@ class UsersController extends BaseController {
 		// render the view (/view/posts/view.php)
 		$this->view->render("users", "view");
 
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=users&action=showall");
 	}
 
+}
 }

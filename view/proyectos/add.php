@@ -31,7 +31,8 @@ $errors = $view->getVariable("errors");
                                 <div class="row">
 									
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="titulo"><?= i18n("Imagen")?></label> <input id="imagen" type="file" name='imagen' class="form-control" onblur="validarVacio(this.id)"  required="required" > </div>
+                                    <img id="preview" src="images/placeholder.jpg"  width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="titulo"><?= i18n("Imagen")?></label> <input id="imagen" type="file" name='imagen' class="form-control" onblur="validarVacio(this.id)" accept="image/png, .jpeg, .jpg, image/gif"  required="required" > </div>
                                     </div>
                                     
                                 </div>
@@ -110,3 +111,13 @@ $errors = $view->getVariable("errors");
     </div>
   </div>
 </div>
+
+<script>
+
+imagen.onchange = evt => {
+  const [file] = imagen.files
+  if (file) {
+    preview.src = URL.createObjectURL(file)
+  }
+}
+  </script>

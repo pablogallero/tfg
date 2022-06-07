@@ -27,7 +27,7 @@ $view->setVariable("title", "Edit Post");
                                         <div class="form-group"> <label for="titulo"><?= i18n("Título")?></label> <input id="titulo" onblur="validarVacio(this.id)" type="text" name="titulo" class="form-control"  required="required" > </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group"> <label for="enlace"><?= i18n("Enlace")?></label> <input id="enlace" onblur="validarVacio(this.id)" type="text" name="enlace" class="form-control" placeholder="<?= i18n("Introduzca aquí el link embebido")?>" required="required" > </div>
+                                        <div class="form-group"> <label for="enlace"><?= i18n("Enlace")?></label> <input id="enlace" onblur="validarVacio(this.id)" type="text" name="enlace" class="form-control" placeholder="<?= i18n("Introduzca aquí el link embebido de Youtube")?>" required="required" > </div>
                                     </div>
                                 </div>
                                 

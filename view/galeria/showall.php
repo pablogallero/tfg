@@ -36,8 +36,8 @@ $fila=0;
 
 
               <div class="modal fade" id="imgMostrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+  <div class="modal-dialog modalgaleria" role="document">
+    <div class="modal-content modalgaleria ">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -45,7 +45,7 @@ $fila=0;
         </button>
       </div>
      
-      <img  id="imagenbig" alt="Galeria Imagen"> 
+      <img  id="imagenbig" alt="Galeria Imagen" > 
       
     </div>
    
@@ -55,8 +55,8 @@ $fila=0;
 
 
         <div class="modal fade" id="imgMostrarDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+  <div class="modal-dialog modalgaleria" role="document">
+    <div class="modalgaleria modal-content ">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -64,7 +64,7 @@ $fila=0;
         </button>
       </div>
      
-      <img  id="imagenbigadmin" alt="Galeria Imagen"> 
+      <img  id="imagenbigadmin"  alt="Galeria Imagen"> 
       
     </div>
     <div class="modal-footer">

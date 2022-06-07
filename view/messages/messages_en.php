@@ -121,7 +121,7 @@ array(
 	"Información de contacto" => "Contact information",
 	"Datos personales" => "Personal information",
 	"Atrás" => "Back",
-	"Cerrar" => "Close",
+	"Introduzca aquí el link embebido de Youtube" => "Insert Youtube's embebed link here",
 	"Cerrar" => "Close",
 	"Cerrar" => "Close",
 	"Cerrar" => "Close",

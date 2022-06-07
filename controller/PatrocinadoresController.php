@@ -64,13 +64,18 @@ class PatrocinadoresController extends BaseController {
 
 
 	public function add() {
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
-		}
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede añadir sin ser administrador"));
+						throw new Exception();
+				
+			}
+	
+
 
 		$patrocinador = new Patrocinador();
         
-		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+		if (isset($_POST["nombre"]) && isset($_FILES["imagen"]["name"]) && isset($_POST["categoria"])) { // reaching via HTTP Post...
 			$name=$_FILES['imagen']['name'];
 			
 			$tmp_name=$_FILES['imagen']['tmp_name'];
@@ -85,9 +90,21 @@ class PatrocinadoresController extends BaseController {
 				
             
 			try {
-				// validate Post object
-				//$videotutorial->checkIsValidForCreate(); // if it fails, ValidationException
-
+				if(strlen($patrocinador->getNombre())<1   ){
+					$this->view->setFlashF(i18n("Nombre demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($patrocinador->getImagen()) < 1  ){
+					$this->view->setFlashF(i18n("Imagen no encontrada"));
+					throw new Exception();
+					
+				}
+				if( strlen($patrocinador->getCategoria()) < 1  ){
+					$this->view->setFlashF(i18n("Categoría demasiado corta"));
+					throw new Exception();
+					
+				}
+				
 				// save the Post object into the database
 				$this->patrocinadorMapper->save($patrocinador);
 
@@ -103,11 +120,9 @@ class PatrocinadoresController extends BaseController {
 				// die();
 				
 
-			} catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+	header("Location: index.php?controller=patrocinadores&action=add");
 			}
 		}
         $categorias= $this->categoriaMapper->findAll();
@@ -116,18 +131,24 @@ class PatrocinadoresController extends BaseController {
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("patrocinadores", "add");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=patrocinadores&action=showall");
+	}
 	}
 
 
     public function addcat() {
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
-		}
-
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
+	
 		$categoria = new Categoria();
         
-		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+		if (isset($_POST["nombre"]) && isset($_POST["color"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
 			$categoria->setNombre($_POST["nombre"]);
@@ -137,6 +158,16 @@ class PatrocinadoresController extends BaseController {
 				
             
 			try {
+
+				if(strlen($categoria->getNombre())<1   ){
+					$this->view->setFlashF(i18n("Nombre demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($categoria->getColor()) < 1  ){
+					$this->view->setFlashF(i18n("Imagen no encontrada"));
+					throw new Exception();
+					
+				}
 				// validate Post object
 				//$videotutorial->checkIsValidForCreate(); // if it fails, ValidationException
 
@@ -155,11 +186,9 @@ class PatrocinadoresController extends BaseController {
 				// die();
 				
 
-			} catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+				header("Location: index.php?controller=patrocinadores&action=addcat");
 			}
 		}
         
@@ -167,39 +196,50 @@ class PatrocinadoresController extends BaseController {
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("patrocinadores", "addcat");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=patrocinadores&action=showall");
+	}
 	}
 
 
 	public function editcat() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("No se encuentra la categoría");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
-		}
-
 
 		// Get the Post object from the database
 		$categoriaid = $_GET["id"];
 		$categoria= $this->categoriaMapper->findById($categoriaid);
 
-		// Does the post exist?
 		if ($categoria == NULL) {
-			throw new Exception("No existe dicha categoria");
+			$this->view->setFlashF(i18n("No se encuentra la categoría"));
+						throw new Exception();
 		}
-
 		
 
-		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+		if (isset($_POST["nombre"])&& isset($_POST["color"])) { // reaching via HTTP Post...
 			
 			// populate the Post object with data form the form
 			$categoria->setNombre($_POST["nombre"]);
 			$categoria->setColor($_POST["color"]);
 			try {
-				// validate Post object
-				//$usuario->checkIsValidForUpdate(); // if it fails, ValidationException
-
+				if(strlen($categoria->getNombre())<1   ){
+					$this->view->setFlashF(i18n("Nombre demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($categoria->getColor()) < 1  ){
+					$this->view->setFlashF(i18n("Imagen no encontrada"));
+					throw new Exception();
+					
+				}
 				// update the Post object in the database
 				$this->categoriaMapper->update($categoria);
 
@@ -215,11 +255,10 @@ class PatrocinadoresController extends BaseController {
 				// die();
 				header("Location: index.php?controller=patrocinadores&action=showall");
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			}catch(Exception $ex) {
+				$this->view->popFlashF();
+				header("Location: index.php?controller=patrocinadores&action=editcat&id=$categoriaid");
+				
 			}
 		}
 
@@ -229,18 +268,26 @@ class PatrocinadoresController extends BaseController {
 	// render the view (/view/posts/edit.php)
 	
 	$this->view->render("patrocinadores", "editcat");
+
+} catch(Exception $ex) {
+	$this->view->popFlashF();
+header("Location: index.php?controller=patrocinadores&action=showall");
+}
 	}
 
 
 
 	public function edit() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("No se encuentra el patrocinador");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
-		}
-
 
 		// Get the Post object from the database
 		$patrocinadorid = $_GET["id"];
@@ -248,12 +295,12 @@ class PatrocinadoresController extends BaseController {
 
 		// Does the post exist?
 		if ($patrocinador == NULL) {
-			throw new Exception("No existe dicho patrocinador");
+			$this->view->setFlashF(i18n("No se encuentra el patrocinador"));
+						throw new Exception();
 		}
-
 		
 
-		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+		if (isset($_POST["nombre"])&& isset($_FILES["imagen"]["name"]) && isset($_POST["categoria"])) { // reaching via HTTP Post...
 			$name=$_FILES['imagen']['name'];
 			
 			$tmp_name=$_FILES['imagen']['tmp_name'];
@@ -265,8 +312,21 @@ class PatrocinadoresController extends BaseController {
 			$patrocinador->setImagen($_FILES["imagen"]["name"]);
 			$patrocinador->setCategoria($_POST["categoria"]);
 			try {
-				// validate Post object
-				//$usuario->checkIsValidForUpdate(); // if it fails, ValidationException
+				if(strlen($patrocinador->getNombre())<1   ){
+					$this->view->setFlashF(i18n("Nombre demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($patrocinador->getImagen()) < 1  ){
+					$this->view->setFlashF(i18n("Imagen no encontrada"));
+					throw new Exception();
+					
+				}
+				if( strlen($patrocinador->getCategoria()) < 1  ){
+					$this->view->setFlashF(i18n("Categoría demasiado corta"));
+					throw new Exception();
+					
+				}
+				
 
 				// update the Post object in the database
 				$this->patrocinadorMapper->update($patrocinador);
@@ -283,11 +343,9 @@ class PatrocinadoresController extends BaseController {
 				// die();
 				header("Location: index.php?controller=patrocinadores&action=showall");
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			}catch(Exception $ex) {
+				$this->view->popFlashF();
+header("Location: index.php?controller=patrocinadores&action=edit&id=$patrocinadorid");
 			}
 		}
 
@@ -298,15 +356,23 @@ class PatrocinadoresController extends BaseController {
 	// render the view (/view/posts/edit.php)
 	
 	$this->view->render("patrocinadores", "edit");
+} catch(Exception $ex) {
+	$this->view->popFlashF();
+header("Location: index.php?controller=patrocinadores&action=showall");
+}
 	}
 
 
 	public function delete() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("La id es obligatoria");
-		}
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede borrar sin ser administrador");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
 
 		
@@ -315,9 +381,11 @@ class PatrocinadoresController extends BaseController {
 		$patrocinador= $this->patrocinadorMapper->findById($patrocinadorid);
 
 		// Does the post exist?
-		if ($patrocinador== NULL) {
-			throw new Exception("No existe ese patrocinador");
+		if ($patrocinador == NULL) {
+			$this->view->setFlashF(i18n("No se encuentra el patrocinador"));
+						throw new Exception();
 		}
+		
 
 		
 		// Delete the Post object from the database
@@ -334,15 +402,23 @@ class PatrocinadoresController extends BaseController {
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
 		header("Location: index.php?controller=patrocinadores&action=showall");
+	}catch(Exception $ex) {
+		$this->view->popFlashF();
+header("Location: index.php?controller=patrocinadores&action=edit&id=$patrocinadorid");
+	}
 
 	}
 
     public function deletecat() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("La id es obligatoria");
-		}
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede borrar sin ser administrador");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
 
 		
@@ -351,10 +427,10 @@ class PatrocinadoresController extends BaseController {
 		$categoria= $this->categoriaMapper->findById($categoriaid);
 
 		// Does the post exist?
-		if ($categoria== NULL) {
-			throw new Exception("No existe esa categoria");
+		if ($categoria == NULL) {
+			$this->view->setFlashF(i18n("No se encuentra la categoría"));
+						throw new Exception();
 		}
-
 		
 		// Delete the Post object from the database
 		$this->categoriaMapper->delete($categoria);
@@ -370,31 +446,11 @@ class PatrocinadoresController extends BaseController {
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
 		header("Location: index.php?controller=patrocinadores&action=showall");
-
+	}catch(Exception $ex) {
+		$this->view->popFlashF();
+header("Location: index.php?controller=patrocinadores&action=edit&id=$patrocinadorid");
+	}
 	}
 
-	public function view(){
-		if (!isset($_GET["id"])) {
-			throw new Exception("La id es obligatoria");
-		}
-
-		$userid = $_GET["id"];
-
-		// find the Post object in the database
-		$user= $this->userMapper->findById($userid);
-
-		if ($user == NULL) {
-			throw new Exception("No existe ningún usuario con esa id: ".$userid);
-		}
-
-		// put the Post object to the view
-		$this->view->setVariable("usuario", $user);
-
-		
-
-		// render the view (/view/posts/view.php)
-		$this->view->render("users", "view");
-
-	}
 
 }

@@ -317,3 +317,15 @@ function validarformulariovideotutoriales(){//Funcion para comprobar que se cump
                  return false;
                  }
                  }   
+
+function validarformularioGaleria(){//Funcion para comprobar que se cumple todas las funciones del formulario 
+
+             if(validarVacio('titulo')  && validarVacio('imagen')  ){
+            return true;
+            }
+            else{//Si no se cumplen todas devuelve false y lanza una alerta
+                document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
+        $('#exampleModal').modal('toggle');
+                 return false;
+                 }
+                 }   

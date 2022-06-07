@@ -24,10 +24,11 @@ $x=0;
                                 
 									
                                     <div class="col-md-12">
-                                    <div class="form-group"> <label for="imagenruta">Título</label> <input id="titulo" type="text" name="titulo" onblur="validarVacio(this.id)" class="form-control" placeholder="Introduzca aquí el título" required="required" > </div>
+                                    <div class="form-group"> <label for="imagenruta">Título</label> <input id="titulo" type="text" name="titulo" onblur="validarVacio(this.id)" class="form-control" placeholder="Introduzca aquí el título"  > </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file" name='imagen'   class="form-control"  required="required" > </div>
+                                    <img id="preview" src="images/placeholder.jpg" width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file" name='imagen'   onblur="validarVacio(this.id)" class="form-control" accept="image/png, .jpeg, .jpg, image/gif" required="required" > </div>
                                     </div>
                                    
                                     </div>
@@ -66,3 +67,13 @@ $x=0;
     </div>
   </div>
 </div>
+
+<script>
+
+imagen.onchange = evt => {
+  const [file] = imagen.files
+  if (file) {
+    preview.src = URL.createObjectURL(file)
+  }
+}
+  </script>

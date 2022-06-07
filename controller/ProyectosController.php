@@ -43,25 +43,7 @@ class ProyectosController extends BaseController {
 	* <li>posts/index (via include)</li>
 	* </ul>
 	*/
-	public function index() {
-		$noticiastres=array();
-		$y=0;
-		// obtain the data from the database
-		$noticias = $this->noticiaMapper->findAll();
-		// put the array containing Post object to the view
-		
-		$noticiasr=array_reverse($noticias);
-		for($x=0;$x<=2;$x=$x+1){
-			$noticiastres[$y]=$noticiasr[$x];
-			$y=$y+1;
-		}
-		$this->view->setVariable("noticias", $noticiastres);
-		
-		// render the view (/view/noticias/index.php)
-		$this->view->render("noticias", "index");
-	}
 
-	
 	public function showAll() {
 		
 		// obtain the data from the database
@@ -98,17 +80,20 @@ class ProyectosController extends BaseController {
 	*
 	*/
 	public function view(){
-		if (!isset($_GET["id"])) {
-			throw new Exception("Se necesita una id de proyecto");
-		}
-
+		try{
+			if (!isset($_GET["id"])) {
+				$this->view->setFlashF(i18n("No se encuentra la id"));
+						throw new Exception();
+			}
+	
 		$proyectoid = $_GET["id"];
 
 		// find the Post object in the database
 		$proyecto = $this->proyectoMapper->findById($proyectoid);
 
 		if ($proyecto == NULL) {
-			throw new Exception("No existe un proyecto con esa id: ".$proyectoid);
+			$this->view->setFlashF(i18n("No se encuentra el proyecto"));
+						throw new Exception();
 		}
 
 		// put the Post object to the view
@@ -119,7 +104,10 @@ class ProyectosController extends BaseController {
 
 		// render the view (/view/posts/view.php)
 		$this->view->render("proyectos", "view");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+		header("Location: index.php?controller=proyectos&action=showall");
+	}
 	}
 
 	
@@ -151,13 +139,16 @@ class ProyectosController extends BaseController {
 	* @return void
 	*/
 	public function add() {
+		try{
 		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede añadir sin ser administrador");
+			$this->view->setFlashF(i18n("No se puede añadir sin ser administrador"));
+					throw new Exception();
+			
 		}
 
 		$proyecto = new Proyecto();
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"]) && isset($_FILES["imagen"]["name"]) && isset($_POST["introduccion"]) &&  isset($_POST["objetivos"]) &&  isset($_POST["metodologia"]) &&  isset($_POST["conclusiones"]) ) { // reaching via HTTP Post...
 			$name=$_FILES['imagen']['name'];
 			
 			$tmp_name=$_FILES['imagen']['tmp_name'];
@@ -175,6 +166,35 @@ class ProyectosController extends BaseController {
 				
 
 			try {
+				if(strlen($proyecto->getTitulo())<5   ){
+					$this->view->setFlashF(i18n("Título demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($proyecto->getImagen()) < 1  ){
+					$this->view->setFlashF(i18n("Imagen no encontrada"));
+					throw new Exception();
+					
+				}
+				if( strlen($proyecto->getIntroduccion()) < 5  ){
+					$this->view->setFlashF(i18n("Introducción demasiado corta"));
+					throw new Exception();
+					
+				}
+				if( strlen($proyecto->getObjetivos()) < 5  ){
+					$this->view->setFlashF(i18n("Objetivos demasiado cortos"));
+					throw new Exception();
+					
+				}
+				if( strlen($proyecto->getMetodologia()) < 5  ){
+					$this->view->setFlashF(i18n("Metodología demasiado corta"));
+					throw new Exception();
+					
+				}
+				if( strlen($proyecto->getConclusiones()) < 5  ){
+					$this->view->setFlashF(i18n("Conclusiones demasiado corto"));
+					throw new Exception();
+					
+				}
 				// validate Post object
 				//	$noticia->checkIsValidForCreate(); // if it fails, ValidationException
 
@@ -193,18 +213,19 @@ class ProyectosController extends BaseController {
 				// die();
 				
 
-			} catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=proyectos&action=showall");
 			}
 		}
 
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("proyectos", "add");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=proyectos&action=showall");
+	}
 	}
 
 	/**
@@ -239,13 +260,18 @@ class ProyectosController extends BaseController {
 	* @return void
 	*/
 	public function edit() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("Se necesita una id de proyecto");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
 
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Editar proyectos requiere rol de administrador");
-		}
+		
 
 		// Get the Post object from the database
 		$proyectoid = $_GET["id"];
@@ -253,8 +279,10 @@ class ProyectosController extends BaseController {
 
 		// Does the post exist?
 		if ($proyecto == NULL) {
-			throw new Exception("no such post with id: ".$postid);
+			$this->view->setFlashF(i18n("No se encuentra el proyecto"));
+						throw new Exception();
 		}
+
 
 		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
 			
@@ -274,8 +302,35 @@ class ProyectosController extends BaseController {
 			$proyecto->setConclusiones($_POST["conclusiones"]);
 
 			try {
-				// validate Post object
-				//$post->checkIsValidForUpdate(); // if it fails, ValidationException
+				if(strlen($proyecto->getTitulo())<5   ){
+					$this->view->setFlashF(i18n("Título demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($proyecto->getImagen()) < 1  ){
+					$this->view->setFlashF(i18n("Imagen no encontrada"));
+					throw new Exception();
+					
+				}
+				if( strlen($proyecto->getIntroduccion()) < 5  ){
+					$this->view->setFlashF(i18n("Introducción demasiado corta"));
+					throw new Exception();
+					
+				}
+				if( strlen($proyecto->getObjetivos()) < 5  ){
+					$this->view->setFlashF(i18n("Objetivos demasiado cortos"));
+					throw new Exception();
+					
+				}
+				if( strlen($proyecto->getMetodologia()) < 5  ){
+					$this->view->setFlashF(i18n("Metodología demasiado corta"));
+					throw new Exception();
+					
+				}
+				if( strlen($proyecto->getConclusiones()) < 5  ){
+					$this->view->setFlashF(i18n("Conclusiones demasiado corto"));
+					throw new Exception();
+					
+				}
 
 				// update the Post object in the database
 				$this->proyectoMapper->update($proyecto);
@@ -292,11 +347,9 @@ class ProyectosController extends BaseController {
 				// die();
 				//$this->view->redirect("proyectos", "showall");
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			}catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=proyectos&action=edit&id=$proyectoid");
 			}
 		}
 
@@ -305,6 +358,10 @@ class ProyectosController extends BaseController {
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("proyectos", "edit");
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=proyectos&action=showall");
+	}
 	}
 
 	/**
@@ -328,22 +385,26 @@ class ProyectosController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Borrar proyectos requiere rol de administrador");
-		}
-		
+
 		// Get the Post object from the database
 		$proyectoid = $_GET["id"];
 		$proyecto = $this->proyectoMapper->findById($proyectoid);
 
 		// Does the post exist?
-		if ($proyecto== NULL) {
-			throw new Exception("No existe ese proyecto");
+		if ($proyecto == NULL) {
+			$this->view->setFlashF(i18n("No se encuentra el proyecto"));
+						throw new Exception();
 		}
-
 		
 		// Delete the Post object from the database
 		$this->proyectoMapper->delete($proyecto);
@@ -359,6 +420,10 @@ class ProyectosController extends BaseController {
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
 		header("Location: index.php?controller=proyectos&action=showall");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=proyectos&action=showall");
 	}
+	}
+
 }

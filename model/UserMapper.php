@@ -77,6 +77,9 @@ class UserMapper {
 		}
 	}
 
+
+
+
 	public function update(User $usuario) {
 		$stmt = $this->db->prepare("UPDATE USUARIO set USERNAME=?,DNI=?,TELEFONO=?,EMAIL=?,DIRECCION=?,GENERO=?,PASSWD=?,ROL=? WHERE	 ID_USUARIO=?");
 		$stmt->execute(array($usuario->getUsername(),$usuario->getDni(),$usuario->getTelefono(),$usuario->getEmail(),$usuario->getDireccion(),$usuario->getGenero(),$usuario->getPasswd(),$usuario->getRol(),$usuario->getId()));
@@ -131,9 +134,18 @@ class UserMapper {
 		else return false;
 	}
 
-	public function UsuarioExists($username) {
+	public function UsernameExists($username) {
 		$stmt = $this->db->prepare("SELECT count(USERNAME) FROM USUARIO where USERNAME	=?");
 		$stmt->execute(array($username));
+
+		if ($stmt->fetchColumn() > 0) {
+			return true;
+		}
+		else return false;
+	}
+	public function TelefonoExists($telefono) {
+		$stmt = $this->db->prepare("SELECT count(TELEFONO) FROM USUARIO where TELEFONO	=?");
+		$stmt->execute(array($telefono));
 
 		if ($stmt->fetchColumn() > 0) {
 			return true;

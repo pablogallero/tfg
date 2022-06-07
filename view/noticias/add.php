@@ -23,11 +23,12 @@ $view->setVariable("title", "Edit Post");
 							
                                 <div class="row">
 									
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group"> <label for="titulo"><?= i18n("Título")?></label> <input id="titulo" onblur="validarVacio(this.id)" type="text" name="titulo" class="form-control" placeholder="<?= i18n("Introduzca aquí el título")?>" > </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Imagen")?></label> <input id="imagen"  type="file" name='imagenruta' class="form-control" placeholder="<?= i18n("Introduzca aquí la imagen")?>"  > </div>
+                                    <div class="col-md-12">
+                                    <img id="preview" src="images/placeholder.jpg"  width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Imagen")?></label> <input id="imagen"  type="file" name='imagenruta' class="form-control" accept="image/png, .jpeg, .jpg, image/gif" placeholder="<?= i18n("Introduzca aquí la imagen")?>"  > </div>
                                     </div>
                                 </div>
                                 
@@ -65,3 +66,14 @@ $view->setVariable("title", "Edit Post");
     </div>
   </div>
 </div>
+
+
+<script>
+
+imagen.onchange = evt => {
+  const [file] = imagen.files
+  if (file) {
+    preview.src = URL.createObjectURL(file)
+  }
+}
+  </script>
