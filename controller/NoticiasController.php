@@ -118,17 +118,19 @@ class NoticiasController extends BaseController {
 	*
 	*/
 	public function view(){
-		if (!isset($_GET["id"])) {
-			throw new Exception("Se necesita una id de noticia");
-		}
-
+		try{
+			
+			if (!isset($_GET["id"])) {
+				$this->view->setFlashF(i18n("Se necesita una id"));
+							throw new Exception();
+			}
 		$noticiaid = $_GET["id"];
 
 		// find the Post object in the database
 		$noticia = $this->noticiaMapper->findByIdWithComments($noticiaid);
-
 		if ($noticia == NULL) {
-			throw new Exception("No existe una noticia con esa id: ".$noticiaid);
+			$this->view->setFlashF(i18n("No se encuentra la categoría"));
+						throw new Exception();
 		}
 
 		// put the Post object to the view
@@ -141,7 +143,10 @@ class NoticiasController extends BaseController {
 
 		// render the view (/view/posts/view.php)
 		$this->view->render("noticias", "view");
-
+	}catch(Exception $ex) {
+		$this->view->popFlashF();
+header("Location: index.php?controller=noticias&action=showall&pagina=0");
+	}
 	}
 
 	
@@ -173,13 +178,16 @@ class NoticiasController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede añadir sin ser administrador");
-		}
-
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
+	
 		$noticia = new Noticia();
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"]) && isset($_POST["cuerponoticia"]) && isset($_FILES["imagenruta"]["name"])) { // reaching via HTTP Post...
 			
 			$name=$_FILES['imagenruta']['name'];
 			
@@ -195,8 +203,20 @@ class NoticiasController extends BaseController {
 				
 
 			try {
-				// validate Post object
-				$noticia->checkIsValidForCreate(); // if it fails, ValidationException
+				if(strlen($noticia->getTitulo())<1   ){
+					$this->view->setFlashF(i18n("Titulo demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($noticia->getCuerponoticia()) < 1  ){
+					$this->view->setFlashF(i18n("Cuerpo de noticia no encontrado"));
+					throw new Exception();
+					
+				}
+				if( strlen($noticia->getImagenruta()) < 1  ){
+					$this->view->setFlashF(i18n("Tamaño incorrecto"));
+					throw new Exception();
+					
+				}
 
 				// save the Post object into the database
 				$this->noticiaMapper->save($noticia);
@@ -213,11 +233,9 @@ class NoticiasController extends BaseController {
 				// die();
 				
 
-			} catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+header("Location: index.php?controller=noticias&action=add");
 			}
 		}
 
@@ -226,6 +244,11 @@ class NoticiasController extends BaseController {
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("noticias", "add");
+
+	}catch(Exception $ex) {
+		$this->view->popFlashF();
+header("Location: index.php?controller=noticias&action=showall&pagina=0");
+	}
 
 	}
 
@@ -261,12 +284,15 @@ class NoticiasController extends BaseController {
 	* @return void
 	*/
 	public function edit() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede añadir sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("Se necesita una id de noticia");
-		}
-
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Editar publicaciones requiere rol de administrador");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
 
 		// Get the Post object from the database
@@ -275,10 +301,11 @@ class NoticiasController extends BaseController {
 
 		// Does the post exist?
 		if ($noticia == NULL) {
-			throw new Exception("No existe ninguna noticia con esa id: ".$noticiaid);
+			$this->view->setFlashF(i18n("No se puede encuentrar la noticia"));
+						throw new Exception();
 		}
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"]) && isset($_POST["cuerponoticia"]) && isset($_FILES["imagenruta"]["name"])) { // reaching via HTTP Post...
 			$name=$_FILES['imagenruta']['name'];
 			
 			$tmp_name=$_FILES['imagenruta']['tmp_name'];
@@ -292,6 +319,21 @@ class NoticiasController extends BaseController {
 
 			try {
 				
+				if(strlen($noticia->getTitulo())<5   ){
+					$this->view->setFlashF(i18n("Titulo demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($noticia->getCuerponoticia()) < 1  ){
+					$this->view->setFlashF(i18n("Cuerpo de noticia no encontrado"));
+					throw new Exception();
+					
+				}
+				if( strlen($noticia->getImagenruta()) < 1  ){
+					$this->view->setFlashF(i18n("Tamaño incorrecto"));
+					throw new Exception();
+					
+				}
+
 
 				// update the Post object in the database
 				$this->noticiaMapper->update($noticia);
@@ -308,12 +350,11 @@ class NoticiasController extends BaseController {
 				// die();
 				header(sprintf("Location: index.php?controller=noticias&action=view&id=%s",$noticia ->getId()));
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			}catch(Exception $ex) {
+				$this->view->popFlashF();
+		header("Location: index.php?controller=noticias&action=edit&id=$noticiaid");
 			}
+		
 		}
 
 		// Put the Post object visible to the view
@@ -321,6 +362,12 @@ class NoticiasController extends BaseController {
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("noticias", "edit");
+
+	}catch(Exception $ex) {
+		$this->view->popFlashF();
+header("Location: index.php?controller=noticias&action=showall&pagina=0");
+	}
+
 	}
 
 	/**
@@ -344,11 +391,15 @@ class NoticiasController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede añadir sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
-		}
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Borrar videotutoriales requiere rol de administrador");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
 		
 		// Get the Post object from the database
@@ -356,10 +407,10 @@ class NoticiasController extends BaseController {
 		$noticia = $this->noticiaMapper->findById($noticiaid);
 
 		// Does the post exist?
-		if ($noticia== NULL) {
-			throw new Exception("No existe dicho ese videotutorial");
+		if ($noticia == NULL) {
+			$this->view->setFlashF(i18n("No se puede encuentrar la noticia"));
+						throw new Exception();
 		}
-
 		
 		// Delete the Post object from the database
 		$this->noticiaMapper->delete($noticia);
@@ -375,5 +426,11 @@ class NoticiasController extends BaseController {
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
 		header("Location: index.php?controller=noticias&action=showall&pagina=0");
+	}catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=noticias&action=showall&pagina=0");
 	}
+	}
+
+
 }

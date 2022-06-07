@@ -54,9 +54,10 @@ class ContactosController extends BaseController {
 	*/
 
 	public function showAll() {
-		
+	
 		// obtain the data from the database
 		$contactos = $this->contactoMapper->findAll();
+		
 		// put the array containing Post object to the view
 		$estructuras = $this->estructuraMapper->findAll();
 		// put the array containing Post object to the view
@@ -67,7 +68,11 @@ class ContactosController extends BaseController {
 		
 		// render the view (/view/noticias/index.php)
 		$this->view->render("contactos", "showall");
+
 	}
+
+	
+	
 	/**
 	* Action to view a given post
 	*
@@ -189,13 +194,16 @@ $this->view->redirect("contactos", "showall");
 	* @return void
 	*/
 	public function add() {
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
-		}
-
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede añadir sin ser administrador"));
+						throw new Exception();
+				
+			}
+	
 		$contacto = new Contacto();
 
-		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+		if (isset($_POST["nombre"]) && isset($_POST["apellidos"]) && isset($_POST["email"]) && isset($_POST["cargo"]) && isset($_POST["telefono"]) && isset($_FILES["rutafoto"]["name"]) && isset($_POST["rutatwitter"])) { // reaching via HTTP Post...
 			
 		
 			$name=$_FILES['rutafoto']['name'];
@@ -216,8 +224,34 @@ $this->view->redirect("contactos", "showall");
 				
 
 			try {
+
+				if(strlen($contacto->getApellidos())<1   ){
+					$this->view->setFlashF(i18n("Apellidos muy cortos"));
+					throw new Exception();
+				}
+				if( strlen($contacto->getEmail()) < 5  ){
+					$this->view->setFlashF(i18n("Email demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($contacto->getNombre()) < 1  ){
+					$this->view->setFlashF(i18n("Nombre demasiado corto"));
+					throw new Exception();
+					
+				}
+				
+				if( strlen($contacto->getTelefono()) < 5  ){
+					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($contacto->getRutatwitter()) < 1  ){
+					$this->view->setFlashF(i18n("Ruta incorrecta"));
+					throw new Exception();
+					
+				}
 				// validate Post object
-				$contacto->checkIsValidForCreate(); // if it fails, ValidationException
+				
 
 				// save the Post object into the database
 				$this->contactoMapper->save($contacto);
@@ -230,15 +264,13 @@ $this->view->redirect("contactos", "showall");
 				$this->view->setFlash(sprintf(i18n("El contacto \"%s\" se agregó correctamente."),$contacto->getNombre()));
 
 				// perform the redirection. More or less:
-				//header("Location: index.php?controller=contactos&action=showall");
+				header("Location: index.php?controller=contactos&action=showall");
 				// die();
 				
 
-			} catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=contactos&action=add");
 			}
 		}
 
@@ -247,7 +279,10 @@ $this->view->redirect("contactos", "showall");
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("contactos", "add");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=contactos&action=showall");
+	}
 	}
 
 	/**
@@ -282,14 +317,16 @@ $this->view->redirect("contactos", "showall");
 	* @return void
 	*/
 	public function edit() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede añadir sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("No se encuentra el contacto");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
-
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Necesita ser administrador");
-		}
-
 
 		// Get the Post object from the database
 		$contactoid = $_GET["id"];
@@ -297,12 +334,13 @@ $this->view->redirect("contactos", "showall");
 
 		// Does the post exist?
 		if ($contacto == NULL) {
-			throw new Exception("No existe dicho ese contacto");
+			$this->view->setFlashF(i18n("No se encuentra el contacto"));
+						throw new Exception();
 		}
 
 		
 
-		if (isset($_POST["nombre"])) { // reaching via HTTP Post...
+		if (isset($_POST["nombre"]) && isset($_POST["apellidos"]) && isset($_POST["email"]) && isset($_POST["cargo"]) && isset($_POST["telefono"]) && isset($_FILES["rutafoto"]["name"]) && isset($_POST["rutatwitter"])) { // reaching via HTTP Post...
 			$name=$_FILES['rutafoto']['name'];
 			
 			$tmp_name=$_FILES['rutafoto']['tmp_name'];
@@ -318,8 +356,31 @@ $this->view->redirect("contactos", "showall");
 			$contacto->setRutafoto($_FILES["rutafoto"]["name"]);
 			$contacto->setRutatwitter($_POST["rutatwitter"]);
 			try {
-				// validate Post object
-				$contacto->checkIsValidForUpdate(); // if it fails, ValidationException
+				if(strlen($contacto->getApellidos())<1   ){
+					$this->view->setFlashF(i18n("Apellidos muy cortos"));
+					throw new Exception();
+				}
+				if( strlen($contacto->getEmail()) < 5  ){
+					$this->view->setFlashF(i18n("Email demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($contacto->getNombre()) < 1  ){
+					$this->view->setFlashF(i18n("Nombre demasiado corto"));
+					throw new Exception();
+					
+				}
+				
+				if( strlen($contacto->getTelefono()) < 5  ){
+					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($contacto->getRutatwitter()) < 1  ){
+					$this->view->setFlashF(i18n("Ruta incorrecta"));
+					throw new Exception();
+					
+				}
 
 				// update the Post object in the database
 				$this->contactoMapper->update($contacto);
@@ -336,11 +397,9 @@ $this->view->redirect("contactos", "showall");
 				// die();
 				header("Location: index.php?controller=contactos&action=showall");
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=contactos&action=edit&id=$contactoid");
 			}
 		}
 
@@ -350,6 +409,10 @@ $this->view->redirect("contactos", "showall");
 	// render the view (/view/posts/edit.php)
 	
 	$this->view->render("contactos", "edit");
+} catch(Exception $ex) {
+	$this->view->popFlashF();
+header("Location: index.php?controller=contactos&action=showall");
+}
 	}
 
 	/**
@@ -373,22 +436,26 @@ $this->view->redirect("contactos", "showall");
 	* @return void
 	*/
 	public function delete() {
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede añadir sin ser administrador"));
+						throw new Exception();
+				
+			}
 		if (!isset($_GET["id"])) {
-			throw new Exception("Se necesita la id");
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Necesita ser administrador");
-		}
+
 		
 		// Get the Post object from the database
 		$contactoid = $_GET["id"];
 		$contacto= $this->contactoMapper->findById($contactoid);
 
-		// Does the post exist?
-		if ($contacto== NULL) {
-			throw new Exception("No existe dicho ese contacto");
+		if ($contacto == NULL) {
+			$this->view->setFlashF(i18n("No se encuentra el contacto"));
+						throw new Exception();
 		}
-
 		
 		// Delete the Post object from the database
 		$this->contactoMapper->delete($contacto);
@@ -404,6 +471,9 @@ $this->view->redirect("contactos", "showall");
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
 		header("Location: index.php?controller=contactos&action=showall");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=contactos&action=showall");
+	}
 	}
 }

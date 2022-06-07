@@ -5,14 +5,22 @@
 
 #flash {
 	background-color:green;
-	animation: backgroundflash 5s forwards; 
+	animation: backgroundflash 12s forwards; 
+  
 }
 
 #flashf {
 	background-color:red;
-	animation: backgroundflash 5s forwards; 
+	animation: backgroundflash 12s forwards; 
+  
 }
+.modalgaleria{
+  width: 800px;
+  height: 600px;
+  margin-left: auto;
+  margin-right: auto;
 
+}
 .slider{
 	background: url("/images/sostenible2.jpg");
 	height: 100vh;

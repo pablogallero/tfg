@@ -81,33 +81,7 @@ class GaleriaController extends BaseController {
 	* @return void
 	*
 	*/
-	public function view(){
-		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
-		}
-
-		$postid = $_GET["id"];
-
-		// find the Post object in the database
-		$post = $this->postMapper->findByIdWithComments($postid);
-
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
-		}
-
-		// put the Post object to the view
-		$this->view->setVariable("post", $post);
-
-		// check if comment is already on the view (for example as flash variable)
-		// if not, put an empty Comment for the view
-		$comment = $this->view->getVariable("comment");
-		$this->view->setVariable("comment", ($comment==NULL)?new Comment():$comment);
-
-		// render the view (/view/posts/view.php)
-		$this->view->render("posts", "view");
-
-	}
-
+	
 	
 	/**
 	* Action to add a new post
@@ -137,13 +111,16 @@ class GaleriaController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Añadir imágenes requiere rol de administrador");
-		}
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede añadir sin ser administrador"));
+						throw new Exception();
+				
+			}
 
 		$galeria = new Galeria();
 
-		if (isset($_POST["titulo"] )&& isset($_FILES["imagen"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"] )&& isset($_FILES["imagen"]["name"])) { // reaching via HTTP Post...
 			
 			$name=$_FILES['imagen']['name'];
 			
@@ -157,6 +134,16 @@ class GaleriaController extends BaseController {
 		
 		
 			try {
+
+				if(strlen($contacto->getTitulo())<1   ){
+					$this->view->setFlashF(i18n("Titulo demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($contacto->getRuta()) < 1  ){
+					$this->view->setFlashF(i18n("Ruta demasiado corta"));
+					throw new Exception();
+					
+				}	
 				// validate Post object
 				//$post->checkIsValidForCreate(); // if it fails, ValidationException
 
@@ -171,15 +158,13 @@ class GaleriaController extends BaseController {
 				$this->view->setFlash(sprintf(i18n("La imagen \"%s\" se añadió correctamente."),$galeria ->getTitulo()));
 
 				// perform the redirection. More or less:
-				//header("Location: index.php?controller=galeria&action=showall&pagina=0");
+				header("Location: index.php?controller=galeria&action=showall&pagina=0");
 				// die();
 				
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=galeria&action=showall");
 			}
 		}
 
@@ -187,7 +172,10 @@ class GaleriaController extends BaseController {
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("galeria", "add");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=galeria&action=showall");
+	}
 	}
 
 	/**
@@ -222,12 +210,15 @@ class GaleriaController extends BaseController {
 	* @return void
 	*/
 	public function edit() {
-		if (!isset($_REQUEST["id"])) {
-			throw new Exception("A post id is mandatory");
-		}
-
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Borrar imágenes requiere rol de administrador");
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
+		if (!isset($_GET["id"])) {
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
 
 
@@ -237,10 +228,11 @@ class GaleriaController extends BaseController {
 
 		// Does the post exist?
 		if ($imagen == NULL) {
-			throw new Exception("No existe una imagen con esa id: ".$imagenid);
+			$this->view->setFlashF(i18n("No se encuentra la imagen"));
+						throw new Exception();
 		}
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"] )&& isset($_FILES["imagen"]["name"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
 			$post->setTitle($_POST["title"]);
@@ -265,11 +257,9 @@ class GaleriaController extends BaseController {
 				// die();
 				$this->view->redirect("posts", "index");
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=galeria&action=showall");
 			}
 		}
 
@@ -278,6 +268,10 @@ class GaleriaController extends BaseController {
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("posts", "edit");
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=galeria&action=showall");
+	}
 	}
 
 	/**
@@ -301,12 +295,18 @@ class GaleriaController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
-		if (!isset($_GET["imagen"])) {
-			throw new Exception("La imagen es necesaria");
+		try{
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("No se puede editar sin ser administrador"));
+						throw new Exception();
+				
+			}
+		if (!isset($_GET["id"])) {
+			$this->view->setFlashF(i18n("Se necesita una id"));
+						throw new Exception();
 		}
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Borrar imágenes requiere rol de administrador");
-		}
+
+
 
 
 		// Get the Post object from the database
@@ -315,9 +315,9 @@ class GaleriaController extends BaseController {
 
 		// Does the post exist?
 		if ($imagen == NULL) {
-			throw new Exception("No existe una imagen con esa id: ".$imagenid);
+			$this->view->setFlashF(i18n("No se encuentra la imagen"));
+						throw new Exception();
 		}
-
 
 		// Delete the Post object from the database
 		$this->galeriaMapper->delete($imagen);
@@ -333,6 +333,10 @@ class GaleriaController extends BaseController {
 		header("Location: index.php?controller=galeria&action=showall&pagina=0");
 		// die();
 		
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+	header("Location: index.php?controller=galeria&action=showall");
 	}
+	}
+	
 }

@@ -111,7 +111,7 @@ $currentuser = $view->getVariable("currentusername");
         
         <div class=" dropdown-menu-izq ">
           
-          <a class="dropdown-item material-icons" href="index.php" onclick="<?php //session_destroy();?>">settings_power</a>
+          <a class="dropdown-item material-icons" href="index.php?controller=users&amp;action=desconectar">settings_power</a>
         </div>
       </div>
       <?php } ?>
@@ -141,14 +141,11 @@ $currentuser = $view->getVariable("currentusername");
         <h4 class="lead">Grena</h4>
         
       </div>
-      <div class="col-md-3">
-        <h4 class="lead">Lorem ipsum</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, fugit?</p>
+      <div class="col-md-6">
+        <h4 class="lead"><?= i18n("¿Qué puedes encontrar en nuestra plataforma?") ?></h4>
+        <p><?= i18n("Nuestra plataforma busca ayudar a una mayor familiarización con el desarollo sostenible, !acercándolo cada vez a más gente!") ?></p>
       </div>
-      <div class="col-md-3">
-        <h4 class="lead">Lorem ipsum</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, quidem!</p>
-      </div>
+      
       <div class="col-md-3">
         <h4 class="lead">Síguenos</h4>
         <a href="https://twitter.com/MedioAmbAND"><span class="badge badge-primary">Twitter</span></a>

@@ -83,8 +83,11 @@ class VideotutorialesController extends BaseController {
 	*/
 	public function showcurrent(){
 		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
+			$this->view->setFlashF(i18n("No se encuentra la id"));
+					throw new Exception();
 		}
+	
+
 
 		$videotutoid = $_GET["id"];
 
@@ -92,7 +95,8 @@ class VideotutorialesController extends BaseController {
 		$videotutorial= $this->videotutorialMapper->findById($videotutoid);
 
 		if ($videotutorial == NULL) {
-			throw new Exception("No existe ningún videotutorial con esa id: ".$videotutoid);
+			$this->view->setFlashF(i18n("No se encuentra el videotutorial"));
+					throw new Exception();
 		}
 
 		// put the Post object to the view
@@ -105,7 +109,8 @@ class VideotutorialesController extends BaseController {
 
 	}
 
-	
+
+
 	/**
 	* Action to add a new post
 	*
@@ -134,13 +139,16 @@ class VideotutorialesController extends BaseController {
 	* @return void
 	*/
 	public function add() {
-		if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
-			throw new Exception("No se puede editar sin ser administrador");
-		}
-
+		try{
+			
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("Se requiere ser administrador"));
+						throw new Exception();
+			}
+	
 		$videotutorial = new Videotutorial();
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
+		if (isset($_POST["titulo"]) && isset($_POST["enlace"]) && isset($_POST["descripcion"])) { // reaching via HTTP Post...
 
 			// populate the Post object with data form the form
 			$videotutorial->setTitulo($_POST["titulo"]);
@@ -151,7 +159,20 @@ class VideotutorialesController extends BaseController {
 
 			try {
 				// validate Post object
-				$videotutorial->checkIsValidForCreate(); // if it fails, ValidationException
+				if(strlen($videotutorial->getTitulo())<1   ){
+					$this->view->setFlashF(i18n("Título demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($videotutorial->getEnlace()) < 5  ){
+					$this->view->setFlashF(i18n("Enlace demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($videotutorial->getDescripcion()) < 1  ){
+					$this->view->setFlashF(i18n("Descripción demasiado corta"));
+					throw new Exception();
+					
+				}
 
 				// save the Post object into the database
 				$this->videotutorialMapper->save($videotutorial);
@@ -168,11 +189,9 @@ class VideotutorialesController extends BaseController {
 				// die();
 				
 
-			} catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			} catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=videotutoriales&action=add");
 			}
 		}
 
@@ -181,7 +200,10 @@ class VideotutorialesController extends BaseController {
 
 		// render the view (/view/posts/add.php)
 		$this->view->render("videotutoriales", "add");
-
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+		header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
+	}
 	}
 
 	/**
@@ -216,13 +238,15 @@ class VideotutorialesController extends BaseController {
 	* @return void
 	*/
 	public function edit() {
-		if (!isset($_GET["id"])) {
-			throw new Exception("No se encuentra el videotutorial");
-		}
-
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Not in session. Editing posts requires login");
-		}
+		try{
+			if (!isset($_GET["id"])) {
+				$this->view->setFlashF(i18n("No se encuentra la id"));
+						throw new Exception();
+			}
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("Se requiere ser administrador"));
+						throw new Exception();
+			}
 
 
 		// Get the Post object from the database
@@ -231,7 +255,8 @@ class VideotutorialesController extends BaseController {
 
 		// Does the post exist?
 		if ($videotutorial == NULL) {
-			throw new Exception("No existe dicho ese videotutorial");
+			$this->view->setFlashF(i18n("No se encuentra el videotutorial"));
+					throw new Exception();
 		}
 
 		
@@ -243,8 +268,20 @@ class VideotutorialesController extends BaseController {
 			$videotutorial->setEnlace($_POST["enlace"]);
 			$videotutorial->setDescripcion($_POST["descripcion"]);
 			try {
-				// validate Post object
-				$videotutorial->checkIsValidForUpdate(); // if it fails, ValidationException
+				if(strlen($videotutorial->getTitulo())<1   ){
+					$this->view->setFlashF(i18n("Título demasiado corto"));
+					throw new Exception();
+				}
+				if( strlen($videotutorial->getEnlace()) < 5  ){
+					$this->view->setFlashF(i18n("Enlace demasiado corto"));
+					throw new Exception();
+					
+				}
+				if( strlen($videotutorial->getDescripcion()) < 1  ){
+					$this->view->setFlashF(i18n("Descripción demasiado corta"));
+					throw new Exception();
+					
+				}
 
 				// update the Post object in the database
 				$this->videotutorialMapper->update($videotutorial);
@@ -261,11 +298,9 @@ class VideotutorialesController extends BaseController {
 				// die();
 				header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
 
-			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
+			}catch(Exception $ex) {
+				$this->view->popFlashF();
+			header("Location: index.php?controller=videotutoriales&action=edit&id=$videotutorialid");
 			}
 		}
 
@@ -275,6 +310,10 @@ class VideotutorialesController extends BaseController {
 	// render the view (/view/posts/edit.php)
 	
 	$this->view->render("videotutoriales", "edit");
+		} catch(Exception $ex) {
+			$this->view->popFlashF();
+			header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
+		}
 	}
 
 	/**
@@ -298,20 +337,24 @@ class VideotutorialesController extends BaseController {
 	* @return void
 	*/
 	public function delete() {
-		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
-		}
-		if ($_SESSION['rol']!= "administrador") {
-			throw new Exception("Borrar videotutoriales requiere rol de administrador");
-		}
-		
+		try{
+			if (!isset($_GET["id"])) {
+				$this->view->setFlashF(i18n("No se encuentra la id"));
+						throw new Exception();
+			}
+			if (!(isset($_SESSION['rol'])&& $_SESSION['rol']=="administrador")) {
+				$this->view->setFlashF(i18n("Se requiere ser administrador"));
+						throw new Exception();
+			}
+
 		// Get the Post object from the database
 		$videotutorialid = $_GET["id"];
 		$videotutorial = $this->videotutorialMapper->findById($videotutorialid);
 
 		// Does the post exist?
 		if ($videotutorial== NULL) {
-			throw new Exception("No existe dicho ese videotutorial");
+			$this->view->setFlashF(i18n("No se encuentra el videotutorial"));
+					throw new Exception();
 		}
 
 		
@@ -329,6 +372,11 @@ class VideotutorialesController extends BaseController {
 		// header("Location: index.php?controller=posts&action=index")
 		// die();
 		header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
+
+	} catch(Exception $ex) {
+		$this->view->popFlashF();
+		header("Location: index.php?controller=videotutoriales&action=showall&pagina=0");
+	}
 
 	}
 }

@@ -27,7 +27,8 @@ $x=0;
                                     <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" type="text" value="<?= $patrocinador->getNombre() ?>" name="nombre"  onblur="comprobarAlfabetico(this.id,50)" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file" name="imagen" value="<?= $patrocinador->getImagen() ?>"  class="form-control"   required="required" > </div>
+                                    <img id="preview" src="images/placeholder.jpg" width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file" name="imagen" value="<?= $patrocinador->getImagen() ?>" accept="image/png, .jpeg, .jpg, image/gif" class="form-control"   required="required" > </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group"> <label for="titulo">Categoria</label> <select class="form-control" name="categoria" id="exampleFormControlSelect1">
@@ -71,3 +72,14 @@ $x=0;
     </div>
   </div>
 </div>
+
+
+<script>
+
+imagen.onchange = evt => {
+  const [file] = imagen.files
+  if (file) {
+    preview.src = URL.createObjectURL(file)
+  }
+}
+  </script>
