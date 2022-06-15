@@ -19,7 +19,7 @@ $currentuser = $view->getVariable("currentusername");
 	<link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
-
+  <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
 
  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>

@@ -18,17 +18,17 @@ $x=0;
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=patrocinadores&amp;action=edit&amp;id=<?= $patrocinador->getId() ?>" onsubmit="return validarformulariopatrocinador()" method="POST" enctype="multipart/form-data">
+                        <form id="contact-form" role="form" action="index.php?controller=patrocinadores&amp;action=edit&amp;id=<?= $patrocinador->getId() ?>" onsubmit="return validarformulariopatrocinadoredit()" method="POST" enctype="multipart/form-data">
                             <div class="controls">
 							
                                 
 									
                                     <div class="col-md-4">
-                                    <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" type="text" value="<?= $patrocinador->getNombre() ?>" name="nombre"  onblur="comprobarAlfabetico(this.id,50)" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
+                                    <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" type="text" value="<?= $patrocinador->getNombre() ?>" name="nombre"  onblur="validarVacio(this.id)" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
                                     </div>
                                     <div class="col-md-12">
-                                    <img id="preview" src="images/placeholder.jpg" width="150" height="150" alt="Preview" />
-                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file" name="imagen" value="<?= $patrocinador->getImagen() ?>" accept="image/png, .jpeg, .jpg, image/gif" class="form-control"   required="required" > </div>
+                                    <img id="preview" src="images/<?= $patrocinador->getImagen() ?>" width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file"  name="imagen" accept="image/png, .jpeg, .jpg, image/gif" class="form-control"  > </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group"> <label for="titulo">Categoria</label> <select class="form-control" name="categoria" id="exampleFormControlSelect1">

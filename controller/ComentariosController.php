@@ -165,7 +165,7 @@ catch(Exception $ex){
 	public function delete() {
 		try{
 		if (!isset($_GET["id"])) {
-			$this->view->setFlashF(i18n("Es necesaria una id"));
+			$this->view->setFlashF(i18n("No se encuentra la id"));
 			throw new Exception();
 			
 			

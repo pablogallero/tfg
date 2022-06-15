@@ -18,7 +18,7 @@ $view->setVariable("title", "Edit Post");
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=noticias&amp;action=edit&amp;id=<?=$noticia->getId() ?>" onsubmit="return validarformularionoticias()" method="POST" enctype="multipart/form-data">
+                        <form id="contact-form" role="form" action="index.php?controller=noticias&amp;action=edit&amp;id=<?=$noticia->getId() ?>" onsubmit="return validarformularionoticiasedit()" method="POST" enctype="multipart/form-data">
                             <div class="controls">
 							
                                 <div class="row">
@@ -27,8 +27,8 @@ $view->setVariable("title", "Edit Post");
                                         <div class="form-group"> <label for="titulo"><?= i18n("Título")?></label> <input id="titulo" onblur="validarVacio(this.id)" type="text" value="<?=$noticia->getTitulo() ?>" name="titulo" class="form-control" placeholder="<?= i18n("Introduzca aquí el título")?>"  > </div>
                                     </div>
                                     <div class="col-md-12">
-                                    <img id="preview" src="images/placeholder.jpg" width="150" height="150" alt="Preview" />
-                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Imagen")?></label> <input id="imagen"   type="file" name="imagenruta" accept="image/png, .jpeg, .jpg, image/gif" src="<?=$noticia->getImagenruta() ?>" class="form-control" placeholder="<?= i18n("Introduzca aquí la imagen")?>" > </div>
+                                    <img id="preview" src="images/<?=$noticia->getImagenruta() ?>" width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Imagen")?></label> <input id="imagen"   type="file" name="imagenruta" accept="image/png, .jpeg, .jpg, image/gif"  class="form-control" placeholder="<?= i18n("Introduzca aquí la imagen")?>" > </div>
                                     </div>
                                 </div>
                                 

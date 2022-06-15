@@ -18,7 +18,7 @@ $view->setVariable("title", "Edit Post");
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=users&amp;action=edit&amp;id=<?=$usuario->getId() ?>" onsubmit="return validarformularioadduser()" method="POST">
+                        <form id="contact-form" role="form" action="index.php?controller=users&amp;action=edit&amp;id=<?=$usuario->getId() ?>" onsubmit="return encryptpass() & validarformularioedituser()" method="POST">
                             <div class="controls">
 							
                                 <div class="row">
@@ -39,7 +39,8 @@ $view->setVariable("title", "Edit Post");
                                         <div class="form-group"> <label for="imagenruta"><?= i18n("Teléfono")?></label> <input id="telefono" type="text" name="telefono" onblur="comprobarTelf(this.id)" value="<?=$usuario->getTelefono() ?>" class="form-control" placeholder="Introduzca aquí el telefono" required="required" > </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Contraseña")?></label> <input id="passwd" type="password" name="passwd" onblur="comprobarTexto(this.id,25)" value="<?=$usuario->getPasswd()  ?>" class="form-control" placeholder="Introduzca aquí la contraseña" required="required" > </div>
+                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Contraseña")?></label> <input id="passwd" type="password" readonly name="passwd" onblur="comprobarTexto(this.id,50)" value="<?=$usuario->getPasswd()  ?>" class="form-control" placeholder="Introduzca aquí la contraseña" required="required" > </div>
+                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Nueva Contraseña")?></label> <input id="passwdnueva" type="password" name="passwdnueva" onblur="comprobarNuevaPass(this.id)"  class="form-control" placeholder="Si no desea cambiar la contraseña, deje el campo vacío"  > </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -75,7 +76,14 @@ $view->setVariable("title", "Edit Post");
         </div> <!-- /.row-->
     </div>
 </div>
+<script>
+function encryptpass(){
 
+  document.getElementById("passwdnueva").value= md5(document.getElementById("passwdnueva").value);
+
+  return true;
+}
+  </script>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

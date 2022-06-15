@@ -32,7 +32,7 @@ $errors = $view->getVariable("errors");
 									
                                     <div class="col-md-12">
                                     <img id="preview" src="images/placeholder.jpg"  width="150" height="150" alt="Preview" />
-                                        <div class="form-group"> <label for="titulo"><?= i18n("Imagen")?></label> <input id="imagen" type="file" name='imagen' class="form-control" onblur="validarVacio(this.id)" accept="image/png, .jpeg, .jpg, image/gif"  required="required" > </div>
+                                        <div class="form-group"> <label for="titulo"><?= i18n("Imagen")?></label> <input id="imagen" type="file" name='imagen' class="form-control" onchange="validarVacio(this.id)" accept="image/png, .jpeg, .jpg, image/gif"  > </div>
                                     </div>
                                     
                                 </div>

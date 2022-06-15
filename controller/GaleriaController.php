@@ -135,11 +135,11 @@ class GaleriaController extends BaseController {
 		
 			try {
 
-				if(strlen($contacto->getTitulo())<1   ){
+				if(strlen($galeria->getTitulo())<1   ){
 					$this->view->setFlashF(i18n("Titulo demasiado corto"));
 					throw new Exception();
 				}
-				if( strlen($contacto->getRuta()) < 1  ){
+				if( strlen($galeria->getRuta()) < 1  ){
 					$this->view->setFlashF(i18n("Ruta demasiado corta"));
 					throw new Exception();
 					
@@ -164,7 +164,7 @@ class GaleriaController extends BaseController {
 
 			} catch(Exception $ex) {
 				$this->view->popFlashF();
-			header("Location: index.php?controller=galeria&action=showall");
+			header("Location: index.php?controller=galeria&action=showall&pagina=0");
 			}
 		}
 
@@ -174,7 +174,7 @@ class GaleriaController extends BaseController {
 		$this->view->render("galeria", "add");
 	} catch(Exception $ex) {
 		$this->view->popFlashF();
-	header("Location: index.php?controller=galeria&action=showall");
+	header("Location: index.php?controller=galeria&action=showall&pagina=0");
 	}
 	}
 
@@ -259,7 +259,7 @@ class GaleriaController extends BaseController {
 
 			} catch(Exception $ex) {
 				$this->view->popFlashF();
-			header("Location: index.php?controller=galeria&action=showall");
+			header("Location: index.php?controller=galeria&action=showall&pagina=0");
 			}
 		}
 
@@ -270,7 +270,7 @@ class GaleriaController extends BaseController {
 		$this->view->render("posts", "edit");
 	} catch(Exception $ex) {
 		$this->view->popFlashF();
-	header("Location: index.php?controller=galeria&action=showall");
+	header("Location: index.php?controller=galeria&action=showall&pagina=0");
 	}
 	}
 
@@ -301,8 +301,8 @@ class GaleriaController extends BaseController {
 						throw new Exception();
 				
 			}
-		if (!isset($_GET["id"])) {
-			$this->view->setFlashF(i18n("Se necesita una id"));
+		if (!isset($_GET["imagen"])) {
+			$this->view->setFlashF(i18n("Se necesita una imagen"));
 						throw new Exception();
 		}
 
@@ -335,7 +335,7 @@ class GaleriaController extends BaseController {
 		
 	} catch(Exception $ex) {
 		$this->view->popFlashF();
-	header("Location: index.php?controller=galeria&action=showall");
+	header("Location: index.php?controller=galeria&action=showall&pagina=0");
 	}
 	}
 	

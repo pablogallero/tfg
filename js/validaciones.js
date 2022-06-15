@@ -11,20 +11,32 @@ function validarVacio(campo) {//Funcion que comprueba si el campo pasado por par
         document.getElementById(campo).style.borderColor="green";
         return true; }
 }
+
+function comprobarVacio(campo) {//Funcion que comprueba si el campo pasado por parametro es vacio;
+    var camp=document.getElementById(campo).value;//Guarda en la variable camp el valor del parametro pasado a la funcion
+    if (camp =="") {//Comprueba si el valor es vacio, si lo es devuelve false y pone el borde del campo en rojo,si no lo es devuelve true y pone el borde en verde
+        document.getElementById(campo).style.borderColor="red";
+       
+        return false;
+    }
+    else { 
+        document.getElementById(campo).style.borderColor="green";
+        return true; }
+}
 function comprobarTexto(campo, size) {//funcion que comprueba si el campo cumple la expresion regular y se ajusta al tamaño indicado
     var camp=document.getElementById(campo).value;//Guarda en la variable camp el valor del parametro pasado a la funcion
     var exprreg = /^([^\s\t]+)+$/;//Expresion regular que acepta 1 o mas ocurrencias de todo tipo de caracteres excepto de espacios en blanco
     if (!validarVacio(campo)) { return false; }//Comprueba si el campo esta vacio
     else {
-        if (camp.length > size) {//Comprueba si el campo no supera el valor pasado como parametro
+        if (camp.length > size || camp.length < 5 ) {//Comprueba si el campo no supera el valor pasado como parametro
             document.getElementById(campo).style.borderColor="red";
-            document.getElementById("parrafovalidacion").innerHTML="El tamaño del valor del campo de texto es incorrecto";
+            document.getElementById("parrafovalidacion").innerHTML="El tamaño del valor del campo de texto es incorrecto. Recuerda que no puede ser menor que 5.";
                 $('#exampleModal').modal('toggle');
            // alert("El campo excede el tamaño máximo");
             return false;
         }
         if (!comprobarExpresionRegular(campo, exprreg, size)) {//Comprueba si el campo no cumple la expresion regular
-            document.getElementById("parrafovalidacion").innerHTML="El formato del campo de texto es incorrecto";
+            document.getElementById("parrafovalidacion").innerHTML="El formato del campo de texto es incorrecto. No puede contener espacios en blanco.";
                 $('#exampleModal').modal('toggle');
 
 
@@ -87,6 +99,19 @@ function comprobarReal(campo, numerodecimales, valormenor, valormayor) {//Funcio
 
 }
 
+function comprobarNuevaPass(campo){
+if(!comprobarVacio(campo) || comprobarTexto(campo)){
+
+    document.getElementById(campo).style.borderColor="green";
+return true;
+}
+else{
+    document.getElementById(campo).style.borderColor="red";
+                document.getElementById("parrafovalidacion").innerHTML="El formato de la contraseña es incorrecto";
+                $('#exampleModal').modal('toggle');
+    return false;}
+
+}
 function comprobarDNI(campo) {//Funcion para ver si el campo pasado como parametro es un dni valido
     var camp;
     var exprreg = /^[0-9]{8}[A-Za-z]{1}$/;//Expresion regular que se cumple si hay 8 ocurrencias de digitos seguidas de una letra mayuscula o minuscula
@@ -164,7 +189,7 @@ function comprobarAlfabetico(campo, size) {//Funcion que comprueba que el campo 
 
 function validarformularioadduser(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
-if(comprobarTexto('username',25) && comprobarTexto('passwd',20) && comprobarDNI('dni') && comprobarTelf('telefono') && comprobarEmail('email') && validarVacio('direccion') ){
+if(comprobarTexto('username',25) && comprobarTexto('passwd',50) && comprobarDNI('dni') && comprobarTelf('telefono') && comprobarEmail('email') && validarVacio('direccion') ){
 return true;
 }
 else{//Si no se cumplen todas devuelve faslse y lanza una alerta
@@ -174,9 +199,21 @@ else{//Si no se cumplen todas devuelve faslse y lanza una alerta
 }
 }
 
+function validarformularioedituser(){//Funcion para comprobar que se cumple todas las funciones del formulario 
+
+    if(comprobarTexto('username',25) && comprobarTexto('passwd',50) && comprobarNuevaPass('passwdnueva',50) && comprobarDNI('dni') && comprobarTelf('telefono') && comprobarEmail('email') && validarVacio('direccion') ){
+    return true;
+    }
+    else{//Si no se cumplen todas devuelve faslse y lanza una alerta
+        document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
+            $('#exampleModal').modal('toggle');
+        return false;
+    }
+    }
+
 function validarformulariocontacto(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
-    if(comprobarAlfabetico('nombre',50) && comprobarAlfabetico('apellidos',50)  &&  comprobarTelf('telefono') && comprobarEmail('email') && comprobarTexto('twitter',25) ){
+    if(comprobarAlfabetico('nombre',50) && comprobarAlfabetico('apellidos',50) &&  validarVacio('fotoperfil')  &&  comprobarTelf('telefono') && comprobarEmail('email') && comprobarTexto('twitter',25) ){
     return true;
     }
     else{//Si no se cumplen todas devuelve false y lanza una alerta
@@ -185,6 +222,18 @@ function validarformulariocontacto(){//Funcion para comprobar que se cumple toda
         return false;
     }
     }
+
+    function validarformulariocontactoedit(){//Funcion para comprobar que se cumple todas las funciones del formulario 
+
+        if(comprobarAlfabetico('nombre',50) && comprobarAlfabetico('apellidos',50)  &&  comprobarTelf('telefono') && comprobarEmail('email') && comprobarTexto('twitter',25) ){
+        return true;
+        }
+        else{//Si no se cumplen todas devuelve false y lanza una alerta
+            document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
+            $('#exampleModal').modal('toggle');
+            return false;
+        }
+        }
 function validarformulariocontactar(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
         if(comprobarAlfabetico('nombre',50)  && comprobarEmail('email') && validarVacio('asunto') && validarVacio('mensaje') ){
@@ -198,7 +247,7 @@ function validarformulariocontactar(){//Funcion para comprobar que se cumple tod
         }
 function validarformulariopatrocinador(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
-            if(comprobarAlfabetico('nombre',50)  && validarVacio('imagen') ){
+            if(validarVacio('nombre')  && validarVacio('imagen') ){
             return true;
             }
             else{//Si no se cumplen todas devuelve false y lanza una alerta
@@ -206,7 +255,20 @@ function validarformulariopatrocinador(){//Funcion para comprobar que se cumple 
         $('#exampleModal').modal('toggle');
                 return false;
             }
-            }        
+            }      
+            
+function validarformulariopatrocinadoredit(){//Funcion para comprobar que se cumple todas las funciones del formulario 
+
+                if(validarVacio('nombre')  ){
+                return true;
+                }
+                else{//Si no se cumplen todas devuelve false y lanza una alerta
+                    document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
+            $('#exampleModal').modal('toggle');
+                    return false;
+                }
+                }        
+    
 
 function validarformulariocategoria(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
@@ -246,7 +308,7 @@ function validarformularioedit(){//Funcion para comprobar que se cumple todas la
 
     function validarformularioproyecto(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
-        if(validarVacio('titulo')  && validarVacio('iamgen')  && validarVacio('mytextarea') && validarVacio('mytextarea1') && validarVacio('mytextarea2') && validarVacio('mytextarea3')){
+        if(validarVacio('titulo')  && validarVacio('imagen')  && validarVacio('mytextarea') && validarVacio('mytextarea1') && validarVacio('mytextarea2') && validarVacio('mytextarea3')){
        return true;
        }
        else{//Si no se cumplen todas devuelve false y lanza una alerta
@@ -255,6 +317,19 @@ function validarformularioedit(){//Funcion para comprobar que se cumple todas la
             return false;
             }
             }     
+
+
+            function validarformularioproyectoedit(){//Funcion para comprobar que se cumple todas las funciones del formulario 
+
+                if(validarVacio('titulo')   && validarVacio('mytextarea') && validarVacio('mytextarea1') && validarVacio('mytextarea2') && validarVacio('mytextarea3')){
+               return true;
+               }
+               else{//Si no se cumplen todas devuelve false y lanza una alerta
+                   document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
+           $('#exampleModal').modal('toggle');
+                    return false;
+                    }
+                    }     
 
     function validarformulariocalendarioadd(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
@@ -305,6 +380,18 @@ function validarformularionoticias(){//Funcion para comprobar que se cumple toda
                  return false;
                  }
                  }   
+
+                 function validarformularionoticiasedit(){//Funcion para comprobar que se cumple todas las funciones del formulario 
+
+                    if(validarVacio('titulo')   && validarVacio('cuerponoticia')  ){
+                   return true;
+                   }
+                   else{//Si no se cumplen todas devuelve false y lanza una alerta
+                       document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
+               $('#exampleModal').modal('toggle');
+                        return false;
+                        }
+                        }   
 
 function validarformulariovideotutoriales(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 

@@ -18,7 +18,7 @@ $proyecto= $view->getVariable("proyecto");
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=proyectos&amp;action=edit&amp;id=<?=$proyecto->getId() ?>" onsubmit="return validarformularioproyecto()"  method="POST" enctype="multipart/form-data">
+                        <form id="contact-form" role="form" action="index.php?controller=proyectos&amp;action=edit&amp;id=<?=$proyecto->getId() ?>" onsubmit="return validarformularioproyectoedit()"  method="POST" enctype="multipart/form-data">
                             <div class="controls">
 							
                                 <div class="row">
@@ -31,8 +31,8 @@ $proyecto= $view->getVariable("proyecto");
                                 <div class="row">
 									
                                     <div class="col-md-12">
-                                    <img id="preview" src="images/placeholder.jpg" width="150" height="150" alt="Preview" />
-                                        <div class="form-group"> <label for="titulo"><?= i18n("Imagen")?></label> <input id="imagen" type="file" name='imagen' class="form-control" value="<?= $proyecto->getImagen() ?>" accept="image/png, .jpeg, .jpg, image/gif" required="required" > </div>
+                                    <img id="preview" src="images/<?= $proyecto->getImagen() ?>" width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="titulo"><?= i18n("Imagen")?></label> <input id="imagen" type="file" name='imagen' class="form-control"  accept="image/png, .jpeg, .jpg, image/gif"  > </div>
                                     </div>
                                     
                                 </div>

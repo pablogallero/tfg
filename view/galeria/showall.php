@@ -64,9 +64,9 @@ $fila=0;
         </button>
       </div>
      
-      <img  id="imagenbigadmin"  alt="Galeria Imagen"> 
+      <img  id="imagenbigadmin"   alt="Galeria Imagen"> 
       
-    </div>
+    
     <div class="modal-footer">
     <button type="button" class="btn btn-danger" id="botonborrar" ><?= i18n("Eliminar")?></button>
    
@@ -78,6 +78,7 @@ $fila=0;
         <!-- MODAL ELIMINAR Videotutorial-->
 
         </div>
+  </div>
   </div>
 <script>
 
@@ -112,15 +113,15 @@ function aumentarAdmin(id){
         $paginaanterior=$pagina-1;  
        ?>
 
-        </section>
-      <a href="index.php?controller=galeria&amp;action=showall&amp;pagina=<?=$paginaanterior?>"> <i class=" mt-1   material-icons ">arrow_back</i></a>
+       
+      <a class="floatleft ml-5 mb-2" href="index.php?controller=galeria&amp;action=showall&amp;pagina=<?=$paginaanterior?>"> <i class=" mt-1   material-icons ">arrow_back</i></a>
       <?php }
       if($pagina<$numpaginas-1){
         $paginasiguiente=$pagina+1;
         ?>
-      <a href="index.php?controller=galeria&amp;action=showall&amp;pagina=<?=$paginasiguiente?>"> <i class=" mt-1   material-icons ">arrow_forward</i></a>
+      <a class="floatright mr-5 mt-2" href="index.php?controller=galeria&amp;action=showall&amp;pagina=<?=$paginasiguiente?>"> <i class=" ml-2 mt-1   material-icons ">arrow_forward</i></a>
       <?php } ?>
 
-      
+      </section> 
 
 

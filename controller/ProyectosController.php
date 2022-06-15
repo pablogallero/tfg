@@ -284,8 +284,8 @@ class ProyectosController extends BaseController {
 		}
 
 
-		if (isset($_POST["titulo"])) { // reaching via HTTP Post...
-			
+		if (isset($_POST["titulo"]) && $_POST["introduccion"] && $_POST["objetivos"] && $_POST["metodologia"] && $_POST["conclusiones"]) { // reaching via HTTP Post...
+			if($_FILES['imagen']['name']!=""){
 			$name=$_FILES['imagen']['name'];
 			
 			$tmp_name=$_FILES['imagen']['tmp_name'];
@@ -293,24 +293,23 @@ class ProyectosController extends BaseController {
 
 			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
 			// populate the Post object with data form the form
-			$proyecto->setTitulo($_POST["titulo"]);
+			
 			$proyecto->setImagen($_FILES["imagen"]["name"]);
+			}
+			
+			$proyecto->setTitulo($_POST["titulo"]);
 			$proyecto->setIntroduccion($_POST["introduccion"]);
 			$proyecto->setObjetivos($_POST["objetivos"]);
 			$proyecto->setMetodologia($_POST["metodologia"]);
 
 			$proyecto->setConclusiones($_POST["conclusiones"]);
-
+			
 			try {
 				if(strlen($proyecto->getTitulo())<5   ){
 					$this->view->setFlashF(i18n("Título demasiado corto"));
 					throw new Exception();
 				}
-				if( strlen($proyecto->getImagen()) < 1  ){
-					$this->view->setFlashF(i18n("Imagen no encontrada"));
-					throw new Exception();
-					
-				}
+				
 				if( strlen($proyecto->getIntroduccion()) < 5  ){
 					$this->view->setFlashF(i18n("Introducción demasiado corta"));
 					throw new Exception();
@@ -327,7 +326,7 @@ class ProyectosController extends BaseController {
 					
 				}
 				if( strlen($proyecto->getConclusiones()) < 5  ){
-					$this->view->setFlashF(i18n("Conclusiones demasiado corto"));
+					$this->view->setFlashF(i18n("Conclusiones demasiado cortas"));
 					throw new Exception();
 					
 				}
@@ -345,7 +344,7 @@ class ProyectosController extends BaseController {
 				// perform the redirection. More or less:
 				// header("Location: index.php?controller=posts&action=index")
 				// die();
-				//$this->view->redirect("proyectos", "showall");
+				$this->view->redirect("proyectos", "showall");
 
 			}catch(Exception $ex) {
 				$this->view->popFlashF();

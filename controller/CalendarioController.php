@@ -67,57 +67,6 @@ class CalendarioController extends BaseController {
 		// render the view (/view/noticias/index.php)
 		$this->view->render("calendario", "showall");
 	}
-	/**
-	* Action to view a given post
-	*
-	* This action should only be called via GET
-	*
-	* The expected HTTP parameters are:
-	* <ul>
-	* <li>id: Id of the post (via HTTP GET)</li>
-	* </ul>
-	*
-	* The views are:
-	* <ul>
-	* <li>posts/view: If post is successfully loaded (via include).	Includes these view variables:</li>
-	* <ul>
-	*	<li>post: The current Post retrieved</li>
-	*	<li>comment: The current Comment instance, empty or
-	*	being added (but not validated)</li>
-	* </ul>
-	* </ul>
-	*
-	* @throws Exception If no such post of the given id is found
-	* @return void
-	*
-	*/
-	public function view(){
-		if (!isset($_GET["id"])) {
-			throw new Exception("id is mandatory");
-		}
-
-		$postid = $_GET["id"];
-
-		// find the Post object in the database
-		$post = $this->postMapper->findByIdWithComments($postid);
-
-		if ($post == NULL) {
-			throw new Exception("no such post with id: ".$postid);
-		}
-
-		// put the Post object to the view
-		$this->view->setVariable("post", $post);
-
-		// check if comment is already on the view (for example as flash variable)
-		// if not, put an empty Comment for the view
-		$comment = $this->view->getVariable("comment");
-		$this->view->setVariable("comment", ($comment==NULL)?new Comment():$comment);
-
-		// render the view (/view/posts/view.php)
-		$this->view->render("posts", "view");
-
-	}
-
 	
 	/**
 	* Action to add a new post
@@ -159,15 +108,13 @@ class CalendarioController extends BaseController {
 			throw new Exception();
 		}
 		
-		if (isset($_POST['title'])) { // reaching via HTTP Post...
-			
-			// populate the Post object with data form the form
+		if (isset($_POST['title'])) { 
 			$evento->setTitulo($_POST['title']);
 			$evento->setColor($_POST['color']);
 			$evento->setInicio($_POST['start_date']." ".$_POST['start_hour']);
 			$evento->setFin($_POST['end_date']." ".$_POST['end_hour']);
 
-			// The user of the Post is the currentUser (user in session)
+			
 			
 
 			try {
@@ -187,27 +134,25 @@ class CalendarioController extends BaseController {
 					
 				}
 				if( $evento->getFin() == NULL  ){
-					$this->view->setFlashF(i18n("La fecha de inicio es incorrecta"));
+					$this->view->setFlashF(i18n("La fecha de finalización es incorrecta"));
 					throw new Exception();
 					
 				}
-				// save the Post object into the database
+				// save the event into the database
 				$this->calendarioMapper->save($evento);
 
 				// POST-REDIRECT-GET
-				// Everything OK, we will redirect the user to the list of posts
+				// Everything OK, we will redirect the user to the calendar
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
 				$this->view->setFlash("La inserción se realizó correctamente");
 
-				// perform the redirection. More or less:
-				// header("Location: index.php?controller=posts&action=index")
-				// die();
+				
 				$this->view->redirect("calendario", "showall");
 
 			}catch(Exception $ex) {
-				// Get the errors array inside the exepction...
+				// Exception
 				$this->view->popFlashF();
 				header("Location: index.php?controller=calendario&action=showall");
 			}
@@ -220,37 +165,7 @@ class CalendarioController extends BaseController {
 
 	}
 
-	/**
-	* Action to edit a post
-	*
-	* When called via GET, it shows an edit form
-	* including the current data of the Post.
-	* When called via POST, it modifies the post in the
-	* database.
-	*
-	* The expected HTTP parameters are:
-	* <ul>
-	* <li>id: Id of the post (via HTTP POST and GET)</li>
-	* <li>title: Title of the post (via HTTP POST)</li>
-	* <li>content: Content of the post (via HTTP POST)</li>
-	* </ul>
-	*
-	* The views are:
-	* <ul>
-	* <li>posts/edit: If this action is reached via HTTP GET (via include)</li>
-	* <li>posts/index: If post was successfully edited (via redirect)</li>
-	* <li>posts/edit: If validation fails (via include). Includes these view variables:</li>
-	* <ul>
-	*	<li>post: The current Post instance, empty or being added (but not validated)</li>
-	*	<li>errors: Array including per-field validation errors</li>
-	* </ul>
-	* </ul>
-	* @throws Exception if no id was provided
-	* @throws Exception if no user is in session
-	* @throws Exception if there is not any post with the provided id
-	* @throws Exception if the current logged user is not the author of the post
-	* @return void
-	*/
+
 	public function edit() {
 		try{
 			if (!isset($_SESSION['rol']) || $_SESSION['rol']!="administrador"){
@@ -259,7 +174,7 @@ class CalendarioController extends BaseController {
 			}
 	
 			
-		// Get the Post object from the database
+		// Get the event object from the database
 		$eventoid = $_POST["ided"];
 		if (!isset($_POST["ided"])) {
 			$this->view->setFlashF(i18n("No se encuentra la id"));
@@ -267,7 +182,7 @@ class CalendarioController extends BaseController {
 		}
 		$evento = $this->calendarioMapper->findById($eventoid);
 
-		// Does the post exist?
+		// Does the event exist?
 		if ($evento == NULL) {
 			$this->view->setFlashF(i18n("No se encuentra el evento"));
 			throw new Exception();
@@ -296,7 +211,7 @@ class CalendarioController extends BaseController {
 				
 			}
 			if( $evento->getFin() == NULL  ){
-				$this->view->setFlashF(i18n("La fecha de inicio es incorrecta"));
+				$this->view->setFlashF(i18n("La fecha de finalización es incorrecta"));
 				throw new Exception();
 				
 			}
@@ -386,7 +301,7 @@ class CalendarioController extends BaseController {
 		// We want to see a message after redirection, so we establish
 		// a "flash" message (which is simply a Session variable) to be
 		// get in the view after redirection.
-		$this->view->setFlash("Evento borrado correctamente");
+		$this->view->setFlash("Evento eliminado correctamente");
 
 		// perform the redirection. More or less:
 		// header("Location: index.php?controller=posts&action=index")

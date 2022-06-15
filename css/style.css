@@ -11,6 +11,7 @@
 
 #flashf {
 	background-color:red;
+  
 	animation: backgroundflash 12s forwards; 
   
 }
