@@ -301,15 +301,17 @@ header("Location: index.php?controller=patrocinadores&action=showall");
 		
 
 		if (isset($_POST["nombre"])&& isset($_FILES["imagen"]["name"]) && isset($_POST["categoria"])) { // reaching via HTTP Post...
+			if($_FILES['imagen']['name']!=""){
 			$name=$_FILES['imagen']['name'];
 			
 			$tmp_name=$_FILES['imagen']['tmp_name'];
 			$upload_folder="images/";
 
 			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
+			$patrocinador->setImagen($_FILES["imagen"]["name"]);}
 			// populate the Post object with data form the form
 			$patrocinador->setNombre($_POST["nombre"]);
-			$patrocinador->setImagen($_FILES["imagen"]["name"]);
+			
 			$patrocinador->setCategoria($_POST["categoria"]);
 			try {
 				if(strlen($patrocinador->getNombre())<1   ){

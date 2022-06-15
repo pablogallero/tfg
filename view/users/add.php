@@ -18,7 +18,7 @@ $errors = $view->getVariable("errors");
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=users&amp;action=add" onsubmit="return validarformularioadduser()" method="POST">
+                        <form id="contact-form" role="form" action="index.php?controller=users&amp;action=add" onsubmit="return encryptpass() & validarformularioadduser()" method="POST">
                             <div class="controls">
 							
                                 <div class="row">
@@ -39,7 +39,7 @@ $errors = $view->getVariable("errors");
                                         <div class="form-group"> <label for="imagenruta"><?= i18n("Teléfono")?></label> <input id="telefono" type="text" name="telefono"  onblur="comprobarTelf(this.id)" class="form-control"  required="required" > </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Contraseña")?></label> <input id="passwd" type="password" name="passwd" onblur="comprobarTexto(this.id,25)" class="form-control"  required="required" > </div>
+                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Contraseña")?></label> <input id="passwd" type="password" name="passwd" onblur="comprobarTexto(this.id,50)" class="form-control"  required="required" > </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -75,7 +75,14 @@ $errors = $view->getVariable("errors");
         </div> <!-- /.row-->
     </div>
 </div>
+<script>
+function encryptpass(){
 
+  document.getElementById("passwd").value= md5(document.getElementById("passwd").value);
+
+  return true;
+}
+  </script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

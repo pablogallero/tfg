@@ -17,7 +17,7 @@ $errors = $view->getVariable("errors");
 
             <div class="mb-md-5 mt-md-4 pb-5">
 
-            <form action="index.php?controller=users&amp;action=register" onsubmit="return validarformularioadduser()" method="POST">
+            <form id="registerform" action="index.php?controller=users&amp;action=register" onsubmit="return  encryptpass()  & validarformularioadduser() " method="POST">
               
               <label class="form-label" for="typeEmailX">Email</label>
                 <input type="email"  name="email"  id="typeEmailX"  onblur="comprobarEmail(this.id)" class="form-control form-control-lg mb-3" />
@@ -26,7 +26,7 @@ $errors = $view->getVariable("errors");
 
               <div class="form-outline form-white mb-4">
               <label class="form-label" for="typePasswordX">Contraseña</label>
-                <input type="password" name="passwd" id="typePasswordX"  onblur="comprobarTexto(this.id,25)" class="form-control form-control-lg mb-3" />
+                <input type="password" name="passwd" id="typePasswordX"   onblur="comprobarTexto(this.id,50)" class="form-control form-control-lg mb-3" />
             
 				<label class="form-label" for="typeUsernameX">Nombre de usuario</label>
                 <input type="text"  name="username" id="typeUsernameX"  onblur="comprobarTexto(this.id,25)" class="form-control form-control-lg mb-3" />
@@ -43,7 +43,7 @@ $errors = $view->getVariable("errors");
        				
        				
 				</select> 
-            
+            <?php  ?>
               
             </form>
             
@@ -64,10 +64,22 @@ $errors = $view->getVariable("errors");
   </div>
 </section>
 
+
 <?php $view->moveToFragment("css");?>
 <link rel="stylesheet" type="text/css" src="css/style2.css">
 <?php $view->moveToDefaultFragment(); ?>
 
+
+
+
+<script>
+function encryptpass(){
+
+  document.getElementById("typePasswordX").value= md5(document.getElementById("typePasswordX").value);
+
+  return true;
+}
+  </script>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

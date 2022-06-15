@@ -76,7 +76,7 @@ $currentuser = $view->getVariable("currentusername");
             
           </div>
           <div class="col-md-5">
-            <img class=" img-fluid mx-auto" src="images/cards1.png" alt="Generic placeholder image">
+            <img class=" img-fluid mx-auto" src="images/proyectospaginainicio.jpg" alt="Generic placeholder image">
           </div>
         </div>
         

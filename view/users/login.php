@@ -16,7 +16,7 @@ $errors = $view->getVariable("errors");
 
             <div class="mb-md-5 mt-md-4 pb-5">
 
-            <form action="index.php?controller=users&amp;action=login" method="POST">
+            <form action="index.php?controller=users&amp;action=login" onsubmit="return encryptpass()" method="POST">
               
               <label class="form-label" for="typeEmailX">Email</label>
                 <input type="email"  name="email" id="typeEmailX" class="form-control form-control-lg mb-3" />
@@ -52,6 +52,15 @@ $errors = $view->getVariable("errors");
 <?php $view->moveToFragment("css");?>
 <link rel="stylesheet" type="text/css" src="css/style2.css">
 <?php $view->moveToDefaultFragment(); ?>
+
+<script>
+function encryptpass(){
+
+  document.getElementById("typePasswordX").value= md5(document.getElementById("typePasswordX").value);
+
+  return true;
+}
+  </script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

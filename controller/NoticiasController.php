@@ -213,7 +213,7 @@ header("Location: index.php?controller=noticias&action=showall&pagina=0");
 					
 				}
 				if( strlen($noticia->getImagenruta()) < 1  ){
-					$this->view->setFlashF(i18n("Tamaño incorrecto"));
+					$this->view->setFlashF(i18n("Tamaño incorrecto de imagen"));
 					throw new Exception();
 					
 				}
@@ -306,16 +306,19 @@ header("Location: index.php?controller=noticias&action=showall&pagina=0");
 		}
 
 		if (isset($_POST["titulo"]) && isset($_POST["cuerponoticia"]) && isset($_FILES["imagenruta"]["name"])) { // reaching via HTTP Post...
+			if($_FILES['imagenruta']['name']!=""){
 			$name=$_FILES['imagenruta']['name'];
 			
 			$tmp_name=$_FILES['imagenruta']['tmp_name'];
 			$upload_folder="images/";
 
 			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
+			$noticia->setImagenruta($_FILES["imagenruta"]["name"]);
+			}
 			// populate the Post object with data form the form
 			$noticia->setTitulo($_POST["titulo"]);
 			$noticia->setCuerponoticia($_POST["cuerponoticia"]);
-			$noticia->setImagenruta($_FILES["imagenruta"]["name"]);
+			
 
 			try {
 				
@@ -329,7 +332,7 @@ header("Location: index.php?controller=noticias&action=showall&pagina=0");
 					
 				}
 				if( strlen($noticia->getImagenruta()) < 1  ){
-					$this->view->setFlashF(i18n("Tamaño incorrecto"));
+					$this->view->setFlashF(i18n("Tamaño incorrecto de imagen"));
 					throw new Exception();
 					
 				}

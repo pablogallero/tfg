@@ -65,15 +65,16 @@ class UsersController extends BaseController {
 	*/
 	public function login() {
 		try{
+		
 		if (isset($_POST["email"]) && isset($_POST["passwd"])){ // reaching via HTTP Post...
 			//process login form
 			if ($this->userMapper->isValidUser($_POST["email"], $_POST["passwd"])) {
-				if(strlen($_POST["email"])<5   ){
+				if(!preg_match('/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/',$_POST["email"])  ){
 					$this->view->setFlashF(i18n("Formato incorrecto del email"));
 					throw new Exception();
 				}
-				if( strlen($_POST["passwd"]) < 5  ){
-					$this->view->setFlashF(i18n("Contraseña demasiado corta"));
+				if( !preg_match('/^([^\s\t]+)+$/',$_POST["passwd"]) || strlen($_POST["passwd"]) < 5  ){
+					$this->view->setFlashF(i18n("La contraseña no puede tener espacios ni ser menor de 5 caracteres"));
 					throw new Exception();
 					
 				}
@@ -145,32 +146,32 @@ class UsersController extends BaseController {
 			$user->setRol("usuario");
 
 			try{
-				if(strlen($user->getEmail())<5   ){
+				if(!preg_match('/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/',$user->getEmail())  ){
 					$this->view->setFlashF(i18n("Formato incorrecto del email"));
 					throw new Exception();
 				}
-				if( strlen($user->getPasswd()) < 5  ){
-					$this->view->setFlashF(i18n("Contraseña demasiado corta"));
+				if( !preg_match('/^([^\s\t]+)+$/',$user->getPasswd()) || strlen($user->getPasswd()) < 5  ){
+					$this->view->setFlashF(i18n("La contraseña no puede tener espacios ni ser menor de 5 caracteres"));
 					throw new Exception();
 					
 				}
-				if( strlen($user->getUsername()) < 1  ){
-					$this->view->setFlashF(i18n("Nombre de usuario demasiado corto"));
+				if( !preg_match('/^([^\s\t]+)+$/',$user->getUsername()) || strlen($user->getUsername()) < 5  ){
+					$this->view->setFlashF(i18n("El nombre de usuario no puede tener espacios ni ser menor de 5 caracteres"));
 					throw new Exception();
 					
 				}
-				if( strlen($user->getDni()) < 5  ){
-					$this->view->setFlashF(i18n("DNI demasiado corto"));
+				if( !preg_match('/^[0-9]{8}[A-Za-z]{1}$/',$user->getDni()) || strlen($user->getDni()) < 9 || strlen($user->getDni()) > 9 ){
+					$this->view->setFlashF(i18n("Formato de DNI inválido"));
 					throw new Exception();
 					
 				}
-				if( strlen($user->getTelefono()) < 5  ){
-					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+				if( !preg_match('/^(\+34|34)?[\s|\-|\.]?[6|7|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$/',$user->getTelefono()) ){
+					$this->view->setFlashF(i18n("Formato de teléfono inválido"));
 					throw new Exception();
 					
 				}
-				if( strlen($user->getDireccion()) < 5  ){
-					$this->view->setFlashF(i18n("Dirección demasiado corta"));
+				if( strlen($user->getDireccion()) < 1  ){
+					$this->view->setFlashF(i18n("La dirección no puede estar vacía"));
 					throw new Exception();
 					
 				}
@@ -267,35 +268,36 @@ class UsersController extends BaseController {
 				
 
 			try {
-				if(strlen($usuario->getEmail())<5   ){
+				if(!preg_match('/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/',$usuario->getEmail())  ){
 					$this->view->setFlashF(i18n("Formato incorrecto del email"));
 					throw new Exception();
 				}
-				if( strlen($usuario->getPasswd()) < 5  ){
-					$this->view->setFlashF(i18n("Contraseña demasiado corta"));
+				if( !preg_match('/^([^\s\t]+)+$/',$usuario->getPasswd()) || strlen($usuario->getPasswd()) < 5  ){
+					$this->view->setFlashF(i18n("La contraseña no puede tener espacios ni ser menor de 5 caracteres"));
 					throw new Exception();
 					
 				}
-				if( strlen($usuario->getUsername()) < 1  ){
-					$this->view->setFlashF(i18n("Nombre de usuario demasiado corto"));
+				if( !preg_match('/^([^\s\t]+)+$/',$usuario->getUsername()) || strlen($usuario->getUsername()) < 5  ){
+					$this->view->setFlashF(i18n("El nombre de usuario no puede tener espacios ni ser menor de 5 caracteres"));
 					throw new Exception();
 					
 				}
-				if( strlen($usuario->getDni()) < 5  ){
-					$this->view->setFlashF(i18n("DNI demasiado corto"));
+				if( !preg_match('/^[0-9]{8}[A-Za-z]{1}$/',$usuario->getDni()) || strlen($usuario->getDni()) < 9 || strlen($usuario->getDni()) > 9 ){
+					$this->view->setFlashF(i18n("Formato de DNI inválido"));
 					throw new Exception();
 					
 				}
-				if( strlen($usuario->getTelefono()) < 5  ){
-					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+				if( !preg_match('/^(\+34|34)?[\s|\-|\.]?[6|7|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$/',$usuario->getTelefono()) ){
+					$this->view->setFlashF(i18n("Formato de teléfono inválido"));
 					throw new Exception();
 					
 				}
-				if( strlen($usuario->getDireccion()) < 5  ){
-					$this->view->setFlashF(i18n("Dirección demasiado corta"));
+				if( strlen($usuario->getDireccion()) < 1  ){
+					$this->view->setFlashF(i18n("La dirección no puede estar vacía"));
 					throw new Exception();
 					
 				}
+				
 				// validate Post object
 				if (!($this->userMapper->EmailExists($_POST["email"]) || $this->userMapper->DniExists($_POST["dni"]) || $this->userMapper->UsernameExists($_POST["username"])|| $this->userMapper->TelefonoExists($_POST["telefono"]))){
 				// save the Post object into the database
@@ -389,36 +391,40 @@ class UsersController extends BaseController {
 			$usuario->setDireccion($_POST["direccion"]);
 			$usuario->setGenero($_POST["genero"]);
 			$usuario->setRol($_POST["rol"]);
+			if($_POST["passwdnueva"] != "d41d8cd98f00b204e9800998ecf8427e"){
+			$usuario->setPassword($_POST["passwdnueva"]);
+			}	
 			try {
-				if(strlen($usuario->getEmail())<5   ){
+				if(!preg_match('/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/',$usuario->getEmail())  ){
 					$this->view->setFlashF(i18n("Formato incorrecto del email"));
 					throw new Exception();
 				}
-				if( strlen($usuario->getPasswd()) < 5  ){
-					$this->view->setFlashF(i18n("Contraseña demasiado corta"));
+				if( !preg_match('/^([^\s\t]+)+$/',$usuario->getPasswd()) || strlen($usuario->getPasswd()) < 5  ){
+					$this->view->setFlashF(i18n("La contraseña no puede tener espacios ni ser menor de 5 caracteres"));
 					throw new Exception();
 					
 				}
-				if( strlen($usuario->getUsername()) < 1  ){
-					$this->view->setFlashF(i18n("Nombre de usuario demasiado corto"));
+				if( !preg_match('/^([^\s\t]+)+$/',$usuario->getUsername()) || strlen($usuario->getUsername()) < 5  ){
+					$this->view->setFlashF(i18n("El nombre de usuario no puede tener espacios ni ser menor de 5 caracteres"));
 					throw new Exception();
 					
 				}
-				if( strlen($usuario->getDni()) < 5  ){
-					$this->view->setFlashF(i18n("DNI demasiado corto"));
+				if( !preg_match('/^[0-9]{8}[A-Za-z]{1}$/',$usuario->getDni()) || strlen($usuario->getDni()) < 9 || strlen($usuario->getDni()) > 9 ){
+					$this->view->setFlashF(i18n("Formato de DNI inválido"));
 					throw new Exception();
 					
 				}
-				if( strlen($usuario->getTelefono()) < 5  ){
-					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+				if( !preg_match('/^(\+34|34)?[\s|\-|\.]?[6|7|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$/',$usuario->getTelefono()) ){
+					$this->view->setFlashF(i18n("Formato de teléfono inválido"));
 					throw new Exception();
 					
 				}
-				if( strlen($usuario->getDireccion()) < 5  ){
-					$this->view->setFlashF(i18n("Dirección demasiado corta"));
+				if( strlen($usuario->getDireccion()) < 1  ){
+					$this->view->setFlashF(i18n("La dirección no puede estar vacía"));
 					throw new Exception();
 					
 				}
+				
 				// validate Post object
 				//$usuario->checkIsValidForUpdate(); // if it fails, ValidationException
 				

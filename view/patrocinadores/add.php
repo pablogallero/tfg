@@ -24,11 +24,11 @@ $x=0;
                                 
 									
                                     <div class="col-md-4">
-                                    <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" type="text" name="nombre" onblur="comprobarAlfabetico(this.id,50)" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
+                                    <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" type="text" name="nombre" onblur="validarVacio(this.id)" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
                                     </div>
                                     <div class="col-md-12">
                                     <img id="preview" src="images/placeholder.jpg" width="150" height="150" alt="Preview" />
-                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file" name="imagen"   class="form-control" accept="image/png, .jpeg, .jpg, image/gif" required="required" > </div>
+                                        <div class="form-group"> <label for="imagenruta">Imagen</label> <input id="imagen" type="file" name="imagen"  onchange="validarVacio(this.id)" class="form-control" accept="image/png, .jpeg, .jpg, image/gif" required="required" > </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group"> <label for="titulo">Categoria</label> <select class="form-control" name="categoria" id="exampleFormControlSelect1">

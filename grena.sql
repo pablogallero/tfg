@@ -28,7 +28,7 @@
 		ID_USUARIO INT(10) AUTO_INCREMENT,
 		USERNAME VARCHAR(255) NOT NULL UNIQUE,
 		DNI VARCHAR(255) NOT NULL UNIQUE,
-		TELEFONO VARCHAR(11) NOT NULL UNIQUE, 
+		TELEFONO VARCHAR(255) NOT NULL UNIQUE, 
 		EMAIL VARCHAR(255) NOT NULL UNIQUE,
 		DIRECCION VARCHAR(255) NOT NULL,
 		GENERO ENUM("mujer","hombre") ,
@@ -39,41 +39,41 @@
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("administrador","12345678Z","988123455","admin@gmail.com","ClubPadel","mujer","holahola","administrador");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Noelia","44488043V","608473560","nghervella@esei.uvigo.es","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Ines","32768072H","666666660","ines@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Tania","18053301A","666666661","tania@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Rocio","44625726E","666666662","rocio@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Ainoa","91497816K","666666663","ainoa@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Antia","47524280R","666666664","antia@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Maria","75342221V","666666665","maria@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Blanca","89236173Z","666666666","blanca@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Miriam","14431247N","666666667","miriam@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Iria","43747460B","666666668","iria@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Lara","18095369G","666666669","lara@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Angela","82870047N","666666600","angela@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Alba","57515199L","666666601","alba@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Isabel","73108502N","666666602","isabel@gmail.com","Celanova","mujer","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("May","34248961Y","666666603","may@gmail.com","Celanova","mujer","holahola","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("administrador","12345678Z","988123455","admin@gmail.com","ClubPadel","mujer","e961b2ac40aac4cc36a8bf65bca9177e","administrador");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Noelia","44488043V","608473560","nghervella@esei.uvigo.es","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Ines","32768072H","666666660","ines@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Tania","18053301A","666666661","tania@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Rocio","44625726E","666666662","rocio@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Ainoa","91497816K","666666663","ainoa@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Antia","47524280R","666666664","antia@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Maria","75342221V","666666665","maria@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Blanca","89236173Z","666666666","blanca@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Miriam","14431247N","666666667","miriam@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Iria","43747460B","666666668","iria@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Lara","18095369G","666666669","lara@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Angela","82870047N","666666600","angela@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Alba","57515199L","666666601","alba@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Isabel","73108502N","666666602","isabel@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("May","34248961Y","666666603","may@gmail.com","Celanova","mujer","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
 
 
 
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Albovy","92802589G","655555550","albovy@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Alejandro","10614506Y","655555551","alejandro@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Ignacio","81172032H","655555552","nacho@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("JaviZabo","03579056A","655555553","zabo@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Gallero","95752404T","655555554","gallero@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("JorgeRuiz","27175418K","655555555","jorgeRuiz@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("JorgePerez","84520948L","655555556","jorgePerez@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Pitichixo","67402532C","655555557","piti@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("IvanDD","01534329E","655555558","ivan@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("YerayLage","99327885Q","655555559","yeray@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Nowi","23002028G","655555510","nowi@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Gonzalo","46714719V","655555511","gonza@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("LuisRo","70988980D","655555512","luis@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Jacobo","11343110Q","655555513","jaco@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Abel","71666111C","655555514","abel@gmail.com","Celanova","hombre","holahola","usuario");
-	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Miguelon","78960771T","655555515","miguelon@gmail.com","Celanova","hombre","holahola","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Albovy","92802589G","655555550","albovy@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Alejandro","10614506Y","655555551","alejandro@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Ignacio","81172032H","655555552","nacho@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("JaviZabo","03579056A","655555553","zabo@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Gallero","95752404T","655555554","gallero@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("JorgeRuiz","27175418K","655555555","jorgeRuiz@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("JorgePerez","84520948L","655555556","jorgePerez@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Pitichixo","67402532C","655555557","piti@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("IvanDD","01534329E","655555558","ivan@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("YerayLage","99327885Q","655555559","yeray@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Nowi","23002028G","655555510","nowi@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Gonzalo","46714719V","655555511","gonza@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("LuisRo","70988980D","655555512","luis@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Jacobo","11343110Q","655555513","jaco@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Abel","71666111C","655555514","abel@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
+	INSERT INTO USUARIO(USERNAME, DNI, TELEFONO, EMAIL, DIRECCION, GENERO, PASSWD, ROL) values ("Miguelon","78960771T","655555515","miguelon@gmail.com","Celanova","hombre","e961b2ac40aac4cc36a8bf65bca9177e","usuario");
 
 
 	CREATE TABLE IF NOT EXISTS PROYECTO(
@@ -102,7 +102,7 @@
 		FECHA DATE NOT NULL,
 		TITULO VARCHAR(255) NOT NULL,
 		ENLACE VARCHAR(255) NOT NULL,
-		DESCRIPCION VARCHAR(2550) NOT NULL,
+		DESCRIPCION VARCHAR(7000) NOT NULL,
 		CONSTRAINT PK_VIDEOTUTORIAL PRIMARY KEY(ID_VIDEOTUTORIAL)
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
@@ -133,10 +133,36 @@
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","noticiachulesca.jpg","noticia1","notiisia1");
-	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","noticiasostenible2.jpg","noticia2","notiisia2");
-	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","noticiasostenible3.jpg","noticia3","notiisia3");
-	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","noticiasostenible4.jpg","noticia4","notiisia4");
+	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","noticiachulesca.jpg","Ocho países de América Latina combatirán juntos la basura marina y la contaminación por plásticos ","Los océanos se han convertido en inmensos depósitos de desechos plásticos. Según el Programa de las Naciones Unidas para el Medio Ambiente (PNUMA), el 80% de la basura marina proviene de fuentes terrestres, principalmente por plásticos asociados a empaques de alimentos y bebidas. 
+
+La producción y el diseño de productos con alto contenido de plástico innecesario o de un solo uso, el consumo acelerado y un manejo ineficiente de los residuos son algunas de las causas de esta epidemia plástica, la cual produce impactos negativos en los ecosistemas, las economías y el bienestar humano. 
+
+El plan, elaborado conjuntamente por representantes de las autoridades nacionales pertinentes de los ocho países de esta subregión, con el apoyo de la agencia de la ONU, como parte de la labor de la Alianza Mundial sobre la Basura Marina, y la Fundación MarViva,  analiza la situación actual de la basura marina en la región, identifica las brechas y oportunidades de mejora y genera recomendaciones en torno a la prevención, la reducción y la gestión adecuada de los residuos marinos.  
+
+“A pesar de que los océanos son esenciales para el equilibrio del planeta, los ecosistemas costeros son cada vez más vulnerables como consecuencia de las actividades humanas, principalmente las terrestres que son origen del 80% de la basura marina. Se trata de un problema global y, por lo tanto, la única forma de abordarlo es con soluciones coordinadas y de gran alcance”, destacó Jorge Jiménez, director general de Fundación MarViva. ");
+	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","noticiasostenible2.jpg","Acelerar el desarrollo sostenible con tecnología, COVID-19, Madrid… Las noticias del jueves"," Las Naciones Unidas y una coalición integrada por 100 países y 1000 partes interesadas lanzaron este jueves un plan de acción para acelerar los procesos de digitalización del desarrollo sostenible y ambiental.
+
+La Coalición para la Sostenibilidad Ambiental Digital tiene como objetivo reorientar y priorizar la aplicación de tecnologías digitales para cumplir con la Agenda 2030 para el Desarrollo Sostenible y atajar el cambio climático, la pérdida de biodiversidad, la contaminación y los residuos.
+
+El plan incluye la creación de procesos inclusivos para definir normas y marcos de gobernanza para la sostenibilidad digital, la asignación de los recursos e infraestructuras necesarios y la identificación de oportunidades que permitan reducir los posibles daños o riesgos de la digitalización.
+
+El programa se lanzó durante la reunión medioambiental Estocolmo+50, que conmemora el 50º aniversario de la Conferencia de las Naciones Unidas sobre el Medio Ambiente Humano celebrada en la capital sueca y que marcó una nueva era de cooperación mundial.");
+	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","noticiasostenible3.jpg","Videojuegos para salvarnos del cambio climático","Desde video juegos con mensajes ecológicos y oportunidades para plantar árboles en la vida real en clásicos como Pac-Man y Angry Birds, la industria de los juegos trabaja con las Naciones Unidas para atraer audiencias como nunca antes e inspirar una nueva ola de comportamientos  en favor del clima.
+
+En algún momento antes de la pandemia de COVID-19, Cassie Flynn se dirigía al trabajo en el metro de la ciudad de Nueva York repleto en hora pico. Como asesora estratégica sobre cambio climático para el Programa de las Naciones Unidas para el Desarrollo (PNUD), a menudo usaba la monotonía del viaje para pensar en cómo involucrar a la gente común en la lucha climática, y esa mañana, notó que todos a su alrededor estaban ocupados con sus teléfonos, no solo mirándolos o desplazándose, sino haciendo alguna cosa.
+
+“Fui un poco descarada, y comencé a mirar lo que la gente estaba haciendo. Miré por encima del hombro de una mujer y vi que estaba jugando Angry Birds, y luego miré y vi a un joven jugando Candy Crush. Todas estas personas estaban jugando en sus teléfonos”, recordó mientras hablaba con ONU Noticias.");
+	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","noticiasostenible4.jpg","Día Mundial del Medioambiente: Nuestro insostenible ritmo de vida representa una amenaza para el planeta","La salud del planeta sigue deteriorándose a pasos agigantados con más 3000 millones de personas afectadas por la degradación de los ecosistemas, con elevadas tasas de contaminación que causan unos nueve millones de muertes prematuras cada año y más de un millón de especies de plantas y animales están en peligro de extinción.
+
+Esta fue una de las advertencias del Secretario General de la ONU en su mensaje por el Día Mundial del Medioambiente, que se celebra este domingo, y en el que el titular de la ONU recordó otras amenazas que penden sobre todas las personas.
+
+“Cerca de la mitad de la humanidad ya vive en zonas de peligro climático, por lo que tiene 15 veces más probabilidades de morir a raíz de efectos del clima como el calor extremo, las inundaciones o la sequía”, destacó António Guterres.
+
+Y en clave climática añadió que “hay un 50 % de posibilidades de que las temperaturas mundiales medias anuales superen en los próximos cinco años el límite de 1,5 °C fijado por el Acuerdo de París. Para 2050 podrían verse desplazadas más de 200 millones de personas por la disrupción climática”.
+
+Ante esta situación, señaló que ha llegado un momento en el que “no podemos desoír las alarmas que se intensifican día tras día” y emplazó a los gobiernos a “priorizar urgentemente la acción climática y la protección ambiental mediante decisiones de política que promuevan el progreso sostenible”.
+
+Para conseguirlo enumeró cinco recomendaciones que servirían para acelerar la implantación de energías renovables en todo el mundo, “como poner las tecnologías renovables y las materias primas a disposición de todos, reducir la burocracia, reorientar las subvenciones y triplicar la inversión”.");
 	INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values ("2021-10-24","catastrofediaria.jpg","Sufriremos más de una catástrofe diaria si no reducimos el riesgo","El coste más elevado lo soporta la región de Asia y el Pacífico, que pierde una media del 1,6% del PIB al año por las catástrofes, mientras que los más pobres también son los que más sufren dentro de los países en desarrollo.
 
 	La falta de seguros que ayuden a la recuperación se suma a los efectos a largo plazo de las catástrofes. Desde 1980, solo el 40% de las pérdidas relacionadas con las catástrofes estaban aseguradas, mientras que los índices de cobertura de los seguros en los países en desarrollo eran a menudo inferiores al 10%, y a veces cercanos a cero, según el documento.
@@ -157,10 +183,10 @@
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-	INSERT INTO COMENTARIOS(FECHA,USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values ("2021-10-24","2","notiisia1","1");
-	INSERT INTO COMENTARIOS(FECHA,USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values ("2021-10-24","1","notiisia2","2");
-	INSERT INTO COMENTARIOS(FECHA,USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values ("2021-10-24","1","notiisia22","2");
-	INSERT INTO COMENTARIOS(FECHA,USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values ("2021-10-24","2","notiisia3","3");
+	INSERT INTO COMENTARIOS(FECHA,USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values ("2021-10-24","2","Este tema me parece algo interesante a tratar","1");
+	INSERT INTO COMENTARIOS(FECHA,USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values ("2021-10-24","1","Este tema me parece algo interesante","2");
+	INSERT INTO COMENTARIOS(FECHA,USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values ("2021-10-24","1","Es algo realmente curioso","2");
+	INSERT INTO COMENTARIOS(FECHA,USUARIOID,CUERPO_COMENTARIO,NOTICIAID) values ("2021-10-24","2","Realmente sorprendente","3");
 
 	CREATE TABLE IF NOT EXISTS GALERIA(
 		ID_IMAGEN INT(10) AUTO_INCREMENT,
@@ -171,9 +197,39 @@
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo1","cards1.png");
+	
 	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","noticiachulesca.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
+	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
 	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
 	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
 	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
@@ -190,14 +246,14 @@
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #0071c5', 'Reunion Colegio', '2022-05-24 09:00:00', '2022-05-25 11:00:00');
-	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #5fc500', 'Reunion Colegio', '2022-05-26 09:00:00', '2022-05-27 11:00:00');
-	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #c5b800', 'Reunion Colegio', '2022-05-28 09:00:00', '2022-05-29 11:00:00');
+	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #0071c5', 'Acampada centro', '2022-06-24 09:00:00', '2022-05-25 11:00:00');
+	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #5fc500', 'Recogida de alimentos', '2022-06-26 09:00:00', '2022-05-27 11:00:00');
+	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #c5b800', 'Concentración por la paz', '2022-06-28 09:00:00', '2022-05-29 11:00:00');
 
 	CREATE TABLE IF NOT EXISTS COMOCOLABORAR(
 		ID_COMOCOL INT(10) AUTO_INCREMENT,
 		TITULO VARCHAR(255) NOT NULL,
-		DESCRIPCION VARCHAR(2550) NOT NULL,
+		DESCRIPCION VARCHAR(7000) NOT NULL,
 		CONSTRAINT PK_COMOCOLABORAR PRIMARY KEY(ID_COMOCOL)
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
@@ -213,7 +269,7 @@
 	CREATE TABLE IF NOT EXISTS ESTRUCTURA(
 		ID_ESTRUCTURA INT(10) AUTO_INCREMENT,
 		TITULO VARCHAR(255) NOT NULL,
-		DESCRIPCION VARCHAR(2550) NOT NULL,
+		DESCRIPCION VARCHAR(7000) NOT NULL,
 		ORGANIGRAMA VARCHAR(255) NOT NULL,
 		
 		CONSTRAINT PK_ESTRUCTURA PRIMARY KEY(ID_ESTRUCTURA)
@@ -236,11 +292,12 @@
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Julito","Barreira Barreira ","pablogallero@gmail.com","Admin","985986886","cards1.png","BarryDiego");
-	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Jose Luis","Gonzalez Marquez","pablogallero@gmail.com","Admin","985986886","cards1.png","BarryDiego");
-	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Jose Luis","Gonzalez Marquez","pablogallero@gmail.com","Admin","985986886","cards1.png","BarryDiego");
-	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Jose Luis","Gonzalez Marquez","pablogallero@gmail.com","Admin","985986886","cards1.png","BarryDiego");
-	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Jose Luis","Gonzalez Marquez","pablogallero@gmail.com","Admin","985986886","cards1.png","BarryDiego");
+	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Julito","Barreira Barreira ","julbarbar@gmail.com","Admin","985286886","avatar1.jpg","MedioAmbAND");
+	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Jose Luis","Gonzalez Marquez","joseluisgm22@gmail.com","Admin","985686886","avatar2.jpg","MedioAmbAND");
+	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Emma","Gutiérrez Sánchez","emmagutzan@gmail.com","Admin","985986486","avatar3.jpg","MedioAmbAND");
+	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Luisa","Fernández Fernández","luisiferfer@gmail.com","Admin","985986886","avatar4.jpg","MedioAmbAND");
+	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Emmanuel","Gonzalez Marquez","emmanumarquez@gmail.com","Admin","985985886","avatar5.jpg","MedioAmbAND");
+	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Blanca","Fernández Fernández","blancafernandezfer@gmail.com","Admin","985982886","avatar6.jpg","MedioAmbAND");
 
 
 	CREATE TABLE IF NOT EXISTS CATEGORIAS(
@@ -267,12 +324,10 @@
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Nivea","cards1.png","1");
-	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Colgate","cards2.png","1");
-	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Colgate","cards2.png","1");
-	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Colgate","cards2.png","1");
-	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Colgate","cards2.png","1");
-	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Colgate","cards2.png","1");
-	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Colgate","cards2.png","1");
-	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Kiss FM","cards3.png","2");
+	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Nivea","Nivea.jpg","1");
+	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Colgate","colgate.png","1");
+	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Spotify","spotify.png","1");
+	
+	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Kiss FM","kissfm.jpg","2");
+	INSERT INTO PATROCINADORES(NOMBRE,IMAGEN,CATEGORIA) values("Kit Kat","kitkat.jpg","2");
 

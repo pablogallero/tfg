@@ -136,7 +136,7 @@ $mail->isSMTP();                      // Set mailer to use SMTP
 $mail->Host = 'smtp.gmail.com';       // Specify main and backup SMTP servers 
 $mail->SMTPAuth = true;               // Enable SMTP authentication 
 $mail->Username = 'contactogrena@gmail.com';   // SMTP username 
-$mail->Password = 'Contactogrena23';   // SMTP password 
+$mail->Password = 'pzdthazjctbrwcjc';   // SMTP password real pass is "Contactogrena23"
 $mail->SMTPSecure = 'tls';            // Enable TLS encryption, `ssl` also accepted 
 $mail->Port = 587;                    // TCP port to connect to 
  
@@ -225,28 +225,28 @@ $this->view->redirect("contactos", "showall");
 
 			try {
 
-				if(strlen($contacto->getApellidos())<1   ){
-					$this->view->setFlashF(i18n("Apellidos muy cortos"));
-					throw new Exception();
-				}
-				if( strlen($contacto->getEmail()) < 5  ){
-					$this->view->setFlashF(i18n("Email demasiado corto"));
+				if( !preg_match('/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/',$contacto->getApellidos()) ){
+					$this->view->setFlashF(i18n("Formato de apellidos inválido"));
 					throw new Exception();
 					
 				}
-				if( strlen($contacto->getNombre()) < 1  ){
-					$this->view->setFlashF(i18n("Nombre demasiado corto"));
+				if(!preg_match('/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/',$contacto->getEmail())  ){
+					$this->view->setFlashF(i18n("Formato incorrecto del email"));
+					throw new Exception();
+				}
+				if( !preg_match('/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/',$contacto->getNombre()) ){
+					$this->view->setFlashF(i18n("Formato de nombre inválido"));
 					throw new Exception();
 					
 				}
 				
-				if( strlen($contacto->getTelefono()) < 5  ){
-					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+				if( !preg_match('/^(\+34|34)?[\s|\-|\.]?[6|7|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$/',$contacto->getTelefono()) ){
+					$this->view->setFlashF(i18n("Formato de teléfono inválido"));
 					throw new Exception();
 					
 				}
 				if( strlen($contacto->getRutatwitter()) < 1  ){
-					$this->view->setFlashF(i18n("Ruta incorrecta"));
+					$this->view->setFlashF(i18n("La ruta no puede estar vacía"));
 					throw new Exception();
 					
 				}
@@ -341,43 +341,45 @@ $this->view->redirect("contactos", "showall");
 		
 
 		if (isset($_POST["nombre"]) && isset($_POST["apellidos"]) && isset($_POST["email"]) && isset($_POST["cargo"]) && isset($_POST["telefono"]) && isset($_FILES["rutafoto"]["name"]) && isset($_POST["rutatwitter"])) { // reaching via HTTP Post...
+			if($_FILES['rutafoto']['name']!=""){
 			$name=$_FILES['rutafoto']['name'];
 			
 			$tmp_name=$_FILES['rutafoto']['tmp_name'];
 			$upload_folder="images/";
 
 			$movefile=move_uploaded_file($tmp_name,$upload_folder.$name);
+			$contacto->setRutafoto($_FILES["rutafoto"]["name"]);}
 			// populate the Post object with data form the form
 			$contacto->setNombre($_POST["nombre"]);
 			$contacto->setApellidos($_POST["apellidos"]);
 			$contacto->setEmail($_POST["email"]);
 			$contacto->setCargo($_POST["cargo"]);
 			$contacto->setTelefono($_POST["telefono"]);
-			$contacto->setRutafoto($_FILES["rutafoto"]["name"]);
+			
 			$contacto->setRutatwitter($_POST["rutatwitter"]);
 			try {
-				if(strlen($contacto->getApellidos())<1   ){
-					$this->view->setFlashF(i18n("Apellidos muy cortos"));
-					throw new Exception();
-				}
-				if( strlen($contacto->getEmail()) < 5  ){
-					$this->view->setFlashF(i18n("Email demasiado corto"));
+				if( !preg_match('/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/',$contacto->getApellidos()) ){
+					$this->view->setFlashF(i18n("Formato de apellidos inválido"));
 					throw new Exception();
 					
 				}
-				if( strlen($contacto->getNombre()) < 1  ){
-					$this->view->setFlashF(i18n("Nombre demasiado corto"));
+				if(!preg_match('/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/',$contacto->getEmail())  ){
+					$this->view->setFlashF(i18n("Formato incorrecto del email"));
+					throw new Exception();
+				}
+				if( !preg_match('/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/',$contacto->getNombre()) ){
+					$this->view->setFlashF(i18n("Formato de nombre inválido"));
 					throw new Exception();
 					
 				}
 				
-				if( strlen($contacto->getTelefono()) < 5  ){
-					$this->view->setFlashF(i18n("Teléfono demasiado corto"));
+				if( !preg_match('/^(\+34|34)?[\s|\-|\.]?[6|7|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$/',$contacto->getTelefono()) ){
+					$this->view->setFlashF(i18n("Formato de teléfono inválido"));
 					throw new Exception();
 					
 				}
 				if( strlen($contacto->getRutatwitter()) < 1  ){
-					$this->view->setFlashF(i18n("Ruta incorrecta"));
+					$this->view->setFlashF(i18n("La ruta no puede estar vacía"));
 					throw new Exception();
 					
 				}

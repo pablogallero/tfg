@@ -28,7 +28,7 @@ $view->setVariable("title", "Edit Post");
                                     </div>
                                     <div class="col-md-12">
                                     <img id="preview" src="images/placeholder.jpg"  width="150" height="150" alt="Preview" />
-                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Imagen")?></label> <input id="imagen"  type="file" name='imagenruta' class="form-control" accept="image/png, .jpeg, .jpg, image/gif" placeholder="<?= i18n("Introduzca aquí la imagen")?>"  > </div>
+                                        <div class="form-group"> <label for="imagenruta"><?= i18n("Imagen")?></label> <input id="imagen"  type="file" name='imagenruta' class="form-control" onchange="validarVacio(this.id)" accept="image/png, .jpeg, .jpg, image/gif" placeholder="<?= i18n("Introduzca aquí la imagen")?>"  > </div>
                                     </div>
                                 </div>
                                 

@@ -18,7 +18,7 @@ $view->setVariable("title", "Edit Post");
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" role="form" action="index.php?controller=contactos&amp;action=edit&amp;id=<?= $contacto->getId() ?>" onsubmit="return validarformulariocontacto()" method="POST" enctype="multipart/form-data">
+                        <form id="contact-form" role="form" action="index.php?controller=contactos&amp;action=edit&amp;id=<?= $contacto->getId() ?>" onsubmit="return validarformulariocontactoedit()" method="POST" enctype="multipart/form-data">
                             <div class="controls">
 							
                                 <div class="row">
@@ -44,8 +44,8 @@ $view->setVariable("title", "Edit Post");
                                 <div class="row">
 									
                                     <div class="col-md-12">
-                                    <img id="preview" src="images/placeholder.jpg"  width="150" height="150" alt="Preview" />
-                                        <div class="form-group"> <label for="rutafoto"><?= i18n("Foto de perfil")?></label> <input id="fotoperfil" type="file" accept="image/png, .jpeg, .jpg, image/gif" name="rutafoto" class="form-control"  required="required" > </div>
+                                    <img id="preview" src="images/<?= $contacto->getRutafoto() ?>"  width="150" height="150" alt="Preview" />
+                                        <div class="form-group"> <label for="rutafoto"><?= i18n("Foto de perfil")?></label> <input id="fotoperfil" type="file" accept="image/png, .jpeg, .jpg, image/gif" name="rutafoto" class="form-control"  > </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group"> <label for="form_need"><?= i18n("Cargo")?></label> <select id="cargo" name="cargo" class="form-control" required="required" data-error="Indica el cargo, por favor.">
