@@ -51,3 +51,4 @@ $contenido= $view->getVariable("comocolaborar");
     </div>
   </div>
 </div>
+

@@ -24,7 +24,7 @@ $y=0;
 				<div class="p-4 border radius-15">
 					<img src="images/<?= $proyectos[$y]->getImagen()?>" width="110" height="110" class="rounded-circle shadow" alt="">
 					<h5 class="mb-0 mt-5"><?=$proyectos[$y]->getTitulo() ?></h5>
-					<p class="mb-3 textoverflowl"><?=$proyectos[$y]->getIntroduccion() ?></p>
+					
 					<button type="button" class="btn btn-success btnreadmore" onclick="window.location.href='index.php?controller=proyectos&amp;action=view&amp;id=<?=$proyectos[$y]->getId();?>'"><?= i18n("Leer más")?> >></button>
                     
                     

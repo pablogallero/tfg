@@ -65,7 +65,7 @@ $x=0;
 
                 ?> <?= i18n("Comentario")?> <?php } ?></h3>
         
-                                <form id="contact-form" class=" align-items-center" role="form" action="index.php?controller=comentarios&amp;action=add&id=<?=$noticia->getId()?>" method="POST">
+                                <form id="contact-form" class=" align-items-center" role="form" action="index.php?controller=comentarios&amp;action=add&id=<?=$noticia->getId()?>" method="POST" onsubmit="return validarformularioComentario()" >
                                 <textarea class="form-control mt-5" id="cuerpocoment" name="cuerpocoment" placeholder="Inserte aquí su comentario" ></textarea>
                                 <button type="submit" value="submit" class="btn btn-normal pull-right  text-center"><?= i18n("Añadir comentario")?></button>
                                 <form>

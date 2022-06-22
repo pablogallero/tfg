@@ -9,32 +9,24 @@ require_once(__DIR__."/../model/User.php");
 /**
  * Class BaseController
  *
- * Implements a basic super constructor for
- * the controllers in the Blog App.
- * Basically, it provides some protected
- * attributes and view variables.
- *
- * @author lipido <lipido@gmail.com>
+ * Implementa un supercontroller para los demás controladores
  */
 class BaseController {
 
 	/**
-	 * The view manager instance
+	 * Se instancia el View Manager
 	 * @var ViewManager
 	 */
 	protected $view;
 
-	/**
-	 * The current user instance
-	 * @var User
-	 */
+	
 	protected $currentUser;
 
 	public function __construct() {
 
 		$this->view = ViewManager::getInstance();
 
-		// get the current user and put it to the view
+		
 		if (session_status() == PHP_SESSION_NONE ) {
 			session_start();
 		}
@@ -43,7 +35,7 @@ class BaseController {
 
 			$this->currentUser = new User($_SESSION["currentuser"]);
 			
-			//add current user to the view, since some views require it
+			
 			$this->view->setVariable("currentusername",
 					$this->currentUser->getEmail());
 		}

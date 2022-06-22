@@ -28,9 +28,9 @@ $x=0;
         <input type="color" class="mb-4" value="#5fc500"  id="color" name="color">
         <br>
         <label for="exampleColorInput" class="form-label"><?= i18n("Fecha inicio")?></label>
-        <input type="text" class="form-control mb-4" readonly id="start_datef" name="start_date">
+        <input type="text" class="form-control mb-4"  id="start_datef" name="start_date">
         <label for="exampleColorInput" class="form-label"><?= i18n("Fecha fin")?></label>
-        <input type="text" class="form-control mb-4" readonly id="end_datef" name="end_date">
+        <input type="text" class="form-control mb-4"  id="end_datef" name="end_date">
         <label for="exampleColorInput" class="form-label"><?= i18n("Hora inicio")?></label>
         <input type="time" class="form-control mb-4"  id="start_hourf" name="start_hour">
         <label for="exampleColorInput" class="form-label"><?= i18n("Hora fin")?></label>
@@ -64,9 +64,9 @@ $x=0;
         <input type="color" class=" mb-4"   id="colored" name="colored">
         <br>
         <label for="exampleColorInput" class="form-label"><?= i18n("Fecha inicio")?></label>
-        <input type="text" class="form-control mb-4" readonly id="start_dateed" name="start_dateed">
+        <input type="text" class="form-control mb-4"  id="start_dateed" name="start_dateed">
         <label for="exampleColorInput" class="form-label"><?= i18n("Fecha fin")?></label>
-        <input type="text" class="form-control mb-4" readonly id="end_dateed" name="end_dateed">
+        <input type="text" class="form-control mb-4"  id="end_dateed" name="end_dateed">
         <label for="exampleColorInput" class="form-label"><?= i18n("Hora inicio")?></label>
         <input type="time" class="form-control mb-4"  id="start_houred" name="start_houred">
         <label for="exampleColorInput" class="form-label"><?= i18n("Hora fin")?></label>
@@ -102,9 +102,9 @@ $x=0;
         <input type="color" class=" mb-4"   id="colordel" name="colored">
         <br>
         <label for="exampleColorInput" class="form-label"><?= i18n("Fecha inicio")?></label>
-        <input type="text" class="form-control mb-4" readonly id="start_datedel" name="start_dateed">
+        <input type="text" class="form-control mb-4"  id="start_datedel" name="start_dateed">
         <label for="exampleColorInput" class="form-label"><?= i18n("Fecha fin")?></label>
-        <input type="text" class="form-control mb-4" readonly id="end_datedel" name="end_dateed">
+        <input type="text" class="form-control mb-4"  id="end_datedel" name="end_dateed">
         <label for="exampleColorInput" class="form-label"><?= i18n("Hora inicio")?></label>
         <input type="time" class="form-control mb-4"  id="start_hourdel" name="start_houred">
         <label for="exampleColorInput" class="form-label"><?= i18n("Hora fin")?></label>

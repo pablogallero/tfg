@@ -40,28 +40,28 @@ $proyecto= $view->getVariable("proyecto");
                                 <div class="row">
                                     <div class="col-md-12">
                                     <h3 class="display-3 titulovideos"><?= i18n("¿Qué es?")?></h3> 
-                                        <div class="form-group">   <textarea rows="15" name="introduccion" onblur="validarVacio(this.id)" id="mytextarea"><?=nl2br( $proyecto->getIntroduccion()) ?></textarea> </div>
+                                        <div class="form-group">   <textarea rows="15" name="introduccion" onblur="validarVacio(this.id)" class="markItUp" id="mytextarea"><?=nl2br( $proyecto->getIntroduccion()) ?></textarea> </div>
                                     </div>
                                     
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                     <h3 class="display-3 titulovideos"><?= i18n("Objetivos")?></h3> 
-                                        <div class="form-group">   <textarea rows="15" name="objetivos" onblur="validarVacio(this.id)" id="mytextarea1"><?=nl2br( $proyecto->getObjetivos()) ?></textarea> </div>
+                                        <div class="form-group">   <textarea rows="15" name="objetivos" onblur="validarVacio(this.id)"  class="markItUp" id="mytextarea1"><?=nl2br( $proyecto->getObjetivos()) ?></textarea> </div>
                                     </div>
                                     
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                     <h3 class="display-3 titulovideos"><?= i18n("Metodología")?></h3> 
-                                        <div class="form-group">   <textarea rows="15" name="metodologia" onblur="validarVacio(this.id)" id="mytextarea2"><?=nl2br( $proyecto->getMetodologia()) ?></textarea> </div>
+                                        <div class="form-group">   <textarea rows="15" name="metodologia" onblur="validarVacio(this.id)" class="markItUp" id="mytextarea2"><?=nl2br( $proyecto->getMetodologia()) ?></textarea> </div>
                                     </div>
                                     
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                     <h3 class="display-3 titulovideos"><?= i18n("Conclusiones")?></h3> 
-                                        <div class="form-group">   <textarea rows="15" name="conclusiones" onblur="validarVacio(this.id)" id="mytextarea3"><?=nl2br( $proyecto->getConclusiones()) ?></textarea> </div>
+                                        <div class="form-group">   <textarea rows="15" name="conclusiones" onblur="validarVacio(this.id)" class="markItUp" id="mytextarea3"><?=nl2br( $proyecto->getConclusiones()) ?></textarea> </div>
                                     </div>
                                     
                                 </div>
@@ -76,20 +76,11 @@ $proyecto= $view->getVariable("proyecto");
 </div>
 
 
-    <script type="text/javascript">
-      tinymce.init({
-        selector: '#mytextarea'
-      });
-      tinymce.init({
-        selector: '#mytextarea1'
-      });
-      tinymce.init({
-        selector: '#mytextarea2'
-      });
-      tinymce.init({
-        selector: '#mytextarea3'
-      });
-    </script>
+<script type="text/javascript" >
+   $(document).ready(function() {
+      $(".markItUp").markItUp(mySettings);
+   });
+</script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

@@ -23,7 +23,7 @@ $errors = $view->getVariable("errors");
                                 
 									
                                     <div class="col-md-6">
-                                    <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" type="text" name="nombre" onblur="comprobarAlfabetico(this.id,50)" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
+                                    <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" type="text" name="nombre" onblur="validarVacio(this.id)" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group"> <label for="imagenruta">Color</label> <input type="color" class="form-control"  id="color" onblur="validarVacio(this.id)" name="color"> </div>

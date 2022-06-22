@@ -3,7 +3,7 @@ function validarVacio(campo) {//Funcion que comprueba si el campo pasado por par
     var camp=document.getElementById(campo).value;//Guarda en la variable camp el valor del parametro pasado a la funcion
     if (camp =="") {//Comprueba si el valor es vacio, si lo es devuelve false y pone el borde del campo en rojo,si no lo es devuelve true y pone el borde en verde
         document.getElementById(campo).style.borderColor="red";
-        document.getElementById("parrafovalidacion").innerHTML="El campo no puede estar vacío";
+        document.getElementById("parrafovalidacion").innerHTML="El campo "+document.getElementById(campo).name +" no puede estar vacío";
         $('#exampleModal').modal('toggle');
         return false;
     }
@@ -30,13 +30,13 @@ function comprobarTexto(campo, size) {//funcion que comprueba si el campo cumple
     else {
         if (camp.length > size || camp.length < 5 ) {//Comprueba si el campo no supera el valor pasado como parametro
             document.getElementById(campo).style.borderColor="red";
-            document.getElementById("parrafovalidacion").innerHTML="El tamaño del valor del campo de texto es incorrecto. Recuerda que no puede ser menor que 5.";
+            document.getElementById("parrafovalidacion").innerHTML="El tamaño del valor del campo de texto "+document.getElementById(campo).name +"  es incorrecto. Recuerda que no puede ser menor que 5.";
                 $('#exampleModal').modal('toggle');
            // alert("El campo excede el tamaño máximo");
             return false;
         }
         if (!comprobarExpresionRegular(campo, exprreg, size)) {//Comprueba si el campo no cumple la expresion regular
-            document.getElementById("parrafovalidacion").innerHTML="El formato del campo de texto es incorrecto. No puede contener espacios en blanco.";
+            document.getElementById("parrafovalidacion").innerHTML="El formato del campo de texto "+document.getElementById(campo).name +"  es incorrecto. No puede contener espacios en blanco.";
                 $('#exampleModal').modal('toggle');
 
 
@@ -175,7 +175,7 @@ function comprobarAlfabetico(campo, size) {//Funcion que comprueba que el campo 
     else {
         if (!comprobarExpresionRegular(campo, exprreg, size)) {//Comprueba que el campo no cumpla la expresion regular
            // alert("El formato es incorrecto, recuerde que debe comenzar por mayúscula.")
-           document.getElementById("parrafovalidacion").innerHTML="El formato es incorrecto, recuerde que debe comenzar por mayúscula";
+           document.getElementById("parrafovalidacion").innerHTML="El formatode "+document.getElementById(campo).name +" es incorrecto, recuerde que debe comenzar por mayúscula";
             $('#exampleModal').modal('toggle');
             return false;
         }
@@ -186,15 +186,29 @@ function comprobarAlfabetico(campo, size) {//Funcion que comprueba que el campo 
 
 
 }
+function fechaIncorrecta(diainicio,horainicio,diafin,horafin){
 
+    var dateTimeInicio = document.getElementById(diainicio).value+' '+document.getElementById(horainicio).value;
+    var dateTimeFin = document.getElementById(diafin).value+' '+document.getElementById(horafin).value;
+    dateinicio= new Date(dateTimeInicio);
+    datefin= new Date(dateTimeFin);
+    
+  if(dateinicio.getTime() >=datefin.getTime()){
+        document.getElementById("parrafovalidacion").innerHTML="La fecha de inicio no puede ser igual o mayor a la fecha de fin";
+        $('#exampleModal').modal('toggle');
+        return false;
+    }
+    if(dateinicio.getTime() < datefin.getTime()) { //Si cumple la expresion regular devuelve true y el borde se pone verde
+        return true ; }
+        
+}
 function validarformularioadduser(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
 if(comprobarTexto('username',25) && comprobarTexto('passwd',50) && comprobarDNI('dni') && comprobarTelf('telefono') && comprobarEmail('email') && validarVacio('direccion') ){
 return true;
 }
 else{//Si no se cumplen todas devuelve faslse y lanza una alerta
-    document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+   
     return false;
 }
 }
@@ -205,8 +219,7 @@ function validarformularioedituser(){//Funcion para comprobar que se cumple toda
     return true;
     }
     else{//Si no se cumplen todas devuelve faslse y lanza una alerta
-        document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-            $('#exampleModal').modal('toggle');
+       
         return false;
     }
     }
@@ -217,8 +230,7 @@ function validarformulariocontacto(){//Funcion para comprobar que se cumple toda
     return true;
     }
     else{//Si no se cumplen todas devuelve false y lanza una alerta
-        document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+       
         return false;
     }
     }
@@ -229,8 +241,7 @@ function validarformulariocontacto(){//Funcion para comprobar que se cumple toda
         return true;
         }
         else{//Si no se cumplen todas devuelve false y lanza una alerta
-            document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-            $('#exampleModal').modal('toggle');
+           
             return false;
         }
         }
@@ -240,8 +251,7 @@ function validarformulariocontactar(){//Funcion para comprobar que se cumple tod
         return true;
         }
         else{//Si no se cumplen todas devuelve false y lanza una alerta
-            document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+          
             return false;
         }
         }
@@ -251,8 +261,7 @@ function validarformulariopatrocinador(){//Funcion para comprobar que se cumple 
             return true;
             }
             else{//Si no se cumplen todas devuelve false y lanza una alerta
-                document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+               
                 return false;
             }
             }      
@@ -263,8 +272,7 @@ function validarformulariopatrocinadoredit(){//Funcion para comprobar que se cum
                 return true;
                 }
                 else{//Si no se cumplen todas devuelve false y lanza una alerta
-                    document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-            $('#exampleModal').modal('toggle');
+               
                     return false;
                 }
                 }        
@@ -272,12 +280,11 @@ function validarformulariopatrocinadoredit(){//Funcion para comprobar que se cum
 
 function validarformulariocategoria(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
-            if(comprobarAlfabetico('nombre',50)  && validarVacio('color') ){
+            if(validarVacio('nombre')  && validarVacio('color') ){
              return true;
              }
              else{//Si no se cumplen todas devuelve false y lanza una alerta
-                document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-                $('#exampleModal').modal('toggle');
+             
                  return false;
                 }
              }        
@@ -287,8 +294,7 @@ function validarformulariocolaborar(){//Funcion para comprobar que se cumple tod
             return true;
             }
             else{//Si no se cumplen todas devuelve false y lanza una alerta
-                document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+          
                  return false;
                  }
                  }     
@@ -299,8 +305,7 @@ function validarformularioedit(){//Funcion para comprobar que se cumple todas la
     return true;
     }
     else{//Si no se cumplen todas devuelve faslse y lanza una alerta
-        document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+      
         return false;
     }
     }
@@ -312,8 +317,7 @@ function validarformularioedit(){//Funcion para comprobar que se cumple todas la
        return true;
        }
        else{//Si no se cumplen todas devuelve false y lanza una alerta
-           document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-   $('#exampleModal').modal('toggle');
+          
             return false;
             }
             }     
@@ -325,32 +329,29 @@ function validarformularioedit(){//Funcion para comprobar que se cumple todas la
                return true;
                }
                else{//Si no se cumplen todas devuelve false y lanza una alerta
-                   document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-           $('#exampleModal').modal('toggle');
+            
                     return false;
                     }
                     }     
 
     function validarformulariocalendarioadd(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
-                if(validarVacio('title') ){
+                if(validarVacio('title') && fechaIncorrecta('start_datef','start_hourf','end_datef','end_hourf') ){
                return true;
                }
                else{//Si no se cumplen todas devuelve false y lanza una alerta
-                   document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-           $('#exampleModal').modal('toggle');
+           
                     return false;
                     }
                     }     
 
     function validarformulariocalendarioedit(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
-                        if(validarVacio('titleed') ){
+                        if(validarVacio('titleed') && fechaIncorrecta('start_dateed','start_houred','end_dateed','end_houred')){
                        return true;
                        }
                        else{//Si no se cumplen todas devuelve false y lanza una alerta
-                           document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-                   $('#exampleModal').modal('toggle');
+                
                             return false;
                             }
                             }     
@@ -358,12 +359,11 @@ function validarformularioedit(){//Funcion para comprobar que se cumple todas la
 
     function validarformulariocalendariodel(){//Funcion para comprobar que se cumple todas las funciones del formulario 
 
-                                if(validarVacio('titledel') ){
+                                if(validarVacio('titledel') && fechaIncorrecta('start_datedel','start_hourdel','end_datedel','end_hourdel') ){
                                return true;
                                }
                                else{//Si no se cumplen todas devuelve false y lanza una alerta
-                                   document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-                           $('#exampleModal').modal('toggle');
+                         
                                     return false;
                                     }
                                     }     
@@ -375,8 +375,7 @@ function validarformularionoticias(){//Funcion para comprobar que se cumple toda
             return true;
             }
             else{//Si no se cumplen todas devuelve false y lanza una alerta
-                document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+          
                  return false;
                  }
                  }   
@@ -387,8 +386,7 @@ function validarformularionoticias(){//Funcion para comprobar que se cumple toda
                    return true;
                    }
                    else{//Si no se cumplen todas devuelve false y lanza una alerta
-                       document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-               $('#exampleModal').modal('toggle');
+                
                         return false;
                         }
                         }   
@@ -399,8 +397,7 @@ function validarformulariovideotutoriales(){//Funcion para comprobar que se cump
             return true;
             }
             else{//Si no se cumplen todas devuelve false y lanza una alerta
-                document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+            
                  return false;
                  }
                  }   
@@ -411,8 +408,18 @@ function validarformularioGaleria(){//Funcion para comprobar que se cumple todas
             return true;
             }
             else{//Si no se cumplen todas devuelve false y lanza una alerta
-                document.getElementById("parrafovalidacion").innerHTML="No se puede registrar debido a que algún campo no cumple los requisitos";
-        $('#exampleModal').modal('toggle');
+          
+                 return false;
+                 }
+                 }   
+
+function validarformularioComentario(){//Funcion para comprobar que se cumple todas las funciones del formulario 
+
+             if(validarVacio('cuerpocoment') ){
+            return true;
+            }
+            else{//Si no se cumplen todas devuelve false y lanza una alerta
+          
                  return false;
                  }
                  }   

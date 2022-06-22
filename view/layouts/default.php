@@ -18,15 +18,17 @@ $currentuser = $view->getVariable("currentusername");
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
+  <script type="text/javascript" src="markitup/jquery.markitup.js"></script>
+  <script type="text/javascript" src="markitup/sets/default/set.js"></script>
+  <link rel="stylesheet" type="text/css" href="markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="markitup/sets/default/style.css" />
   <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
-
+ 
  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
-  
- 
+
   <script type="text/javascript" src="js/moment.min.js"></script>
   <script type="text/javascript" src="js/validaciones.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
