@@ -246,9 +246,9 @@ Para conseguirlo enumeró cinco recomendaciones que servirían para acelerar la 
 
 	)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #0071c5', 'Acampada centro', '2022-06-24 09:00:00', '2022-05-25 11:00:00');
-	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #5fc500', 'Recogida de alimentos', '2022-06-26 09:00:00', '2022-05-27 11:00:00');
-	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #c5b800', 'Concentración por la paz', '2022-06-28 09:00:00', '2022-05-29 11:00:00');
+	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #0071c5', 'Acampada centro', '2022-06-24 09:00:00', '2022-06-25 11:00:00');
+	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #5fc500', 'Recogida de alimentos', '2022-06-26 09:00:00', '2022-06-27 11:00:00');
+	INSERT INTO EVENTOS(COLOR,TITULO,INICIO,FIN) values(' #c5b800', 'Concentración por la paz', '2022-06-28 09:00:00', '2022-06-29 11:00:00');
 
 	CREATE TABLE IF NOT EXISTS COMOCOLABORAR(
 		ID_COMOCOL INT(10) AUTO_INCREMENT,
@@ -297,7 +297,7 @@ Para conseguirlo enumeró cinco recomendaciones que servirían para acelerar la 
 	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Emma","Gutiérrez Sánchez","emmagutzan@gmail.com","Admin","985986486","avatar3.jpg","MedioAmbAND");
 	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Luisa","Fernández Fernández","luisiferfer@gmail.com","Admin","985986886","avatar4.jpg","MedioAmbAND");
 	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Emmanuel","Gonzalez Marquez","emmanumarquez@gmail.com","Admin","985985886","avatar5.jpg","MedioAmbAND");
-	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Blanca","Fernández Fernández","blancafernandezfer@gmail.com","Admin","985982886","avatar6.jpg","MedioAmbAND");
+	INSERT INTO CONTACTOS(NOMBRE,APELLIDOS,EMAIL,CARGO,TELEFONO,RUTAFOTO,RUTATWITTER) values("Blanca","Fernández García","blancafernandezgarcia@gmail.com","Admin","985982886","avatar6.jpg","MedioAmbAND");
 
 
 	CREATE TABLE IF NOT EXISTS CATEGORIAS(

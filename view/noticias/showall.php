@@ -32,7 +32,7 @@ $x=0;
     
     <div class="row " >
     
-    <img class=" img-fluid mx-auto mb-4" width="650" height="200" src="images/<?= $noticias[$x+4*$pagina]->getImagenruta() ?>" alt="Generic placeholder image">
+    <img class=" img-fluid mx-auto mb-4" width="650" height="400" src="images/<?= $noticias[$x+4*$pagina]->getImagenruta() ?>" alt="Generic placeholder image">
     <div class="texto-encima ">
     <a class="linkblanco" href="index.php?controller=noticias&action=view&id=<?= $noticias[$x+4*$pagina]->getId()?>">   <h2 class="display-5"><?= $noticias[$x+4*$pagina]->getTitulo() ?></h2> </a>
   

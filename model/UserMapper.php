@@ -1,39 +1,25 @@
 <?php
-// file: model/UserMapper.php
+
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
 
 class UserMapper {
 
-	/**
-	* Reference to the PDO connection
-	* @var PDO
-	*/
+	
 	private $db;
 
 	public function __construct() {
 		$this->db = PDOConnection::getInstance();
 	}
 
-	/**
-	* Saves a User into the database
-	*
-	* @param User $user The user to be saved
-	* @throws PDOException if a database error occurs
-	* @return void
-	*/
+
 	public function save($user) {
 		$stmt = $this->db->prepare("INSERT INTO USUARIO(USERNAME,DNI,TELEFONO,EMAIL,DIRECCION,GENERO,PASSWD,ROL) values (?,?,?,?,?,?,?,?)");
 		$stmt->execute(array($user->getUsername(), $user->getDni(), $user->getTelefono(), $user->getEmail(), $user->getDireccion(), $user->getGenero(), $user->getPasswd(), $user->getRol()));
 	}
 
-	/**
-	* Checks if a given username is already in the database
-	*
-	* @param string $username the username to check
-	* @return boolean true if the username exists, false otherwise
-	*/
+	
 
 	public function findById($userid){
 		$stmt = $this->db->prepare("SELECT * FROM USUARIO WHERE ID_USUARIO=?");
@@ -165,13 +151,7 @@ class UserMapper {
 	}
 
 
-	/**
-	* Checks if a given pair of username/password exists in the database
-	*
-	* @param string $username the username
-	* @param string $passwd the password
-	* @return boolean true the username/passwrod exists, false otherwise.
-	*/
+	
 	public function isValidUser($email, $passwd) {
 		$stmt = $this->db->prepare("SELECT count(EMAIL) FROM USUARIO where EMAIL=? and PASSWD=?");
 		$stmt->execute(array($email, $passwd));

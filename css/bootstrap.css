@@ -7574,6 +7574,7 @@ a.bg-inverse:focus, a.bg-inverse:hover {
       -webkit-box-orient: vertical;
 }
 .linkblanco{
+  
   color: #FFFFFF;
   text-decoration: none;
 }
@@ -7611,8 +7612,8 @@ a.bg-inverse:focus, a.bg-inverse:hover {
 .texto-encima{
   position: absolute; 
   bottom:20px;
-  left: 50px;
-  color: #FFF;
+  left: 10px;
+  color: #000;
 }
 .card {
   position: relative;

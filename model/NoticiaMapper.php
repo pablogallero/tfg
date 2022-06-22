@@ -1,5 +1,5 @@
 <?php
-// file: model/PostMapper.php
+
 require_once(__DIR__."/../core/PDOConnection.php");
 
 require_once(__DIR__."/../model/User.php");
@@ -9,24 +9,14 @@ require_once(__DIR__."/../model/Comentario.php");
 
 class NoticiaMapper {
 
-	/**
-	* Reference to the PDO connection
-	* @var PDO
-	*/
+	
 	private $db;
 
 	public function __construct() {
 		$this->db = PDOConnection::getInstance();
 	}
 
-	/**
-	* Retrieves all posts
-	*
-	* Note: Comments are not added to the Post instances
-	*
-	* @throws PDOException if a database error occurs
-	* @return mixed Array of Post instances (without comments)
-	*/
+	
 	public function findAll() {
 		$stmt = $this->db->query("SELECT * FROM NOTICIA");
 		$noticia_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -40,15 +30,7 @@ class NoticiaMapper {
 		return $noticias;
 	}
 
-	/**
-	* Loads a Post from the database given its id
-	*
-	* Note: Comments are not added to the Post
-	*
-	* @throws PDOException if a database error occurs
-	* @return Post The Post instances (without comments). NULL
-	* if the Post is not found
-	*/
+	
 	public function findById($noticiaid){
 		$stmt = $this->db->prepare("SELECT * FROM NOTICIA WHERE ID_NOTICIA=?");
 		$stmt->execute(array($noticiaid));
@@ -135,43 +117,20 @@ class NoticiaMapper {
 			}
 		}
 
-		/**
-		* Saves a Post into the database
-		*
-		* @param Post $post The post to be saved
-		* @throws PDOException if a database error occurs
-		* @return int The mew post id
-		*/
+		
 		public function save(Noticia $noticia) {
 			$stmt = $this->db->prepare("INSERT INTO NOTICIA(FECHA,IMAGEN_RUTA,TITULO,CUERPO_NOTICIA) values (?,?,?,?)");
 			$stmt->execute(array(getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"],$noticia->getImagenruta(),$noticia->getTitulo(),$noticia->getCuerponoticia()));
 	
 		}
 
-		/**
-		* Updates a Post in the database
-		*
-		* @param Post $post The post to be updated
-		* @throws PDOException if a database error occurs
-		* @return void
-		*/
+	
 	public function update(Noticia $noticia) {
 			$stmt = $this->db->prepare("UPDATE NOTICIA set FECHA=?, IMAGEN_RUTA=?, TITULO=?,CUERPO_NOTICIA=? where ID_NOTICIA=?");
 			$stmt->execute(array(getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"], $noticia->getImagenruta(),$noticia->getTitulo(),$noticia->getCuerponoticia(),$noticia->getId()));
 		}
 
-		/**
-		* Deletes a Post into the database
-		*
-		* @param Post $post The post to be deleted
-		* @throws PDOException if a database error occurs
-		* @return void
-		*/
-	/*	public function delete(Post $post) {
-			$stmt = $this->db->prepare("DELETE from posts WHERE id=?");
-			$stmt->execute(array($post->getId()));
-		}
-*/
+		
 public function delete(Noticia $noticia) {
 	
 	$stmt = $this->db->prepare("DELETE from COMENTARIOS WHERE NOTICIAID=?");

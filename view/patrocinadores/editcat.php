@@ -24,7 +24,7 @@ $categoria = $view->getVariable("categoria");
                                 
 									
                                     <div class="col-md-6">
-                                    <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" onblur="comprobarAlfabetico(this.id,50)" type="text" name="nombre" value="<?= $categoria->getNombre() ?>" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
+                                    <div class="form-group"> <label for="imagenruta">Nombre</label> <input id="nombre" onblur="validarVacio(this.id)" type="text" name="nombre" value="<?= $categoria->getNombre() ?>" class="form-control" placeholder="Introduzca aquí el nombre" required="required" > </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group"> <label for="imagenruta">Color</label> <input type="color" class="form-control" value="<?= $categoria->getColor() ?>" id="color" onblur="validarVacio(this.id)" name="color"> </div>
