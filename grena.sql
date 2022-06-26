@@ -204,36 +204,7 @@ Para conseguirlo enumeró cinco recomendaciones que servirían para acelerar la 
 	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
 	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
 	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo2","noticiasostenible2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo3","slider-2.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo4","noticiasostenible3.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo5","campingairelibre.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo6","noticiasostenible4.jpg");
-	INSERT INTO GALERIA(FECHA,TITULO,RUTA) values("2019-10-24","titulo7","vistasallago.jpg");
+
 
 
 	CREATE TABLE IF NOT EXISTS EVENTOS(
