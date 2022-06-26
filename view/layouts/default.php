@@ -18,10 +18,9 @@ $currentuser = $view->getVariable("currentusername");
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="markitup/jquery.markitup.js"></script>
-  <script type="text/javascript" src="markitup/sets/default/set.js"></script>
-  <link rel="stylesheet" type="text/css" href="markitup/skins/markitup/style.css" />
-<link rel="stylesheet" type="text/css" href="markitup/sets/default/style.css" />
+  <link rel="stylesheet" href="widgEditor/css/widgEditor.css" />
+
+<script src="widgEditor/scripts/widgEditor.js"></script>
   <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
  
  

@@ -31,7 +31,7 @@ $contenido= $view->getVariable("comocolaborar");
                                 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="descripcion"><?= i18n("Descripción")?></label>  <textarea rows="15" name="descripcion" class="markItUp" id="mytextarea" onblur="validarVacio(this.id)"><?=nl2br( $contenido->getDescripcion()) ?></textarea> </div>
+                                        <div class="form-group"> <label for="descripcion"><?= i18n("Descripción")?></label>  <textarea rows="15" name="descripcion" class="widgEditor" id="mytextarea" onblur="validarVacio(this.id)"><?=nl2br( $contenido->getDescripcion()) ?></textarea> </div>
                                     </div>
                                     <div class="col-md-12"> <button type="submit" class="btn btn-success btn-send pt-2 btn-block w-100" name="submit" value="submit"> <?= i18n("Editar")?> </button></div>
                                 </div>
@@ -45,11 +45,6 @@ $contenido= $view->getVariable("comocolaborar");
 </div>
 
 
-<script type="text/javascript" >
-   $(document).ready(function() {
-      $(".markItUp").markItUp(mySettings);
-   });
-</script>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

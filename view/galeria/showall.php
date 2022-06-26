@@ -31,7 +31,7 @@ $fila=0;
     
     
     <div class="col-lg-4 column">
-              <img src="galeria/<?= $fotos[$x+3*$y+20*$pagina]->getRuta() ?>" <?php if(!isset($_SESSION['rol']) || $_SESSION['rol']!="administrador"){ ?> onclick="aumentar(this.id)" <?php } else{ ?>onclick="aumentarAdmin(this.id)" <?php } ?> id="<?=$fotos[$x+3*$y+20*$pagina]->getRuta()?>" alt="Galeria Imagen"> 
+              <img src="galeria/<?= $fotos[$x+3*$y+20*$pagina]->getRuta() ?>" <?php if(!isset($_SESSION['rol']) || $_SESSION['rol']!="administrador"){ ?> onclick="aumentar(this.src,this.id)" <?php } else{ ?>onclick="aumentarAdmin(this.src,this.id)" <?php } ?> id="<?=$fotos[$x+3*$y+20*$pagina]->getTitulo()?>" alt="Galeria Imagen"> 
               </div>
 
 
@@ -39,7 +39,7 @@ $fila=0;
   <div class="modal-dialog modalgaleria" role="document">
     <div class="modal-content modalgaleria ">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <h5 class="modal-title" id="tituloimagenbig"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -58,7 +58,7 @@ $fila=0;
   <div class="modal-dialog modalgaleria" role="document">
     <div class="modalgaleria modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <h5 class="modal-title" id="tituloimagenbigadmin"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -82,18 +82,24 @@ $fila=0;
   </div>
 <script>
 
-function aumentar(id){
-  document.getElementById("imagenbig").src="galeria/"+id;
+function aumentar(src,id){
   
+  document.getElementById("imagenbig").src=src;
+  document.getElementById("tituloimagenbig").innerHTML= id;
 
     $('#imgMostrar').modal('toggle');
 
     }
 
     
-function aumentarAdmin(id){
-  document.getElementById("imagenbigadmin").src="galeria/"+id;
-  document.getElementById("botonborrar").onclick= function(){window.location.href="index.php?controller=galeria&action=delete&imagen="+id};
+function aumentarAdmin(src,id){
+  
+  document.getElementById("tituloimagenbigadmin").innerHTML=id;
+
+  document.getElementById("imagenbigadmin").src=src;
+  var borrarsrc= src.substr(src.indexOf('galeria/')+8);
+  
+  document.getElementById("botonborrar").onclick= function(){window.location.href="index.php?controller=galeria&action=delete&imagen="+borrarsrc};
   
     $('#imgMostrarDelete').modal('toggle');
 
