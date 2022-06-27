@@ -148,7 +148,7 @@ $currentuser = $view->getVariable("currentusername");
       </div>
       
       <div class="col-md-3">
-        <h4 class="lead">Síguenos</h4>
+        <h4 class="lead"><?= i18n("Síguenos") ?></h4>
         <a href="https://twitter.com/MedioAmbAND"><span class="badge badge-primary">Twitter</span></a>
         <a href="https://www.youtube.com/user/fdsostenible"><span class="badge badge-danger">Youtube</span></a>
       </div>

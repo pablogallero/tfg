@@ -1,0 +1,36 @@
+## GUIA DE INSTALACIÓN ##
+
+Nos posicionaremos en la carpeta tfg y, desde linea de comandos, ejecutaremos los siguientes comandos(aceptando las condiciones por las cuales nos pregunten):
+
+sudo apt-get update
+
+sudo apt-get install apache2
+
+sudo apt-get install mysql-server mysql-client
+
+sudo apt-get install php libapache2-mod-php php-mysql
+
+
+## IMPORTACIÓN DE BASE DE DATOS ##
+
+Después ejecutaremos el comando "sudo mysql"  y nos encontraremos en una linea de comandos mysql, donde emplearemos el comando "source grena.sql;"
+
+
+
+## UBICAR ARCHIVOS EN EL SERVIDOR LOCAL ##
+
+Por ultimo todos los archivos que uses en el servidor local debes colocarlo en la carpeta html que la encuentras en :
+
+ /var/www/html 
+
+ puedes realizarlo mediante el comando "sudo mv ../tfg /var/www/html/tfg
+
+ ## PROPORCIONAMOS PERMISOS A LA CARPETA ##
+
+Necesitaremos proporcionar permisos a la carpeta del proyecto mediante el comando "sudo chmod -R 777 /var/www/html/tfg"
+
+ ## LOCALHOST ##
+
+ Por último, encontraremos el proyecto en la URL
+
+ http://localhost/tfg
